@@ -1,0 +1,41 @@
+import { cn } from "@/lib/utils";
+import { ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+interface SidebarHeaderProps {
+  isCollapsed: boolean;
+  toggleSidebar: () => void;
+}
+
+export default function SidebarHeader({
+  isCollapsed,
+  toggleSidebar,
+}: SidebarHeaderProps) {
+  return (
+    <div className="p-4 border-b border-border">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-primary-foreground font-bold">
+            W
+          </div>
+          {!isCollapsed && (
+            <span className="ml-2 font-semibold text-lg text-foreground ">
+              Aero
+            </span>
+          )}
+        </div>
+        {!isCollapsed && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={toggleSidebar}
+          >
+            <ChevronLeft className="h-4 w-4" />
+            <span className="sr-only">Collapse sidebar</span>
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}
