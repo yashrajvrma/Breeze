@@ -1,6 +1,9 @@
 import { cn } from "@/lib/utils";
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
+import logo from "../../public/assets/images/aero-icon.png";
 
 interface SidebarHeaderProps {
   isCollapsed: boolean;
@@ -15,9 +18,15 @@ export default function SidebarHeader({
     <div className="p-4 border-b border-border">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-primary-foreground font-bold">
-            W
-          </div>
+          <Link href="/">
+            <Image
+              src={logo}
+              alt="logo"
+              width={26}
+              height={20}
+              placeholder="blur"
+            />
+          </Link>
           {!isCollapsed && (
             <span className="ml-2 font-semibold text-lg text-foreground ">
               Aero
