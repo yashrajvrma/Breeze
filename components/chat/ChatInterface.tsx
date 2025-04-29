@@ -41,36 +41,33 @@ export default function ChatInterface() {
   const messages = [
     {
       id: "1",
-      content: "## 2. Drug Discovery and Development",
+      content: "Generate a word document on LLM",
       sender: "user",
-      timestamp: new Date(Date.now() - 1000 * 60 * 10).toISOString(),
     },
     {
       id: "2",
-      content:
-        "The traditional drug development process typically takes 10-15 years and costs billions of dollars. AI is dramatically accelerating this timeline by:\n\n- Analyzing biological data to identify potential drug candidates\n- Predicting how compounds will behave in the human body\n- Repurposing existing medications for new therapeutic uses\n- Designing novel molecules with specific properties\n\nCompanies like Insillico Medicine have used AI to identify promising drug candidates for diseases ranging from fibrosis to cancer in a matter of weeks rather than years.",
+      content: `
+I've generated the Word document about Large Language Models (LLMs)! Would you like me to add more?
+`,
       sender: "ai",
-      timestamp: new Date(Date.now() - 1000 * 60 * 8).toISOString(),
     },
     {
       id: "3",
-      content: "## 3. Patient Care and Monitoring",
+      content: "Also add how LLMs work",
       sender: "user",
-      timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
     },
     {
       id: "4",
       content:
-        "AI-powered systems are transforming patient care through:\n\n- **Continuous monitoring**: Wearable devices",
+        "Certainly! Here's a brief explanation of how Large Language Models (LLMs) work, which I can add in the document.",
       sender: "ai",
-      timestamp: new Date(Date.now() - 1000 * 60 * 3).toISOString(),
     },
   ];
 
   return (
-    <div className="flex flex-col h-full border-r border-border">
+    <div className="flex flex-col h-full border-r border-border font-sans">
       <div className="p-4 border-b border-border">
-        <h2 className="text-lg font-semibold">Chat with AI</h2>
+        <h2 className="text-md font-medium">Word Doc on LLM</h2>
       </div>
       <ScrollArea className="flex-1 p-4 pb-0">
         <div className="space-y-4">
@@ -80,7 +77,7 @@ export default function ChatInterface() {
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
-      <div className="p-4 border-t border-border mt-auto">
+      <div className="p-4 mt-auto">
         <form onSubmit={handleSubmit} className="relative">
           <Textarea
             ref={textareaRef}

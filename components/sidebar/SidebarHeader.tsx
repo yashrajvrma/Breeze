@@ -15,7 +15,7 @@ export default function SidebarHeader({
   toggleSidebar,
 }: SidebarHeaderProps) {
   return (
-    <div className="p-4 border-b border-border">
+    <div className="p-3 border-b border-border">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <Link href="/">

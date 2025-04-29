@@ -6,7 +6,6 @@ interface Message {
   id: string;
   content: string;
   sender: string;
-  timestamp: string;
 }
 
 interface ChatMessageProps {
@@ -14,12 +13,10 @@ interface ChatMessageProps {
 }
 
 export default function ChatMessage({ message }: ChatMessageProps) {
-  const formattedTime = format(new Date(message.timestamp), "h:mm a");
-
   return (
     <div
       className={cn(
-        "flex flex-col w-full ",
+        "flex flex-col w-full",
         message.sender === "user" ? "items-end" : "items-start"
       )}
     >
@@ -31,13 +28,31 @@ export default function ChatMessage({ message }: ChatMessageProps) {
             : "text-foreground max-w-[85%]"
         )}
       >
-        <div className="prose prose-sm dark:prose-invert max-w-none">
-          <ReactMarkdown>{message.content}</ReactMarkdown>
+        <div className="prose prose-sm dark:prose-invert max-w-none text-md">
+          <ReactMarkdown
+            components={{
+              span: ({ node, className, children, ...props }) => {
+                if (className?.includes("bg-button")) {
+                  return (
+                    <span
+                      {...props}
+                      className={cn(
+                        "inline-block bg-blue-500 text-white px-2 py-1 rounded",
+                        className // Merge with additional classes if any
+                      )}
+                    >
+                      {children}
+                    </span>
+                  );
+                }
+                return <span {...props}>{children}</span>;
+              },
+            }}
+          >
+            {message.content}
+          </ReactMarkdown>
         </div>
       </div>
-      <span className="text-xs text-muted-foreground mt-1">
-        {formattedTime}
-      </span>
     </div>
   );
 }

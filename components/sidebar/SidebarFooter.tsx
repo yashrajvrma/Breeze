@@ -6,9 +6,7 @@ interface SidebarFooterProps {
   isCollapsed: boolean;
 }
 
-export default function SidebarFooter({
-  isCollapsed,
-}: SidebarFooterProps) {
+export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
   return (
     <div className="p-4 border-t border-border">
       <div className="flex items-center">
@@ -20,7 +18,7 @@ export default function SidebarFooter({
         </Avatar>
         {!isCollapsed && (
           <div className="ml-2">
-            <p className="text-sm font-medium">user@example.com</p>
+            <p className="text-sm font-medium">yashrajverma@gmail.com</p>
           </div>
         )}
       </div>

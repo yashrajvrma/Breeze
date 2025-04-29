@@ -5,7 +5,9 @@ interface SidebarNavigationProps {
   isCollapsed: boolean;
 }
 
-export default function SidebarNavigation({ isCollapsed }: SidebarNavigationProps) {
+export default function SidebarNavigation({
+  isCollapsed,
+}: SidebarNavigationProps) {
   return (
     <div className="px-3 py-2">
       <div className={cn("mb-2", isCollapsed ? "px-2" : "px-3")}>
@@ -23,17 +25,17 @@ export default function SidebarNavigation({ isCollapsed }: SidebarNavigationProp
 
       <div className="space-y-1">
         <ChatItem
-          title="Chat 1"
+          title="Large Language Model"
           isCollapsed={isCollapsed}
           isActive={true}
         />
         <ChatItem
-          title="Chat 2"
+          title="Sales report"
           isCollapsed={isCollapsed}
           isActive={false}
         />
         <ChatItem
-          title="Chat 3"
+          title="Boom of AI Agents"
           isCollapsed={isCollapsed}
           isActive={false}
         />

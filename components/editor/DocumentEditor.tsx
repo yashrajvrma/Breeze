@@ -6,27 +6,22 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function DocumentEditor() {
   const [documentContent, setDocumentContent] =
-    useState(`# AI-Generated Document
+    useState(`# Large Language Models
 
 ## Introduction
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+Large Language Models (LLMs) are a type of artificial intelligence (AI) that can understand and generate human-like text. Trained on massive amounts of data, LLMs are capable of tasks like answering questions, writing essays, summarizing information, translating languages, coding, and even reasoning to a certain degree. They form the backbone of many modern AI applications, including chatbots, virtual assistants, content generators, and coding assistants.
 
-## Main Content
+LLMs are typically built using deep learning techniques, particularly transformer architectures like GPT (Generative Pre-trained Transformer). These models revolutionize how machines process language, enabling interactions that feel surprisingly human.
 
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+## How Large Language Models Work
 
-### Section 1
+Large Language Models operate based on deep neural networks, particularly utilizing transformer architectures. Neural networks are computational systems inspired by the human brain, designed to recognize patterns and relationships in data. The transformer model, introduced in the paper "Attention Is All You Need" by Vaswani et al., brought a major breakthrough in natural language processing by enabling models to attend to different parts of input sequences simultaneously through a mechanism called self-attention. This allowed for more efficient training and better handling of long-range dependencies in text.
 
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+## Popular LLMs in the Market
 
-### Section 2
-
-Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
-
-## Analysis
-
-At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti`);
+Today, several prominent LLMs dominate the AI landscape. OpenAI’s GPT series, particularly GPT-3.5 and GPT-4, are among the most widely used models and are known for their versatility across different domains. Google has introduced its Gemini model, aiming to integrate text, image, and audio understanding. Anthropic developed the Claude series, which focuses heavily on alignment and safety. Meta (formerly Facebook) released the LLaMA (Large Language Model Meta AI) models, which are designed to be open-weight and accessible for research and development. Other notable contributors include Mistral, known for lightweight open-source LLMs, and Cohere, which focuses on enterprise AI solutions. Each of these models has its strengths and specialized applications, driving innovation across industries.
+`);
 
   return (
     <div className="flex flex-col h-full">
@@ -37,7 +32,7 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
             {documentContent.split("\n\n").map((paragraph, i) => {
               if (paragraph.startsWith("# ")) {
                 return (
-                  <h1 key={i} className="text-2xl font-bold my-4">
+                  <h1 key={i} className="text-center text-2xl font-bold my-4">
                     {paragraph.substring(2)}
                   </h1>
                 );
