@@ -1,14 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import NextAuth from "next-auth/next";
+import { authConfig } from "@/lib/auth";
 
-export async function GET(req: NextRequest) {
-  const data = {
-    id: 1,
-    name: "hitler",
-    email: "hitler@gmail.com",
-  };
+const handler = NextAuth(authConfig);
 
-  return NextResponse.json({
-    message: "succcess",
-    data: data,
-  });
-}
+export { handler as GET, handler as POST };
