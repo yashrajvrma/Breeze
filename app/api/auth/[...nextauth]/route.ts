@@ -6,6 +6,7 @@ export async function GET(req: NextRequest) {
     name: "hitler",
     email: "hitler@gmail.com",
   };
+
   return NextResponse.json({
     message: "succcess",
     data: data,
