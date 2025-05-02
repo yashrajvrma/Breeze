@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { GripVertical } from "lucide-react";
 import * as ResizablePrimitive from "react-resizable-panels";
@@ -17,25 +17,50 @@ export default function ResizablePanels({
   className,
 }: ResizablePanelsProps) {
   const childrenArray = React.Children.toArray(children);
+  const [isStable, setIsStable] = useState(false);
+
+  // Set isStable to true after initial render and sizing
+  useEffect(() => {
+    // Using requestAnimationFrame ensures we're after the browser paint
+    const frame = requestAnimationFrame(() => {
+      // And setTimeout adds a small buffer to ensure everything is settled
+      const timer = setTimeout(() => {
+        setIsStable(true);
+      }, 50);
+
+      return () => clearTimeout(timer);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   return (
-    <ResizablePrimitive.PanelGroup
-      direction="horizontal"
-      className={cn("h-full w-full", className)}
-    >
-      <ResizablePrimitive.Panel
-        defaultSize={defaultSize}
-        minSize={30}
-        maxSize={75}
-        className="overflow-auto"
+    <div className="h-full w-full">
+      <ResizablePrimitive.PanelGroup
+        direction="horizontal"
+        className={cn("h-full w-full", className)}
+        // This onLayout callback helps ensure proper initial sizing
+        onLayout={() => {
+          if (!isStable) setIsStable(true);
+        }}
       >
-        {childrenArray[0]}
-      </ResizablePrimitive.Panel>
-      <ResizableHandle />
-      <ResizablePrimitive.Panel minSize={30} className="overflow-auto">
-        {childrenArray[1]}
-      </ResizablePrimitive.Panel>
-    </ResizablePrimitive.PanelGroup>
+        <ResizablePrimitive.Panel
+          defaultSize={defaultSize}
+          minSize={30}
+          maxSize={75}
+          className={cn(
+            "overflow-auto transition-opacity duration-100",
+            !isStable && "opacity-95"
+          )} // Subtle visual cue during initial layout
+        >
+          {childrenArray[0]}
+        </ResizablePrimitive.Panel>
+        <ResizableHandle />
+        <ResizablePrimitive.Panel minSize={30} className="overflow-auto">
+          {childrenArray[1]}
+        </ResizablePrimitive.Panel>
+      </ResizablePrimitive.PanelGroup>
+    </div>
   );
 }
 
