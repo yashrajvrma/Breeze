@@ -1,13 +1,10 @@
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import LogoutButton from "@/components/logout"; // adjust path as needed
+import LogoutButton from "@/components/logout";
 
 export default async function ProfilePage() {
   const session = await getServerSession(authConfig);
-
-  console.log(JSON.stringify(session));
-  console.log(JSON.stringify(session?.user?.image));
 
   if (!session) redirect("/signin");
 
@@ -19,7 +16,10 @@ export default async function ProfilePage() {
       <p>Avatar: {session.user?.image}</p>
       <img
         src={session.user?.image!}
+        referrerPolicy="no-referrer"
         alt="Profile"
+        width={300}
+        height={300}
         className="w-24 h-24 rounded-full mt-4"
       />
       <LogoutButton />

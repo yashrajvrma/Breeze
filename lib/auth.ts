@@ -1,9 +1,8 @@
-import { NextAuthOptions, SessionStrategy } from "next-auth";
+import { NextAuthOptions, Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/db";
-import { Session } from "next-auth";
 
-export interface session extends Session {
+export interface CustomSession extends Session {
   user: {
     id: string;
     email: string;
@@ -19,63 +18,90 @@ export const authConfig: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
         params: {
-          scope:
-            "openid email profile https://www.googleapis.com/auth/userinfo.profile",
+          scope: "openid email profile",
+          prompt: "consent",
         },
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+  },
   callbacks: {
     async signIn({ profile }) {
-      const googleProfile = profile as {
-        email?: string;
-        name?: string;
-        picture?: string;
-      };
+      try {
+        const googleProfile = profile as {
+          email?: string;
+          name?: string;
+          picture?: string;
+        };
 
-      if (!googleProfile?.email) {
-        throw new Error("Sorry something went wrong");
+        if (!googleProfile?.email) {
+          console.error("Email is required");
+          return false;
+        }
+        await prisma.user.upsert({
+          where: {
+            email: googleProfile.email,
+          },
+          create: {
+            email: googleProfile.email,
+            name: googleProfile.name || null,
+            avatar: googleProfile.picture || null,
+          },
+          update: {
+            name: googleProfile.name || null,
+            avatar: googleProfile.picture || null,
+          },
+        });
+
+        return true;
+      } catch (error) {
+        console.error("Error during sign in:", error);
+        return false;
       }
-
-      const user = await prisma.user.upsert({
-        where: {
-          email: googleProfile.email,
-        },
-        create: {
-          email: googleProfile.email,
-          name: googleProfile.name,
-          avatar: googleProfile.picture,
-        },
-        update: {
-          name: googleProfile.name,
-          avatar: googleProfile.picture,
-        },
-      });
-
-      return true;
     },
 
     async session({ session }) {
-      const newSession: session = session as session;
+      try {
+        const customSession = session as CustomSession;
 
-      if (newSession?.user?.email) {
-        const user = await prisma.user.findUnique({
-          where: { email: newSession.user.email },
+        if (customSession?.user?.email) {
+          const user = await prisma.user.findUnique({
+            where: { email: customSession.user.email },
+          });
+
+          if (user) {
+            customSession.user.id = user.id;
+            customSession.user.name = user.name;
+            customSession.user.image = user.avatar;
+          }
+        }
+
+        return customSession;
+      } catch (error) {
+        console.error("Error fetching session data:", error);
+        return session;
+      }
+    },
+    async jwt({ token, user, account }) {
+      if (account && user) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: user.email as string },
         });
 
-        if (user) {
-          (newSession.user.id = user.id),
-            (newSession.user.email = user.email),
-            (newSession.user.name = user?.name),
-            (newSession.user.image = user.avatar);
+        if (dbUser) {
+          token.userId = dbUser.id;
         }
       }
-
-      return newSession;
+      return token;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/signin",
+    error: "/error",
   },
+  debug: process.env.NODE_ENV === "development",
 };
