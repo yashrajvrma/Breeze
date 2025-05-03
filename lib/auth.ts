@@ -20,79 +20,106 @@ export const authConfig: NextAuthOptions = {
         params: {
           scope: "openid email profile",
           prompt: "consent",
+          access_type: "offline",
         },
       },
+      checks: ["pkce", "state"],
     }),
   ],
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
   },
   callbacks: {
-    async signIn({ profile }) {
+    async signIn({ account, profile }) {
       try {
+        if (!account || !profile) {
+          throw new Error("Invalid OAuth profile");
+        }
+
         const googleProfile = profile as {
-          email?: string;
+          email: string;
           name?: string;
           picture?: string;
+          email_verified?: boolean;
         };
 
-        if (!googleProfile?.email) {
-          console.error("Email is required");
-          return false;
+        // Validate email
+        if (!googleProfile.email || googleProfile.email_verified === false) {
+          throw new Error("Email is not verified");
         }
-        await prisma.user.upsert({
-          where: {
-            email: googleProfile.email,
-          },
-          create: {
-            email: googleProfile.email,
-            name: googleProfile.name || null,
-            avatar: googleProfile.picture || null,
-          },
-          update: {
-            name: googleProfile.name || null,
-            avatar: googleProfile.picture || null,
-          },
+
+        await prisma.$transaction(async (tx) => {
+          await tx.user.upsert({
+            where: { email: googleProfile.email },
+            create: {
+              email: googleProfile.email,
+              name: googleProfile.name,
+              avatar: googleProfile.picture,
+            },
+            update: {
+              name: googleProfile.name,
+              avatar: googleProfile.picture,
+              updatedAt: new Date(),
+            },
+          });
         });
 
         return true;
       } catch (error) {
-        console.error("Error during sign in:", error);
+        console.error("SignIn error:", error);
         return false;
       }
     },
 
-    async session({ session }) {
+    async session({ session, token }) {
       try {
         const customSession = session as CustomSession;
 
-        if (customSession?.user?.email) {
+        if (token.sub) {
+          customSession.user.id = token.sub;
+        }
+
+        if (session.user?.email) {
           const user = await prisma.user.findUnique({
-            where: { email: customSession.user.email },
+            where: { email: session.user.email },
+            select: {
+              id: true,
+              name: true,
+              avatar: true,
+              email: true,
+            },
           });
 
           if (user) {
             customSession.user.id = user.id;
-            customSession.user.name = user.name;
-            customSession.user.image = user.avatar;
+            customSession.user.name = user.name || session.user.name;
+            customSession.user.image = user.avatar || session.user.image;
+            customSession.user.email = user.email;
           }
         }
 
         return customSession;
       } catch (error) {
-        console.error("Error fetching session data:", error);
-        return session;
+        console.error("Session error:", error);
+        throw new Error("Failed to create session");
       }
     },
+
     async jwt({ token, user, account }) {
-      if (account && user) {
+      if (account?.access_token) {
+        token.accessToken = account.access_token;
+      }
+
+      if (user?.email) {
         const dbUser = await prisma.user.findUnique({
-          where: { email: user.email as string },
+          where: { email: user.email },
+          select: { id: true },
         });
 
         if (dbUser) {
-          token.userId = dbUser.id;
+          token.sub = dbUser.id;
         }
       }
       return token;
@@ -101,7 +128,9 @@ export const authConfig: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/signin",
+    signOut: "/",
     error: "/error",
   },
   debug: process.env.NODE_ENV === "development",
+  useSecureCookies: process.env.NODE_ENV === "production",
 };

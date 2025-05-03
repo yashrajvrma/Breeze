@@ -8,7 +8,7 @@ export default function Signin() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      redirect("/profile");
+      redirect("/");
     }
   }, [status]);
 
