@@ -5,6 +5,11 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import ResizablePanels from "@/components/ui/ResizablePanels";
 import ChatInterface from "@/components/chat/ChatInterface";
 import DocumentEditor from "@/components/editor/DocumentEditor";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 
 export default function MainLayout() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -45,10 +50,19 @@ export default function MainLayout() {
     <div className="flex h-screen bg-background overflow-hidden font-sans">
       <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
       <div className="flex-1 overflow-hidden">
-        <ResizablePanels defaultSize={40}>
+        {/* <ResizablePanels defaultSize={40}>
           <ChatInterface />
           <DocumentEditor />
-        </ResizablePanels>
+        </ResizablePanels> */}
+        <ResizablePanelGroup direction="horizontal">
+          <ResizablePanel defaultSize={50} minSize={30} maxSize={75}>
+            <ChatInterface />
+          </ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel>
+            <DocumentEditor />
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
     </div>
   );
