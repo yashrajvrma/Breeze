@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ChevronRight } from "lucide-react";
+import { ArrowRightFromLine, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -38,7 +38,7 @@ export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
                 className="h-8 w-8 mb-2 mx-auto"
                 onClick={toggleSidebar}
               >
-                <ChevronRight className="h-4 w-4" />
+                <ArrowRightFromLine className="h-4 w-4" />
                 <span className="sr-only">Expand sidebar</span>
               </Button>
             </TooltipTrigger>

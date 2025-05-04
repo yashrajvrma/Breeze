@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ChevronLeft } from "lucide-react";
+import { ArrowLeftFromLine, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,7 +15,7 @@ export default function SidebarHeader({
   toggleSidebar,
 }: SidebarHeaderProps) {
   return (
-    <div className="p-3 border-b border-border">
+    <div className="p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <Link href="/">
@@ -34,7 +34,8 @@ export default function SidebarHeader({
             className="h-8 w-8"
             onClick={toggleSidebar}
           >
-            <ChevronLeft className="h-4 w-4" />
+            {/* <ChevronLeft className="h-4 w-4" /> */}
+            <ArrowLeftFromLine className="h-4 w-4" />
             <span className="sr-only">Collapse sidebar</span>
           </Button>
         )}
