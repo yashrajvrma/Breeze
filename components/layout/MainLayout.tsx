@@ -50,10 +50,6 @@ export default function MainLayout() {
     <div className="flex h-screen bg-background overflow-hidden font-sans">
       <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
       <div className="flex-1 overflow-hidden">
-        {/* <ResizablePanels defaultSize={40}>
-          <ChatInterface />
-          <DocumentEditor />
-        </ResizablePanels> */}
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel defaultSize={50} minSize={30} maxSize={75}>
             <ChatInterface />
