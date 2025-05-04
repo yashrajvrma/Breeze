@@ -14,11 +14,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Sender {
+  user
+  assistant
+}
+
+enum MessageStatus {
+  PENDING
+  STREAMING
+  COMPLETED
+}
+
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id        String      @id @default(uuid())
+  email     String      @unique
   name      String?
   avatar    String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  Chat      Chat[]
+  Favourite Favourite[]
+
+  @@map("user")
+}
+
+model Chat {
+  id String @id @default(uuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  title    String?
+  isActive Boolean @default(true)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  Message Message[]
+
+  Favourite Favourite[]
+
+  @@map("chat")
+}
+
+model Message {
+  id String @id @default(uuid())
+
+  chatId String
+  chat   Chat   @relation(fields: [chatId], references: [id])
+
+  sender  Sender
+  content String
+  status  MessageStatus @default(PENDING)
+
+  orderIndex Int
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("message")
+}
+
+model Favourite {
+  id String @id @default(uuid())
+
+  chatId String
+  chat   Chat   @relation(fields: [chatId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("favourite")
 }
