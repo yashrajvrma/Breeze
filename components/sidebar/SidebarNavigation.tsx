@@ -61,22 +61,24 @@ export default function SidebarNavigation({
         /> */}
         </div>
       </div>
-      <div className="pl-3 pr-0 py-2">
-        <div className="px-3 mb-2 text-sm text-muted-foreground leading-none">
-          Recents
-        </div>
-        <ScrollArea className="h-72 w-full">
-          <div className="pl-3 pr-0 py-2">
-            {tags.map((tag) => (
-              <>
-                <div key={tag} className="text-sm py-2">
-                  {tag}
-                </div>
-              </>
-            ))}
+      {!isCollapsed && (
+        <div className="pl-3 pr-0 py-2">
+          <div className="px-3 mb-2 text-sm text-muted-foreground leading-none">
+            Recents
           </div>
-        </ScrollArea>
-      </div>
+          <ScrollArea className="h-72 w-full">
+            <div className="pl-3 pr-0 py-2">
+              {tags.map((tag) => (
+                <>
+                  <div key={tag} className="text-sm py-2">
+                    {tag}
+                  </div>
+                </>
+              ))}
+            </div>
+          </ScrollArea>
+        </div>
+      )}
     </div>
   );
 }
