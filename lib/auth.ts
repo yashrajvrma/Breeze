@@ -1,14 +1,13 @@
-import { NextAuthOptions, Session } from "next-auth";
+import { type DefaultSession, NextAuthOptions, Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/db";
 
-export interface CustomSession extends Session {
-  user: {
-    id: string;
-    email: string;
-    name?: string | null;
-    image?: string | null;
-  };
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string | null;
+    } & DefaultSession["user"];
+  }
 }
 
 export const authConfig: NextAuthOptions = {
@@ -75,12 +74,6 @@ export const authConfig: NextAuthOptions = {
 
     async session({ session, token }) {
       try {
-        const customSession = session as CustomSession;
-
-        if (token.sub) {
-          customSession.user.id = token.sub;
-        }
-
         if (session.user?.email) {
           const user = await prisma.user.findUnique({
             where: { email: session.user.email },
@@ -93,14 +86,14 @@ export const authConfig: NextAuthOptions = {
           });
 
           if (user) {
-            customSession.user.id = user.id;
-            customSession.user.name = user.name || session.user.name;
-            customSession.user.image = user.avatar || session.user.image;
-            customSession.user.email = user.email;
+            session.user.id = user.id;
+            session.user.name = user.name;
+            session.user.image = user.avatar || session.user.image;
+            session.user.email = user.email;
           }
         }
 
-        return customSession;
+        return session;
       } catch (error) {
         console.error("Session error:", error);
         throw new Error("Failed to create session");
