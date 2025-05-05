@@ -39,17 +39,22 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
           <DropdownMenuTrigger asChild>
             <div className="flex flex-row items-center gap-x-2.5 hover:cursor-pointer">
               <Avatar className="h-8 w-8">
-                <AvatarImage src={session?.user?.image || ""} alt="User" />
+                <AvatarImage
+                  src={session?.user?.image || ""}
+                  referrerPolicy="no-referrer"
+                  alt="User"
+                />
                 <AvatarFallback>
                   <User className="h-4 w-4" />
                 </AvatarFallback>
               </Avatar>
               {!isCollapsed && (
-                <div>
-                  <p className="text-sm font-normal">
+                <div className="text-sm font-semibold">
+                  <p className="text-foreground">
                     {session?.user?.name?.[0]?.toUpperCase()! +
                       session?.user?.name?.slice(1)}
                   </p>
+                  <p className="text-muted-foreground">Free Plan</p>
                 </div>
               )}
             </div>
