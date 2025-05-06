@@ -6,11 +6,78 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ChatMessage from "./ChatMessage";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import toast from "react-hot-toast";
 
+interface Messages {
+  id: string;
+  sender: "user" | "assistant";
+  content: string;
+  status: "PENDING" | "STREAMING" | "COMPLETED";
+  orderIndex: number;
+  createdAt: string;
+}
+interface Thread {
+  chatId: string;
+  messages: Messages[];
+}
 export default function ChatInterface() {
+  const params = useParams();
+
   const [message, setMessage] = useState("");
+  const [thread, setThread] = useState<Thread>();
+  const [firstMsg, setFirstMsg] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const { chatId } = params;
+
+  useEffect(() => {
+    const fetchThread = async () => {
+      try {
+        const response = await axios.get(`/api/chat/thread?chatId=${chatId}`);
+
+        if (response.data && response.data.success === true) {
+          setThread(response.data.thread);
+          toast.success(`${response.data.message}`);
+          console.log("thread msg", thread);
+
+          fetchFirstMessage();
+        }
+      } catch (error: any) {
+        if (error.response) {
+          toast.error(error.response.data?.message || "Something went wrong");
+        } else if (error.request) {
+          console.log(error.request);
+          toast.error("No response from server");
+        } else {
+          console.log("Axios error", error.message);
+          toast.error("Unexpected error occurred");
+        }
+      }
+    };
+    fetchThread();
+  }, [chatId]);
+
+  function fetchFirstMessage() {
+    if (
+      thread?.messages &&
+      thread?.messages[0].sender === "user" &&
+      thread?.messages[0].status === "PENDING"
+    ) {
+      const inputMsg = thread?.messages[0].content!;
+      setFirstMsg(inputMsg);
+    }
+  }
+
+  // useEffect(() => {
+
+  //   if(firstMsg){
+
+  //   }
+
+  // }, [thread]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -94,7 +161,6 @@ I've generated the Word document about Large Language Models (LLMs)! Would you l
             className="absolute right-1.5 bottom-1.5 h-7 w-7"
           >
             <SendHorizontal className="h-4 w-4" />
-            <span className="sr-only">Send message</span>
           </Button>
         </form>
       </div>
