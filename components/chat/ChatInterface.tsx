@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SendHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,122 +19,92 @@ interface Messages {
   orderIndex: number;
   createdAt: string;
 }
+
 interface Thread {
   chatId: string;
   messages: Messages[];
 }
+
 export default function ChatInterface() {
   const params = useParams();
+  const { chatId } = params;
 
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    
-  });
-
-  const [message, setMessage] = useState("");
-  const [thread, setThread] = useState<Thread>();
-  const [firstMsg, setFirstMsg] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { chatId } = params;
+  const [thread, setThread] = useState<Thread | null>(null);
+  const [initialLoading, setInitialLoading] = useState(true);
+
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    append,
+    isLoading,
+    setMessages,
+  } = useChat({
+    api: "/api/chat",
+    body : []
+  });
 
   useEffect(() => {
     const fetchThread = async () => {
       try {
         const response = await axios.get(`/api/chat/thread?chatId=${chatId}`);
-
         if (response.data && response.data.success === true) {
-          setThread(response.data.thread);
-          toast.success(`${response.data.message}`);
-          console.log("thread msg", thread);
+          const threadData = response.data.thread as Thread;
+          setThread(threadData);
 
-          fetchFirstMessage();
+          const msgs = threadData.messages;
+
+          if (
+            msgs.length === 1 &&
+            msgs[0].sender === "user" &&
+            msgs[0].status === "PENDING"
+          ) {
+            await append({
+              role: "user",
+              content: msgs[0].content,
+            });
+          } else {
+            const initialMsgs = msgs.map((message) => ({
+              id: message.id,
+              role: message.sender,
+              content: message.content,
+            }));
+            setMessages(initialMsgs);
+          }
+
+          toast.success(`${response.data.message}`);
         }
       } catch (error: any) {
-        if (error.response) {
-          toast.error(error.response.data?.message || "Something went wrong");
-        } else if (error.request) {
-          console.log(error.request);
-          toast.error("No response from server");
-        } else {
-          console.log("Axios error", error.message);
-          toast.error("Unexpected error occurred");
-        }
+        toast.error(
+          error.response?.data?.message || "Failed to fetch conversation"
+        );
+      } finally {
+        setInitialLoading(false);
       }
     };
+
     fetchThread();
-  }, [chatId]);
+  }, [chatId, append, setMessages]);
 
-  function fetchFirstMessage() {
-    if (
-      thread?.messages &&
-      thread?.messages[0].sender === "user" &&
-      thread?.messages[0].status === "PENDING"
-    ) {
-      const inputMsg = thread?.messages[0].content!;
-      setFirstMsg(inputMsg);
-    }
-  }
-
-  // useEffect(() => {
-
-  //   if(firstMsg){
-
-  //   }
-
-  // }, [thread]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (message.trim()) {
-      setMessage("");
-      // Here you would typically send the message to your AI backend
-      // and receive a response
-    }
-  };
-
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
+    handleInputChange(e);
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
-
-  // Sample messages for demonstration
-  const messages = [
-    {
-      id: "1",
-      content: "Generate a word document on LLM",
-      sender: "user",
-    },
-    {
-      id: "2",
-      content: `
-I've generated the Word document about Large Language Models (LLMs)! Would you like me to add more?
-`,
-      sender: "ai",
-    },
-    {
-      id: "3",
-      content: "Also add how LLMs work",
-      sender: "user",
-    },
-    {
-      id: "4",
-      content:
-        "Certainly! Here's a brief explanation of how Large Language Models (LLMs) work, which I can add in the document.",
-      sender: "ai",
-    },
-  ];
 
   return (
     <div className="flex flex-col h-full border-r border-border font-sans">
@@ -143,8 +113,15 @@ I've generated the Word document about Large Language Models (LLMs)! Would you l
       </div>
       <ScrollArea className="flex-1 p-4 pb-0">
         <div className="space-y-4">
-          {messages.map((msg) => (
-            <ChatMessage key={msg.id} message={msg} />
+          {messages.map((msg, index) => (
+            <ChatMessage
+              key={index}
+              message={{
+                id: String(index),
+                sender: msg.role === "user" ? "user" : "assistant",
+                content: msg.content,
+              }}
+            />
           ))}
           <div ref={messagesEndRef} />
         </div>
@@ -153,7 +130,7 @@ I've generated the Word document about Large Language Models (LLMs)! Would you l
         <form onSubmit={handleSubmit} className="relative">
           <Textarea
             ref={textareaRef}
-            value={message}
+            value={input}
             onChange={handleTextareaChange}
             placeholder="Ask AI to write or edit your document..."
             className="pr-10 min-h-[44px] max-h-[200px] resize-none"
@@ -162,7 +139,7 @@ I've generated the Word document about Large Language Models (LLMs)! Would you l
           <Button
             size="icon"
             type="submit"
-            disabled={!message.trim()}
+            disabled={!input.trim() || isLoading}
             className="absolute right-1.5 bottom-1.5 h-7 w-7"
           >
             <SendHorizontal className="h-4 w-4" />

@@ -2,21 +2,20 @@ import prisma from "@/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const chatId = req?.nextUrl?.searchParams.get("chatId");
-
-  if (!chatId) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Chat Id is required",
-      },
-      {
-        status: 400,
-      }
-    );
-  }
-
   try {
+    const chatId = req?.nextUrl?.searchParams.get("chatId");
+
+    if (!chatId) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Chat Id is required",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
     const isChatIdValid = await prisma.chat.findUnique({
       where: {
         id: chatId,
@@ -52,7 +51,6 @@ export async function GET(req: NextRequest) {
         content: true,
         status: true,
         orderIndex: true,
-        createdAt: true,
       },
     });
 
