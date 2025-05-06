@@ -8,17 +8,13 @@ import prisma from "@/db";
 export async function POST(req: NextRequest, res: NextResponse) {
   const { message } = await req.json();
 
-  const { textStream } = streamText({
+  const result = streamText({
     model: google("gemini-1.5-pro-latest"),
     system: docsSystemPrompt,
     prompt: message,
   });
 
-  for await (const textPart of textStream) {
-    console.log(textPart);
-  }
-
-  //   return result.toDataStreamResponse();
+  return result.toDataStreamResponse();
 
   //   return NextResponse.json(
   //     {

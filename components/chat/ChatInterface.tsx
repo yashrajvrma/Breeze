@@ -9,6 +9,7 @@ import ChatMessage from "./ChatMessage";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useChat } from "@ai-sdk/react";
 
 interface Messages {
   id: string;
@@ -24,6 +25,10 @@ interface Thread {
 }
 export default function ChatInterface() {
   const params = useParams();
+
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    
+  });
 
   const [message, setMessage] = useState("");
   const [thread, setThread] = useState<Thread>();
