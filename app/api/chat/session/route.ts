@@ -1,6 +1,5 @@
-import { PendingThenable } from "./../../../../node_modules/@tanstack/query-core/src/thenable";
 import prisma from "@/db";
-import { system } from "@/lib/prompt";
+import { titleSystemPrompt } from "@/lib/prompt";
 import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,7 +12,7 @@ export async function POST(req: NextRequest) {
   try {
     const { text } = await generateText({
       model: google("gemini-1.5-pro-latest"),
-      system: system,
+      system: titleSystemPrompt,
       prompt: message,
     });
 
