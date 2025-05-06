@@ -1,18 +1,41 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { MoveRight } from "lucide-react";
 import { useSession } from "next-auth/react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export default function HomeChatLayout() {
+  const router = useRouter();
+
   const [message, setMessage] = useState<string>("");
   const { data: session } = useSession();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(session?.user?.id);
+
+    const userId = session?.user?.id!;
+
+    try {
+      const response = await axios.post("/api/chat/session", {
+        userId: userId,
+        message: message,
+      });
+      if (response.data) {
+        const chatId = response.data?.chatId;
+        console.log("id", chatId);
+        router.push(`/chat/${chatId}`);
+        console.log("after push");
+      }
+    } catch (error) {
+      console.log(`error ${error}`);
+    }
   };
   return (
     <div className="flex justify-center items-center align-middle font-sans h-screen">
