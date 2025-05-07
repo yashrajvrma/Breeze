@@ -4,12 +4,13 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const session = await getServerSession(authConfig);
-  if (!session) {
-    return new Response("Unauthorized", { status: 401 });
-  }
   try {
+    const session = await getServerSession(authConfig);
     const chatId = req?.nextUrl?.searchParams.get("chatId");
+
+    if (!session) {
+      return new Response("Unauthorized", { status: 401 });
+    }
 
     if (!chatId) {
       return NextResponse.json(
@@ -99,4 +100,3 @@ export async function GET(req: NextRequest) {
     );
   }
 }
-

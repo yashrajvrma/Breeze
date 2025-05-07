@@ -4,34 +4,59 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const session = await getServerSession(authConfig);
-  if (!session) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-
-  const userId = session.user.id!;
-
   try {
+    const session = await getServerSession(authConfig);
+
+    if (!session) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    const pageParam = req.nextUrl.searchParams.get("page") || "1";
+    const sizeParam = req.nextUrl.searchParams.get("size") || "10";
+
+    const userId = session.user.id;
+
+    const page = parseInt(pageParam, 10);
+    const size = parseInt(sizeParam, 10);
+
+    const skip = (page - 1) * size;
+
     const chats = await prisma.chat.findMany({
       where: {
-        userId: userId,
+        userId: userId!,
         isActive: true,
       },
       orderBy: {
         createdAt: "asc",
+      },
+      select: {
+        id: true,
+        title: true,
+        createdAt: true,
+      },
+      take: size,
+      skip: skip,
+    });
+
+    const totalChats = await prisma.chat.count({
+      where: {
+        userId: userId!,
+        isActive: true,
       },
     });
 
     return NextResponse.json(
       {
         success: true,
-        chats: chats,
+        page,
+        size,
+        totalChats,
+        chats,
       },
-      {
-        status: 200,
-      }
+      { status: 200 }
     );
   } catch (error) {
-    console.error("Failed to store assistant response:", error);
+    console.error("Failed to fetch chats:", error);
+    return new Response("Internal Server Error", { status: 500 });
   }
 }
