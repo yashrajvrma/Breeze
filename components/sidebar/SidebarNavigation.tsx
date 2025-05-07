@@ -21,11 +21,6 @@ export default function SidebarNavigation({
         <div className="space-y-1 font-sans">
           <Favourite isCollapsed={isCollapsed} />
         </div>
-        <ChatItem
-          title="Sales report"
-          isCollapsed={isCollapsed}
-          isActive={false}
-        />
       </div>
 
       {/* Scrollable recent chats section */}
@@ -42,23 +37,4 @@ interface ChatItemProps {
   title: string;
   isCollapsed: boolean;
   isActive: boolean;
-}
-
-function ChatItem({ title, isCollapsed, isActive }: ChatItemProps) {
-  return (
-    <div
-      className={cn(
-        "flex justify-start items-center cursor-pointer transition-colors",
-        isCollapsed
-          ? "justify-start h-8 w-8 rounded-full"
-          : "px-3 py-2 rounded-md",
-        isActive
-          ? "bg-accent text-accent-foreground"
-          : "text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground"
-      )}
-      title={isCollapsed ? title : undefined}
-    >
-      {!isCollapsed && <span className="text-sm truncate">{title}</span>}
-    </div>
-  );
 }
