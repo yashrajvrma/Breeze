@@ -6,12 +6,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const { userId, message } = await req.json();
-  console.log(message);
-  console.log(userId);
+  console.log("msg", message);
+  console.log("user id", userId);
 
   try {
     const { text } = await generateText({
-      model: google("gemini-1.5-pro-latest"),
+      model: google("gemini-1.5-pro"),
       system: titleSystemPrompt,
       prompt: message,
     });
@@ -42,6 +42,7 @@ export async function POST(req: NextRequest) {
         data: {
           chatId: chatId,
           sender: "user",
+          userId: userId,
           content: message,
           orderIndex: orderIndex,
         },
