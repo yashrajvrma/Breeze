@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
           userId: userId,
           content: message,
           orderIndex: orderIndex,
-          status: "COMPLETED",
+          status: "PENDING",
         },
       });
 

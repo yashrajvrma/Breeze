@@ -26,6 +26,12 @@ export async function POST(req: NextRequest) {
     orderBy: { orderIndex: "asc" },
   });
 
+  if (
+    dbMessages[0] &&
+    dbMessages[0].sender === "user" &&
+    dbMessages[0].status === "PENDING"
+  ) {
+  }
   console.log("user id is ", userId);
 
   // Determine whether to store the user message
@@ -43,10 +49,12 @@ export async function POST(req: NextRequest) {
     : 1;
 
   // Store user message only if it’s not already there
+  let userMessageId: string = "";
+
   if (shouldStoreUserMessage) {
     console.log("storing first meessages ");
 
-    await prisma.message.create({
+    const userMsg = await prisma.message.create({
       data: {
         chatId,
         userId,
@@ -56,6 +64,9 @@ export async function POST(req: NextRequest) {
         orderIndex: lastOrderIndex + 1,
       },
     });
+    userMessageId = userMsg.id;
+  } else {
+    userMessageId = dbMessages[0].id;
   }
 
   const result = await streamText({
@@ -77,18 +88,30 @@ export async function POST(req: NextRequest) {
         (m) => m.role === "assistant"
       );
 
+      const llmResponse = assistantMessages[assistantMessages.length - 1];
+
+      console.log("llm resp is", JSON.stringify(llmResponse));
+
       console.log("assistant response ", JSON.stringify(assistantResponse));
 
-      if (assistantResponse?.content) {
+      if (llmResponse && llmResponse.role === "assistant") {
         try {
           await prisma.message.create({
             data: {
               chatId: chatId,
               userId: userId,
               sender: "assistant",
-              content: assistantResponse.content,
+              content: llmResponse.content,
               status: "COMPLETED",
               orderIndex: lastOrderIndex + (shouldStoreUserMessage ? 2 : 1),
+            },
+          });
+          await prisma.message.update({
+            where: {
+              id: userMessageId,
+            },
+            data: {
+              status: "COMPLETED",
             },
           });
         } catch (err) {

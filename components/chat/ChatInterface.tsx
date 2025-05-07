@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { SendHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ChatMessage from "./ChatMessage";
 import { useParams } from "next/navigation";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useChat } from "@ai-sdk/react";
+import { useQuery } from "@tanstack/react-query";
 
 interface Messages {
   id: string;
@@ -25,78 +25,70 @@ interface Thread {
   messages: Messages[];
 }
 
+async function fetchThread(chatId: string) {
+  const response = await fetch(`/api/chat/thread?chatId=${chatId}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch conversation");
+  }
+  return response.json();
+}
+
 export default function ChatInterface() {
   const params = useParams();
   const { chatId } = params;
-
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [initialLoading, setInitialLoading] = useState(true);
-  const [fetchedMessages, setFetchedMessages] = useState<Messages[]>([]);
+
+  const {
+    data: threadData,
+    isLoading: isThreadLoading,
+    error: threadError,
+  } = useQuery({
+    queryKey: ["thread", chatId],
+    queryFn: () => fetchThread(chatId as string),
+    refetchOnWindowFocus: false,
+  });
 
   const { messages, input, handleInputChange, append, setMessages, isLoading } =
     useChat({
       api: "/api/chat/message",
-      body: () => ({
-        chatId,
-        messages,
-      }),
-      initialMessages: fetchedMessages.map((msg) => ({
-        id: msg.id,
-        role: msg.sender,
-        content: msg.content,
-      })),
+      body: {
+        chatId, // Include chatId in the body
+      },
+      initialMessages:
+        threadData?.thread?.messages?.map((msg: Messages) => ({
+          id: msg.id,
+          role: msg.sender,
+          content: msg.content,
+        })) || [],
       experimental_throttle: 50,
     });
 
   useEffect(() => {
-    const fetchThread = async () => {
-      try {
-        const response = await axios.get(`/api/chat/thread?chatId=${chatId}`);
-        if (response.data?.success) {
-          const threadData = response.data.thread as Thread;
-          const msgs = threadData.messages;
+    if (threadError) {
+      toast.error(threadError.message);
+    }
+  }, [threadError]);
 
-          setFetchedMessages(msgs); // Store in state for initialMessages
+  useEffect(() => {
+    if (threadData?.thread?.messages) {
+      const msgs = threadData.thread.messages as Messages[];
 
-          // If only 1 pending user message, trigger assistant reply
-          if (
-            msgs.length === 1 &&
-            msgs[0].sender === "user" &&
-            msgs[0].status === "PENDING"
-          ) {
-            await append(
-              {
-                role: "user",
-                content: msgs[0].content,
-              },
-              {
-                body: {
-                  chatId,
-                  messages: [
-                    {
-                      role: "user",
-                      content: msgs[0].content,
-                    },
-                  ],
-                },
-              }
-            );
-          }
-
-          toast.success(response.data.message);
-        }
-      } catch (error: any) {
-        toast.error(
-          error.response?.data?.message || "Failed to fetch conversation"
-        );
-      } finally {
-        setInitialLoading(false);
+      // If only 1 pending user message, trigger assistant reply
+      if (
+        msgs.length === 1 &&
+        msgs[0].sender === "user" &&
+        msgs[0].status === "PENDING"
+      ) {
+        append({
+          role: "user",
+          content: msgs[0].content,
+        }).catch((error) => {
+          toast.error(error.message);
+        });
       }
-    };
-
-    fetchThread();
-  }, [chatId, append]);
+    }
+  }, [threadData, append]);
 
   useEffect(() => {
     scrollToBottom();
@@ -118,19 +110,26 @@ export default function ChatInterface() {
     e.preventDefault();
     if (!input.trim()) return;
 
-    await append(
-      {
+    try {
+      // First append the user message to the chat
+      await append({
         role: "user",
         content: input.trim(),
-      },
-      {
-        body: {
-          chatId,
-          messages,
-        },
-      }
-    );
+      });
+    } catch (error) {
+      toast.error("Failed to send message");
+    }
   };
+
+  if (isThreadLoading) {
+    return (
+      <div className="flex flex-col h-full border-r border-border font-sans">
+        <div className="p-4 border-b border-border">
+          <h2 className="text-md font-medium">Loading conversation...</h2>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full border-r border-border font-sans">
@@ -141,9 +140,9 @@ export default function ChatInterface() {
         <div className="space-y-4">
           {messages.map((msg, index) => (
             <ChatMessage
-              key={index}
+              key={msg.id || index}
               message={{
-                id: String(index),
+                id: msg.id || String(index),
                 sender: msg.role === "user" ? "user" : "assistant",
                 content: msg.content,
               }}
@@ -161,6 +160,7 @@ export default function ChatInterface() {
             placeholder="Ask AI to write or edit your document..."
             className="pr-10 min-h-[44px] max-h-[200px] resize-none"
             rows={1}
+            disabled={isLoading}
           />
           <Button
             size="icon"

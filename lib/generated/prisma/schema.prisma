@@ -21,7 +21,6 @@ enum Sender {
 
 enum MessageStatus {
   PENDING
-  STREAMING
   COMPLETED
 }
 
@@ -34,6 +33,7 @@ model User {
   updatedAt DateTime    @updatedAt
   Chat      Chat[]
   Favourite Favourite[]
+  Message   Message[]
 
   @@map("user")
 }
@@ -62,6 +62,9 @@ model Message {
 
   chatId String
   chat   Chat   @relation(fields: [chatId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
   sender  Sender
   content String
