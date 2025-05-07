@@ -1,61 +1,37 @@
 import { cn } from "@/lib/utils";
-import { MessageSquare, Plus } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import NewChat from "./NewChat";
-import Favourite from "./Favourite";
+import Favourite from "./FavouriteChats";
+import RecentChats from "./RecentChats";
 
 interface SidebarNavigationProps {
   isCollapsed: boolean;
 }
 
-const tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`
-);
-
 export default function SidebarNavigation({
   isCollapsed,
 }: SidebarNavigationProps) {
   return (
-    <div>
-      <div className="px-3 py-2">
+    <div className="flex flex-col h-full">
+      {/* Fixed top section */}
+      <div className="px-3 py-2 flex-shrink-0">
         <NewChat isCollapsed={isCollapsed} />
 
-        {/* Chat List */}
+        {/* Favourite Chat List */}
         <div className="space-y-1 font-sans">
           <Favourite isCollapsed={isCollapsed} />
-          {/* <ChatItem
-          title="Large Language Model"
-          isCollapsed={isCollapsed}
-          isActive={true}
-        />
+        </div>
         <ChatItem
           title="Sales report"
           isCollapsed={isCollapsed}
           isActive={false}
         />
-        <ChatItem
-          title="Boom of AI Agents"
-          isCollapsed={isCollapsed}
-          isActive={false}
-        /> */}
-        </div>
       </div>
+
+      {/* Scrollable recent chats section */}
       {!isCollapsed && (
-        <div className="pl-3 pr-0 py-2">
-          <div className="px-3 mb-2 text-sm text-muted-foreground leading-none">
-            Recents
-          </div>
-          <ScrollArea className="h-72 w-full">
-            <div className="pl-3 pr-0 py-2">
-              {tags.map((tag) => (
-                <>
-                  <div key={tag} className="text-sm py-2">
-                    {tag}
-                  </div>
-                </>
-              ))}
-            </div>
-          </ScrollArea>
+        <div className="flex-1 overflow-hidden flex flex-col">
+          <RecentChats isCollapsed={isCollapsed} />
         </div>
       )}
     </div>
@@ -82,7 +58,6 @@ function ChatItem({ title, isCollapsed, isActive }: ChatItemProps) {
       )}
       title={isCollapsed ? title : undefined}
     >
-      {/* <MessageSquare className="h-4 w-4 flex-shrink-0" /> */}
       {!isCollapsed && <span className="text-sm truncate">{title}</span>}
     </div>
   );
