@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";

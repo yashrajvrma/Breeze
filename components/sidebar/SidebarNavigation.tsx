@@ -2,6 +2,8 @@ import { cn } from "@/lib/utils";
 import { MessageSquare, Plus } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import NewChat from "./NewChat";
+import Favourite from "./Favourite";
+
 interface SidebarNavigationProps {
   isCollapsed: boolean;
 }
@@ -20,9 +22,7 @@ export default function SidebarNavigation({
 
         {/* Chat List */}
         <div className="space-y-1 font-sans">
-          <div className="px-3 py-2 text-sm text-muted-foreground">
-            Favourite
-          </div>
+          <Favourite isCollapsed={isCollapsed} />
           {/* <ChatItem
           title="Large Language Model"
           isCollapsed={isCollapsed}
