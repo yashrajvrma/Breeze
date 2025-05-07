@@ -1,8 +1,8 @@
 import prisma from "@/db";
 import { titleSystemPrompt } from "@/lib/prompt";
-import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
 import { NextRequest, NextResponse } from "next/server";
+import { openai } from "@ai-sdk/openai";
 
 export async function POST(req: NextRequest) {
   const { userId, message } = await req.json();
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const { text } = await generateText({
-      model: google("gemini-1.5-pro"),
+      model: openai("gpt-3.5-turbo"),
       system: titleSystemPrompt,
       prompt: message,
     });
@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
           userId: userId,
           content: message,
           orderIndex: orderIndex,
+          status: "COMPLETED",
         },
       });
 

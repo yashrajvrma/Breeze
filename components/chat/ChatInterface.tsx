@@ -31,52 +31,59 @@ export default function ChatInterface() {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const [thread, setThread] = useState<Thread | null>(null);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [fetchedMessages, setFetchedMessages] = useState<Messages[]>([]);
 
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    append,
-    isLoading,
-    setMessages,
-  } = useChat({
-    api: "/api/chat",
-    body : []
-  });
+  const { messages, input, handleInputChange, append, setMessages, isLoading } =
+    useChat({
+      api: "/api/chat/message",
+      body: () => ({
+        chatId,
+        messages,
+      }),
+      initialMessages: fetchedMessages.map((msg) => ({
+        id: msg.id,
+        role: msg.sender,
+        content: msg.content,
+      })),
+    });
 
   useEffect(() => {
     const fetchThread = async () => {
       try {
         const response = await axios.get(`/api/chat/thread?chatId=${chatId}`);
-        if (response.data && response.data.success === true) {
+        if (response.data?.success) {
           const threadData = response.data.thread as Thread;
-          setThread(threadData);
-
           const msgs = threadData.messages;
 
+          setFetchedMessages(msgs); // Store in state for initialMessages
+
+          // If only 1 pending user message, trigger assistant reply
           if (
             msgs.length === 1 &&
             msgs[0].sender === "user" &&
             msgs[0].status === "PENDING"
           ) {
-            await append({
-              role: "user",
-              content: msgs[0].content,
-            });
-          } else {
-            const initialMsgs = msgs.map((message) => ({
-              id: message.id,
-              role: message.sender,
-              content: message.content,
-            }));
-            setMessages(initialMsgs);
+            await append(
+              {
+                role: "user",
+                content: msgs[0].content,
+              },
+              {
+                body: {
+                  chatId,
+                  messages: [
+                    {
+                      role: "user",
+                      content: msgs[0].content,
+                    },
+                  ],
+                },
+              }
+            );
           }
 
-          toast.success(`${response.data.message}`);
+          toast.success(response.data.message);
         }
       } catch (error: any) {
         toast.error(
@@ -88,7 +95,7 @@ export default function ChatInterface() {
     };
 
     fetchThread();
-  }, [chatId, append, setMessages]);
+  }, [chatId, append]);
 
   useEffect(() => {
     scrollToBottom();
@@ -104,6 +111,24 @@ export default function ChatInterface() {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    await append(
+      {
+        role: "user",
+        content: input.trim(),
+      },
+      {
+        body: {
+          chatId,
+          messages,
+        },
+      }
+    );
   };
 
   return (
@@ -127,7 +152,7 @@ export default function ChatInterface() {
         </div>
       </ScrollArea>
       <div className="p-4 mt-auto">
-        <form onSubmit={handleSubmit} className="relative">
+        <form onSubmit={handleFormSubmit} className="relative">
           <Textarea
             ref={textareaRef}
             value={input}
