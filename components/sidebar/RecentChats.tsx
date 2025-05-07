@@ -1,4 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useQuery } from "@tanstack/react-query";
 
 interface RecentChatsProps {
   isCollapsed: boolean;
@@ -8,7 +9,15 @@ const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`
 );
 
+const fetchRecentChats = () => {
+  return axios.post("/chat/threads");
+};
+
 export default function RecentChats({ isCollapsed }: RecentChatsProps) {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["recentChats"],
+    queryFn: fetchRecentChats,
+  });
   return (
     <div className="flex flex-col h-full">
       {/* Fixed header */}
