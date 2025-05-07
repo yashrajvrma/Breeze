@@ -15,7 +15,7 @@ interface Messages {
   id: string;
   sender: "user" | "assistant";
   content: string;
-  status: "PENDING" | "STREAMING" | "COMPLETED";
+  status: "PENDING" | "COMPLETED";
   orderIndex: number;
   createdAt: string;
 }
@@ -46,6 +46,7 @@ export default function ChatInterface() {
         role: msg.sender,
         content: msg.content,
       })),
+      experimental_throttle: 50,
     });
 
   useEffect(() => {
