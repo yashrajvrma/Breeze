@@ -15,7 +15,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   return (
     <div
       className={cn(
-        "flex flex-col w-full",
+        "flex flex-col w-full text-sm font-sans",
         message.sender === "user" ? "items-end" : "items-start"
       )}
     >

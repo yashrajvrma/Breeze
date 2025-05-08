@@ -91,7 +91,7 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
               <div
                 key={chat.id}
                 className={cn(
-                  "group relative flex items-center rounded-lg transition-colors cursor-pointer",
+                  "group relative flex items-center rounded-lg transition-colors cursor-pointer text-sm font-sans",
                   isActive
                     ? "bg-accent text-accent-foreground"
                     : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"

@@ -10,6 +10,7 @@ import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useChat } from "@ai-sdk/react";
 import { useQuery } from "@tanstack/react-query";
+import ChatTitle from "./ChatTitle";
 
 interface Messages {
   id: string;
@@ -74,7 +75,6 @@ export default function ChatInterface() {
     if (threadData?.thread?.messages) {
       const msgs = threadData.thread.messages as Messages[];
 
-      // If only 1 pending user message, trigger assistant reply
       if (
         msgs.length === 1 &&
         msgs[0].sender === "user" &&
@@ -133,8 +133,8 @@ export default function ChatInterface() {
 
   return (
     <div className="flex flex-col h-full border-r border-border font-sans">
-      <div className="p-4 border-b border-border">
-        <h2 className="text-md font-medium">Word Doc on LLM</h2>
+      <div className="p-3 bg-green-500">
+        <ChatTitle />
       </div>
       <ScrollArea className="flex-1 p-4 pb-0">
         <div className="space-y-4">
