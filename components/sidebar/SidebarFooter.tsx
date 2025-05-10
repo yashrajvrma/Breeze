@@ -33,7 +33,7 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   return (
-    <div className="p-4 border-t border-border">
+    <div className="p-4">
       <div className="flex flex-row items-center align-middle">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

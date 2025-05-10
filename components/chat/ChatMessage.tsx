@@ -23,11 +23,11 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         className={cn(
           "p-3 rounded-lg",
           message.sender === "user"
-            ? "bg-secondary text-secondary-foreground max-w-[85%]"
-            : "text-foreground max-w-[85%]"
+            ? "bg-secondary text-secondary-foreground max-w-[100%]"
+            : "text-foreground max-w-[100%] font-sans"
         )}
       >
-        <div className="prose prose-sm dark:prose-invert max-w-none text-md">
+        <div className="prose prose-sm dark:prose-invert max-w-none text-base font-sans">
           <ReactMarkdown
             components={{
               span: ({ node, className, children, ...props }) => {
