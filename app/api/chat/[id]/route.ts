@@ -31,13 +31,13 @@ export async function GET(
     return NextResponse.json(
       {
         success: true,
-        title: chatTitle,
+        title: chatTitle?.title,
       },
       {
         status: 200,
       }
     );
   } catch (error) {
-    console.log("Failed to fetche chat");
+    console.log("Failed to fetch chat");
   }
 }
