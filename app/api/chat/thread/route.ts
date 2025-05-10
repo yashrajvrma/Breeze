@@ -80,7 +80,6 @@ export async function GET(req: NextRequest) {
         message: "Thread retrieved successfully",
         thread: {
           chatId: chatId,
-          title: isChatIdValid.title,
           messages: threadMessage,
         },
       },
