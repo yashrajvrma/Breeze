@@ -96,12 +96,10 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                     ? "bg-accent text-accent-foreground"
                     : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                 )}
+                onClick={() => router.push(`/chat/${chat.id}`)}
               >
                 <div className="relative flex-1 min-w-0 px-3 py-2 overflow-hidden">
-                  <span
-                    className="block overflow-hidden whitespace-nowrap pr-6"
-                    onClick={() => router.push(`/chat/${chat.id}`)}
-                  >
+                  <span className="block overflow-hidden whitespace-nowrap pr-6">
                     {chat.title || "New chat"}
                   </span>
 
