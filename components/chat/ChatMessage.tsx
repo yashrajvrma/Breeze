@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "@/lib/hook";
+import { showDocument } from "@/lib/features/documentEditor/documentSlice";
 
 interface Message {
   id: string;
@@ -19,6 +21,7 @@ interface ParsedContent {
 }
 
 export default function ChatMessage({ message }: ChatMessageProps) {
+  const dispatch = useAppDispatch();
   const [parsedContent, setParsedContent] = useState<ParsedContent>({
     beforeDoc: message.content,
     docContent: null,
@@ -72,6 +75,21 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
   const { beforeDoc, docContent, afterDoc } = parsedContent;
 
+  const handleDocumentClick = () => {
+    if (docContent) {
+      // Extract a title from the first line or use a default
+      const title = docContent.split("\n")[0].trim() || "Generated Document";
+
+      // Dispatch the action to show document in the editor
+      dispatch(
+        showDocument({
+          content: docContent,
+          title: title.length > 50 ? title.substring(0, 50) + "..." : title,
+        })
+      );
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -93,13 +111,23 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
           {/* Word doc card - shows even during streaming */}
           {docContent !== null && (
-            <div className="rounded-lg border bg-muted p-4 shadow-sm cursor-pointer hover:bg-muted/70 transition">
-              <p className="text-sm font-semibold mb-1">Word Document</p>
-              <p className="text-xs text-muted-foreground">
-                {docContent.length > 200
-                  ? `${docContent.slice(0, 200)}...`
-                  : docContent || "Loading document content..."}
-              </p>
+            <div
+              className="rounded-lg border bg-muted p-4 shadow-sm cursor-pointer hover:bg-muted/70 transition flex flex-col"
+              onClick={handleDocumentClick}
+            >
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-sm font-semibold">Document</p>
+                <div className="flex items-center gap-1 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded">
+                  <span>Click to edit</span>
+                </div>
+              </div>
+              <div className="text-xs text-muted-foreground bg-background/70 p-2 rounded border border-border/50 max-h-20 overflow-hidden">
+                {docContent
+                  ? docContent.length > 200
+                    ? `${docContent.slice(0, 200)}...`
+                    : docContent
+                  : "Loading document content..."}
+              </div>
             </div>
           )}
 
