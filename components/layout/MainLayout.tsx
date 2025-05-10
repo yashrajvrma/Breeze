@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Sidebar from "@/components/sidebar/Sidebar";
-import ResizablePanels from "@/components/ui/ResizablePanels";
 import ChatInterface from "@/components/chat/ChatInterface";
 import DocumentEditor from "@/components/editor/DocumentEditor";
 import {

@@ -1,40 +1,34 @@
-"use client";
-
-import { useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { MoveRight } from "lucide-react";
-import { useSession } from "next-auth/react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import { createChatSession } from "@/app/actions/session";
+import CreateChatButton from "../button/CreateChatButton";
 
-export default function HomeChatLayout() {
-  const router = useRouter();
+export default async function HomeChatLayout() {
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
 
-  const [message, setMessage] = useState<string>("");
-  const { data: session } = useSession();
+  //   try {
+  //     const response = await axios.post("/api/chat/session", {
+  //       userId: userId,
+  //       message: message,
+  //     });
+  //     if (response.data) {
+  //       const chatId = response.data?.chatId;
+  //       console.log("id", chatId);
+  //       router.push(`/chat/${chatId}`);
+  //       console.log("after push");
+  //     }
+  //   } catch (error) {
+  //     console.log(`error ${error}`);
+  //   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(session?.user?.id);
+  // };
 
-    const userId = session?.user?.id!;
+  // const createChat = async (formData: FormData) => {
+  //   await createChatSession(formData);
+  // };
 
-    try {
-      const response = await axios.post("/api/chat/session", {
-        userId: userId,
-        message: message,
-      });
-      if (response.data) {
-        const chatId = response.data?.chatId;
-        console.log("id", chatId);
-        router.push(`/chat/${chatId}`);
-        console.log("after push");
-      }
-    } catch (error) {
-      console.log(`error ${error}`);
-    }
-  };
   return (
     <div className="flex justify-center items-center align-middle font-sans h-screen">
       <div className="flex flex-col items-center align-middle text-center">
@@ -45,23 +39,23 @@ export default function HomeChatLayout() {
           Prompt, create and edit word documents .
         </div>
         <div className="w-[500px] mt-7">
-          <form onSubmit={handleSubmit} className="relative">
+          <form action={createChatSession} className="relative">
             <Textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              name="message"
               placeholder="How can Aero help you today?"
               className="font-medium text-sm p-5 min-h-[150px] max-h-[600px] resize-none focus:outline-none w-full"
               rows={1}
+              required
             />
-            <Button
+            {/* <Button
               size="icon"
               type="submit"
-              disabled={!message.trim()}
               className="absolute top-4 right-4 h-9 w-9 bg-cyan-500 hover:bg-cyan-600"
             >
               <MoveRight className="h-5 w-5 text-foreground" />
               <span className="sr-only">Send message</span>
-            </Button>
+            </Button> */}
+            <CreateChatButton />
           </form>
         </div>
       </div>
