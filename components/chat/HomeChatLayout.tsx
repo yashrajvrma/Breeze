@@ -8,8 +8,6 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
-
 export default function HomeChatLayout() {
   const router = useRouter();
 
@@ -58,7 +56,7 @@ export default function HomeChatLayout() {
             <Button
               size="icon"
               type="submit"
-              //   disabled={!message.trim()}
+              disabled={!message.trim()}
               className="absolute top-4 right-4 h-9 w-9 bg-cyan-500 hover:bg-cyan-600"
             >
               <MoveRight className="h-5 w-5 text-foreground" />
