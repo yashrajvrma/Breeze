@@ -42,7 +42,7 @@ export default function DocumentEditor() {
   }
 
   return (
-    <div className="flex flex-col h-full bg-background border-l border-border">
+    <div className="flex flex-col h-full bg-background">
       <div className="flex items-center justify-between px-4 py-2 border-b border-border">
         <Input
           value={localTitle}
@@ -86,7 +86,7 @@ export default function DocumentEditor() {
           </Button>
         </div>
       </div>
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto font-sans text-sm ">
         <TiptapEditor
           content={
             typeof content === "string"

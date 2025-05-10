@@ -189,7 +189,7 @@ export function TiptapEditor({ content, onUpdate }: TiptapEditorProps) {
       <Toolbar editor={editor} />
       <EditorContent
         editor={editor}
-        className="flex-1 p-4 overflow-auto border rounded-md"
+        className="flex-1 p-4 overflow-auto font-sans text-sm focus:outline-none"
       />
     </div>
   );
