@@ -166,7 +166,7 @@ export default function ChatInterface() {
             rows={1}
             disabled={isLoading}
           />
-          <SendMessageButton inputMessage={input} />
+          <SendMessageButton inputMessage={input} isLoading={isLoading} />
         </form>
       </div>
     </div>
