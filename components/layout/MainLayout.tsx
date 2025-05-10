@@ -1,7 +1,3 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import Sidebar from "@/components/sidebar/Sidebar";
 import ChatInterface from "@/components/chat/ChatInterface";
 import DocumentEditor from "@/components/editor/DocumentEditor";
 import {
@@ -9,45 +5,36 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import SidebarLayout from "../chat/SidebarLayout";
 
 export default function MainLayout() {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [isClient, setIsClient] = useState(false);
+  // const [isClient, setIsClient] = useState(false);
 
-  // Set isClient to true on component mount - this ensures we're in the browser
-  useEffect(() => {
-    // Using a small timeout helps ensure the browser has completed its initial rendering
-    const timer = setTimeout(() => {
-      setIsClient(true);
-    }, 10);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setIsClient(true);
+  //   }, 10);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
-  };
-
-  // During server-side rendering or initial client render,
-  // show a placeholder to prevent layout shift
-  if (!isClient) {
-    return (
-      <div className="flex h-screen bg-background overflow-hidden font-sans">
-        {/* Simple placeholder with similar structure to prevent layout shift */}
-        <div className="w-[240px] border-r border-border"></div>
-        <div className="flex-1">
-          <div className="flex h-full">
-            <div className="w-[40%] border-r border-border"></div>
-            <div className="flex-1"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (!isClient) {
+  //   return (
+  //     <div className="flex h-screen bg-background overflow-hidden font-sans">
+  //       <div className="w-[240px] border-r border-border"></div>
+  //       <div className="flex-1">
+  //         <div className="flex h-full">
+  //           <div className="w-[40%] border-r border-border"></div>
+  //           <div className="flex-1"></div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex h-screen bg-background overflow-hidden font-sans">
-      <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
+      <SidebarLayout />
       <div className="flex-1 overflow-hidden">
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel defaultSize={50} minSize={30} maxSize={75}>

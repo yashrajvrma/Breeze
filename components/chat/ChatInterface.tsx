@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SendHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,6 +11,8 @@ import toast from "react-hot-toast";
 import { useChat } from "@ai-sdk/react";
 import { useQuery } from "@tanstack/react-query";
 import ChatTitle from "./ChatTitle";
+import CreateChatButton from "../button/CreateChatButton";
+import SendMessageButton from "../button/SendMessageButton";
 
 interface Messages {
   id: string;
@@ -40,6 +42,8 @@ export default function ChatInterface() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const [firstMsg, setFirstMsg] = useState<Messages[]>();
+
   const {
     data: threadData,
     isLoading: isThreadLoading,
@@ -54,14 +58,15 @@ export default function ChatInterface() {
     useChat({
       api: "/api/chat/message",
       body: {
-        chatId, // Include chatId in the body
+        chatId,
       },
-      initialMessages:
-        threadData?.thread?.messages?.map((msg: Messages) => ({
-          id: msg.id,
-          role: msg.sender,
-          content: msg.content,
-        })) || [],
+      initialMessages: firstMsg
+        ? []
+        : threadData?.thread?.messages?.map((msg: Messages) => ({
+            id: msg.id,
+            role: msg.sender,
+            content: msg.content,
+          })),
       experimental_throttle: 50,
     });
 
@@ -74,12 +79,14 @@ export default function ChatInterface() {
   useEffect(() => {
     if (threadData?.thread?.messages) {
       const msgs = threadData.thread.messages as Messages[];
+      // setFirstMsg(threadData.thread.message);
 
       if (
         msgs.length === 1 &&
         msgs[0].sender === "user" &&
         msgs[0].status === "PENDING"
       ) {
+        setFirstMsg(msgs);
         append({
           role: "user",
           content: msgs[0].content,
@@ -111,7 +118,6 @@ export default function ChatInterface() {
     if (!input.trim()) return;
 
     try {
-      // First append the user message to the chat
       await append({
         role: "user",
         content: input.trim(),
@@ -162,14 +168,7 @@ export default function ChatInterface() {
             rows={1}
             disabled={isLoading}
           />
-          <Button
-            size="icon"
-            type="submit"
-            disabled={!input.trim() || isLoading}
-            className="absolute right-1.5 bottom-1.5 h-7 w-7"
-          >
-            <SendHorizontal className="h-4 w-4" />
-          </Button>
+          <SendMessageButton inputMessage={input} />
         </form>
       </div>
     </div>
