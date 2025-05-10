@@ -1,40 +1,31 @@
+// components/DocumentEditor.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X, Download } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import {
   hideDocument,
   updateDocumentContent,
   updateDocumentTitle,
 } from "@/lib/features/documentEditor/documentSlice";
+import { TiptapEditor } from "../tiptap/TiptapEditor";
+import { JSONContent } from "@tiptap/core";
+import { generateHTML } from "@tiptap/html";
+import { extensions } from "../tiptap/extensions/extensions";
 
 export default function DocumentEditor() {
+  console.log("inside doc editor");
+
   const dispatch = useAppDispatch();
   const { isVisible, content, title } = useAppSelector(
     (state) => state.document
   );
-  const [localContent, setLocalContent] = useState(content || "");
+
+  console.log("content is ", JSON.stringify(content));
   const [localTitle, setLocalTitle] = useState(title);
-
-  // Update local state when Redux state changes
-  useEffect(() => {
-    if (content !== null) {
-      setLocalContent(content);
-    }
-    setLocalTitle(title);
-  }, [content, title]);
-
-  // Save changes to Redux store
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newContent = e.target.value;
-    setLocalContent(newContent);
-    dispatch(updateDocumentContent(newContent));
-  };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
@@ -42,8 +33,12 @@ export default function DocumentEditor() {
     dispatch(updateDocumentTitle(newTitle));
   };
 
+  const handleContentUpdate = (newContent: JSONContent) => {
+    dispatch(updateDocumentContent(newContent));
+  };
+
   if (!isVisible) {
-    return null; // Don't render anything if document should be hidden
+    return null;
   }
 
   return (
@@ -61,12 +56,16 @@ export default function DocumentEditor() {
             size="icon"
             className="h-8 w-8"
             onClick={() => {
-              // Download document
-              const blob = new Blob([localContent], { type: "text/plain" });
+              // Convert content to HTML for download
+              const htmlContent =
+                typeof content === "string"
+                  ? content
+                  : generateHTML(content, extensions);
+              const blob = new Blob([htmlContent], { type: "text/html" });
               const url = URL.createObjectURL(blob);
               const a = document.createElement("a");
               a.href = url;
-              a.download = `${localTitle || "document"}.txt`;
+              a.download = `${localTitle || "document"}.html`;
               document.body.appendChild(a);
               a.click();
               document.body.removeChild(a);
@@ -87,15 +86,22 @@ export default function DocumentEditor() {
           </Button>
         </div>
       </div>
-      <div className="flex-1 p-4 overflow-auto">
-        <textarea
-          value={localContent}
-          onChange={handleContentChange}
-          className={cn(
-            "w-full h-full p-4 resize-none border rounded-md focus:outline-none focus:ring-1 focus:ring-primary",
-            "font-mono text-sm bg-background"
-          )}
-          placeholder="Document content appears here..."
+      <div className="flex-1 overflow-auto">
+        <TiptapEditor
+          content={
+            typeof content === "string"
+              ? JSON.parse(content) // convert string to JSONContent
+              : content || {
+                  type: "doc",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [{ type: "text", text: "Start typing here..." }],
+                    },
+                  ],
+                }
+          }
+          onUpdate={(newContent) => dispatch(updateDocumentContent(newContent))}
         />
       </div>
     </div>

@@ -1,8 +1,11 @@
+// components/ChatMessage.tsx
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/lib/hook";
 import { showDocument } from "@/lib/features/documentEditor/documentSlice";
+import { generateJSON } from "@tiptap/html";
+import { extensions } from "../tiptap/extensions/extensions";
 
 interface Message {
   id: string;
@@ -28,7 +31,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     afterDoc: null,
   });
 
-  // Parse content as it changes during streaming
   useEffect(() => {
     const content = message.content;
     const startTag = "<<start-doc>>";
@@ -36,7 +38,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
     const startIdx = content.indexOf(startTag);
 
-    // If we haven't found the start tag yet, everything is pre-doc content
     if (startIdx === -1) {
       setParsedContent({
         beforeDoc: content,
@@ -49,7 +50,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     const beforeDoc = content.slice(0, startIdx).trim();
     const endIdx = content.indexOf(endTag, startIdx);
 
-    // If we have a start tag but no end tag yet, show what we have so far as document content
     if (endIdx === -1) {
       const partialDocContent = content
         .slice(startIdx + startTag.length)
@@ -62,7 +62,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       return;
     }
 
-    // We have both tags, so we can parse all three sections
     const docContent = content.slice(startIdx + startTag.length, endIdx).trim();
     const afterDoc = content.slice(endIdx + endTag.length).trim();
 
@@ -80,10 +79,12 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       // Extract a title from the first line or use a default
       const title = docContent.split("\n")[0].trim() || "Generated Document";
 
-      // Dispatch the action to show document in the editor
+      // Convert the content to Tiptap JSON format
+      const jsonContent = generateJSON(docContent, extensions);
+
       dispatch(
         showDocument({
-          content: docContent,
+          content: jsonContent,
           title: title.length > 50 ? title.substring(0, 50) + "..." : title,
         })
       );
@@ -106,10 +107,8 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         )}
       >
         <div className="prose prose-sm dark:prose-invert max-w-none text-sm font-sans space-y-4">
-          {/* Content before document */}
           {beforeDoc && <ReactMarkdown>{beforeDoc}</ReactMarkdown>}
 
-          {/* Word doc card - shows even during streaming */}
           {docContent !== null && (
             <div
               className="rounded-lg border bg-muted p-4 shadow-sm cursor-pointer hover:bg-muted/70 transition flex flex-col"
@@ -131,7 +130,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
             </div>
           )}
 
-          {/* Content after document */}
           {afterDoc && <ReactMarkdown>{afterDoc}</ReactMarkdown>}
         </div>
       </div>
