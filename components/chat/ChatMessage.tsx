@@ -87,7 +87,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
             : "text-foreground max-w-[100%] font-sans"
         )}
       >
-        <div className="prose prose-sm dark:prose-invert max-w-none text-base font-sans space-y-4">
+        <div className="prose prose-sm dark:prose-invert max-w-none text-sm font-sans space-y-4">
           {/* Content before document */}
           {beforeDoc && <ReactMarkdown>{beforeDoc}</ReactMarkdown>}
 

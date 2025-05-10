@@ -1,5 +1,5 @@
 import { Button } from "../../ui/button";
-import { SendHorizontal } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 interface Message {
@@ -20,7 +20,7 @@ export default function SendMessageButton({
       disabled={pending || !inputMessage.trim() || isLoading}
       className="absolute right-1.5 bottom-1.5 h-7 w-7"
     >
-      <SendHorizontal className="h-4 w-4" />
+      <ArrowUp className="h-4 w-4" />
     </Button>
   );
 }

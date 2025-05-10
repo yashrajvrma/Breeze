@@ -137,7 +137,7 @@ export default function ChatInterface() {
 
   return (
     <div className="flex flex-col h-full border-r border-border font-sans">
-      <div className="py-3 px-12">
+      <div className="py-3 px-12 text-base font-medium">
         {threadData?.thread?.title || "Untitled Chat"}
       </div>
       <ScrollArea className="flex-1 p-4 pb-0 px-14">
@@ -155,19 +155,22 @@ export default function ChatInterface() {
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
-      <div className="p-4 mt-auto">
+      <div className="px-4 pt-4 mt-auto">
         <form onSubmit={handleFormSubmit} className="relative">
           <Textarea
             ref={textareaRef}
             value={input}
             onChange={handleTextareaChange}
-            placeholder="Ask AI to write or edit your document..."
+            placeholder="Ask a follow up..."
             className="pr-10 min-h-[44px] max-h-[200px] resize-none"
             rows={1}
             disabled={isLoading}
           />
           <SendMessageButton inputMessage={input} isLoading={isLoading} />
         </form>
+        <div className="flex justify-center items-center font-sans text-xs text-muted-foreground py-2">
+          Aero may make mistakes. Please use with discretion.
+        </div>
       </div>
     </div>
   );
