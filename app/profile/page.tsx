@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import LogoutButton from "@/components/logout";
+import LogoutButton from "@/components/auth/logout";
 
 export default async function ProfilePage() {
   const session = await getServerSession(authConfig);
