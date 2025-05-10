@@ -5,7 +5,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import SidebarLayout from "../chat/SidebarLayout";
+import MainSidebarLayout from "../chat/MainSidebarLayout";
 
 export default function MainLayout() {
   // const [isClient, setIsClient] = useState(false);
@@ -34,7 +34,7 @@ export default function MainLayout() {
 
   return (
     <div className="flex h-screen bg-background overflow-hidden font-sans">
-      <SidebarLayout />
+      <MainSidebarLayout />
       <div className="flex-1 overflow-hidden">
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel defaultSize={50} minSize={30} maxSize={75}>

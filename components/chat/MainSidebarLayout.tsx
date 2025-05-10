@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Sidebar from "../sidebar/Sidebar";
 
-export default function SidebarLayout() {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+export default function MainSidebarLayout() {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);

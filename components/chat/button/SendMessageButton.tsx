@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { SendHorizontal } from "lucide-react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 

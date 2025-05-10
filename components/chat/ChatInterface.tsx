@@ -10,9 +10,7 @@ import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useChat } from "@ai-sdk/react";
 import { useQuery } from "@tanstack/react-query";
-import ChatTitle from "./ChatTitle";
-import CreateChatButton from "../button/CreateChatButton";
-import SendMessageButton from "../button/SendMessageButton";
+import SendMessageButton from "./button/SendMessageButton";
 
 interface Messages {
   id: string;
@@ -139,9 +137,7 @@ export default function ChatInterface() {
 
   return (
     <div className="flex flex-col h-full border-r border-border font-sans">
-      <div className="p-3 bg-green-500">
-        <ChatTitle />
-      </div>
+      <div className="p-3 ">{threadData?.thread?.title || "Untitled Chat"}</div>
       <ScrollArea className="flex-1 p-4 pb-0">
         <div className="space-y-4">
           {messages.map((msg, index) => (

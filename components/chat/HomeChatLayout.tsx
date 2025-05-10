@@ -2,7 +2,7 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { MoveRight } from "lucide-react";
 import { createChatSession } from "@/app/actions/session";
-import CreateChatButton from "../button/CreateChatButton";
+import CreateChatButton from "./button/CreateChatButton";
 
 export default async function HomeChatLayout() {
   // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -1,10 +1,10 @@
 import HomeChatLayout from "../chat/HomeChatLayout";
-import SidebarLayout from "../chat/SidebarLayout";
+import HomeSidebarLayout from "../chat/HomeSidebarLayout";
 
-export default function MainLayout() {
+export default function HomeLayout() {
   return (
     <div className="flex h-screen bg-background overflow-hidden font-sans">
-      <SidebarLayout />
+      <HomeSidebarLayout />
       <div className="flex-1 overflow-hidden">
         <HomeChatLayout />
       </div>

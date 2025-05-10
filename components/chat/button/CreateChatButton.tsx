@@ -1,7 +1,7 @@
 "use client";
 
 import { MoveRight } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 export default function CreateChatButton() {
