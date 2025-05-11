@@ -5,6 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 
 export const Editor = () => {
   const editor = useEditor({
+    immediatelyRender: false,
     editorProps: {
       attributes: {
         style: "padding-left : 56px; padding-right:56px",
