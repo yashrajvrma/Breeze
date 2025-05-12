@@ -5,10 +5,12 @@ import { useEditorStore } from "@/lib/zustand/store";
 import {
   BoldIcon,
   ItalicIcon,
+  ListTodoIcon,
   LucideIcon,
   PrinterIcon,
   Redo2Icon,
   SpellCheckIcon,
+  Underline,
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
@@ -95,6 +97,14 @@ export const Toolbar = () => {
         isActive: editor?.isActive("underline"),
       },
     ],
+    [
+      {
+        label: "List Todo",
+        icon: ListTodoIcon,
+        onClick: () => editor?.chain().focus().toggleTaskList().run(),
+        isActive: editor?.isActive("taskList"),
+      },
+    ],
   ];
 
   return (
@@ -111,6 +121,11 @@ export const Toolbar = () => {
       {/* TODO : Heading */}
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Font size */}
+      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      {/* TODO : Task list */}
+      {sections[2].map((item) => (
+        <ToolbarButton key={item.label} {...item} />
+      ))}
     </div>
   );
 };

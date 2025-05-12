@@ -10,6 +10,8 @@ import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
 import { Toolbar } from "./Toolbar";
 import Underline from "@tiptap/extension-underline";
+import TaskItem from "@tiptap/extension-task-item";
+import TaskList from "@tiptap/extension-task-list";
 
 import { useEditorStore } from "@/lib/zustand/store";
 
@@ -62,6 +64,10 @@ export const Editor = () => {
       Image,
       ImageResize,
       Underline,
+      TaskItem.configure({
+        nested: true,
+      }),
+      TaskList,
     ],
     content: `
         <p>This is a basic example of implementing images. Drag to re-order.</p>
