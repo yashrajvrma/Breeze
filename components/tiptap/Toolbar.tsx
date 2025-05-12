@@ -20,6 +20,7 @@ import { FontFamilyButton } from "./custom/FontFamilyButton";
 import { HeadingLevelButton } from "./custom/HeadingLevelButton";
 import { SketchPicker, CirclePicker } from "react-color";
 import { TextColorButton } from "./custom/TextColorButton";
+import { HighlightColorButton } from "./custom/HighlightColorButton";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -143,14 +144,9 @@ export const Toolbar = () => {
       ))}
 
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
-      {/* highlight color */}
-      {/* {sections[3].map((item) => (
-        <button onClick={() => }>
-          <ToolbarButton key={item.label} {...item} />
-        </button>
-      ))}
-      <CirclePicker /> */}
+
       <TextColorButton />
+      <HighlightColorButton />
 
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Text Align */}
