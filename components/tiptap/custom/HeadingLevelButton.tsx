@@ -42,7 +42,7 @@ export const HeadingLevelButton = () => {
           <ChevronDownIcon className="ml-1 w-5 h-5 shrink-0" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+      <DropdownMenuContent className="p-1 flex flex-col gap-y-1 bg-neutral-50 text-neutral-900 border border-neutral-300">
         {headings.map(({ label, value, fontSize }) => (
           <button
             key={value}
