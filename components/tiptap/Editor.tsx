@@ -9,6 +9,7 @@ import TableRow from "@tiptap/extension-table-row";
 import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
 import { Toolbar } from "./Toolbar";
+import Underline from "@tiptap/extension-underline";
 
 import { useEditorStore } from "@/lib/zustand/store";
 
@@ -17,6 +18,27 @@ export const Editor = () => {
 
   const editor = useEditor({
     onCreate({ editor }) {
+      setEditor(editor);
+    },
+    onDestroy() {
+      setEditor(null);
+    },
+    onBlur({ editor }) {
+      setEditor(editor);
+    },
+    onUpdate({ editor }) {
+      setEditor(editor);
+    },
+    onSelectionUpdate({ editor }) {
+      setEditor(editor);
+    },
+    onTransaction({ editor }) {
+      setEditor(editor);
+    },
+    onFocus({ editor }) {
+      setEditor(editor);
+    },
+    onContentError({ editor }) {
       setEditor(editor);
     },
     immediatelyRender: false,
@@ -39,6 +61,7 @@ export const Editor = () => {
       TableRow,
       Image,
       ImageResize,
+      Underline,
     ],
     content: `
         <p>This is a basic example of implementing images. Drag to re-order.</p>
