@@ -45,6 +45,7 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "@reduxjs/toolkit": "^2.8.1",
     "@tanstack/react-query": "^5.75.2",
+    "@tiptap/extension-image": "^2.12.0",
     "@tiptap/extension-table": "^2.12.0",
     "@tiptap/extension-table-cell": "^2.12.0",
     "@tiptap/extension-table-header": "^2.12.0",
@@ -92,9 +93,11 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
+    "tiptap-extension-resize-image": "^1.2.2",
     "typescript": "5.2.2",
     "vaul": "^0.9.9",
-    "zod": "^3.24.4"
+    "zod": "^3.24.4",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "prisma": "^6.7.0",
