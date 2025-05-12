@@ -1,5 +1,6 @@
 "use client";
 
+import { useEditorStore } from "@/lib/zustand/store";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Table from "@tiptap/extension-table";
@@ -12,37 +13,14 @@ import { Toolbar } from "./Toolbar";
 import Underline from "@tiptap/extension-underline";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
-
-import { useEditorStore } from "@/lib/zustand/store";
+import { TextAlign } from "@tiptap/extension-text-align";
+import FontFamily from "@tiptap/extension-font-family";
+import TextStyle from "@tiptap/extension-text-style";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
 
   const editor = useEditor({
-    onCreate({ editor }) {
-      setEditor(editor);
-    },
-    onDestroy() {
-      setEditor(null);
-    },
-    onBlur({ editor }) {
-      setEditor(editor);
-    },
-    onUpdate({ editor }) {
-      setEditor(editor);
-    },
-    onSelectionUpdate({ editor }) {
-      setEditor(editor);
-    },
-    onTransaction({ editor }) {
-      setEditor(editor);
-    },
-    onFocus({ editor }) {
-      setEditor(editor);
-    },
-    onContentError({ editor }) {
-      setEditor(editor);
-    },
     immediatelyRender: false,
     editorProps: {
       attributes: {
@@ -68,7 +46,37 @@ export const Editor = () => {
         nested: true,
       }),
       TaskList,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      FontFamily,
+      TextStyle,
     ],
+    onCreate({ editor }) {
+      setEditor(editor);
+    },
+    onDestroy() {
+      setEditor(null);
+    },
+    onBlur({ editor }) {
+      setEditor(editor);
+    },
+    onUpdate({ editor }) {
+      setEditor(editor);
+    },
+    onSelectionUpdate({ editor }) {
+      setEditor(editor);
+    },
+    onTransaction({ editor }) {
+      setEditor(editor);
+    },
+    onFocus({ editor }) {
+      setEditor(editor);
+    },
+    onContentError({ editor }) {
+      setEditor(editor);
+    },
+
     content: `
         <p>This is a basic example of implementing images. Drag to re-order.</p>
         <img src="https://placehold.co/800x400" />
