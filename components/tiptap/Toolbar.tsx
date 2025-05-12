@@ -9,8 +9,8 @@ import {
   LucideIcon,
   PrinterIcon,
   Redo2Icon,
+  RemoveFormattingIcon,
   SpellCheckIcon,
-  Underline,
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
@@ -103,6 +103,11 @@ export const Toolbar = () => {
         icon: ListTodoIcon,
         onClick: () => editor?.chain().focus().toggleTaskList().run(),
         isActive: editor?.isActive("taskList"),
+      },
+      {
+        label: "Remove Formatting",
+        icon: RemoveFormattingIcon,
+        onClick: () => editor?.chain().focus().unsetAllMarks().run(),
       },
     ],
   ];
