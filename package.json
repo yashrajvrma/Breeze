@@ -45,8 +45,10 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "@reduxjs/toolkit": "^2.8.1",
     "@tanstack/react-query": "^5.75.2",
+    "@tiptap/extension-color": "^2.12.0",
     "@tiptap/extension-font-family": "^2.12.0",
     "@tiptap/extension-heading": "^2.12.0",
+    "@tiptap/extension-highlight": "^2.12.0",
     "@tiptap/extension-image": "^2.12.0",
     "@tiptap/extension-table": "^2.12.0",
     "@tiptap/extension-table-cell": "^2.12.0",
@@ -85,6 +87,7 @@
     "openai-edge": "^1.2.2",
     "postcss": "8.4.30",
     "react": "18.2.0",
+    "react-color": "^2.19.3",
     "react-day-picker": "^8.10.1",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.53.0",
@@ -107,6 +110,7 @@
     "zustand": "^5.0.4"
   },
   "devDependencies": {
+    "@types/react-color": "^3.0.13",
     "prisma": "^6.7.0",
     "tsx": "^4.19.4"
   }

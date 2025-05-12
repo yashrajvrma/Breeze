@@ -7,6 +7,7 @@ import {
   ItalicIcon,
   ListTodoIcon,
   LucideIcon,
+  PenIcon,
   PrinterIcon,
   Redo2Icon,
   RemoveFormattingIcon,
@@ -17,6 +18,8 @@ import {
 import { Separator } from "../ui/separator";
 import { FontFamilyButton } from "./custom/FontFamilyButton";
 import { HeadingLevelButton } from "./custom/HeadingLevelButton";
+import { SketchPicker, CirclePicker } from "react-color";
+import { TextColorButton } from "./custom/TextColorButton";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -112,6 +115,14 @@ export const Toolbar = () => {
         onClick: () => editor?.chain().focus().unsetAllMarks().run(),
       },
     ],
+    [
+      {
+        label: "Highlight",
+        icon: PenIcon,
+        onClick: () => editor?.chain().focus().toggleHighlight().run(),
+        isActive: editor?.isActive("highlight"),
+      },
+    ],
   ];
 
   return (
@@ -119,21 +130,36 @@ export const Toolbar = () => {
       {sections[0].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
+
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       <FontFamilyButton />
+
+      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <HeadingLevelButton />
+
+      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {sections[1].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
+
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
-      {/* TODO : Heading */}
-      <HeadingLevelButton />
+      {/* highlight color */}
+      {/* {sections[3].map((item) => (
+        <button onClick={() => }>
+          <ToolbarButton key={item.label} {...item} />
+        </button>
+      ))}
+      <CirclePicker /> */}
+      <TextColorButton />
+
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Text Align */}
 
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Font size */}
+
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
-      {/* TODO : Task list */}
+      {/* task list */}
       {sections[2].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}

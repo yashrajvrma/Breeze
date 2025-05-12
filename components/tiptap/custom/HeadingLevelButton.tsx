@@ -37,7 +37,7 @@ export const HeadingLevelButton = () => {
         asChild
         className="flex items-center align-middle font-sans h-8"
       >
-        <button className="h-7 min-w-7 shrink-0 flex item-center justify-center rounded-sm hover:bg-neutral-200/80 px-2 py-3 overflow-hidden text-sm">
+        <button className="h-7 min-w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80 px-2 py-3 overflow-hidden text-sm">
           <span className="truncate">{getCurrentHeading()}</span>
           <ChevronDownIcon className="ml-1 w-5 h-5 shrink-0" />
         </button>

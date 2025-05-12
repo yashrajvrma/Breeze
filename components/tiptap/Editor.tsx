@@ -16,6 +16,8 @@ import TaskList from "@tiptap/extension-task-list";
 import { TextAlign } from "@tiptap/extension-text-align";
 import FontFamily from "@tiptap/extension-font-family";
 import TextStyle from "@tiptap/extension-text-style";
+import Highlight from "@tiptap/extension-highlight";
+import { Color } from "@tiptap/extension-color";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
@@ -51,6 +53,10 @@ export const Editor = () => {
       }),
       FontFamily,
       TextStyle,
+      Color,
+      Highlight.configure({
+        multicolor: true,
+      }),
     ],
     onCreate({ editor }) {
       setEditor(editor);
