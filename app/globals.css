@@ -105,6 +105,10 @@
     margin-top: 0;
   }
 
+  p {
+    font-size: 1rem;
+  }
+
   /* Heading styles */
   h1,
   h2,
@@ -113,30 +117,37 @@
   h5,
   h6 {
     line-height: 1.1;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     text-wrap: pretty;
   }
 
   h1,
   h2 {
-    margin-top: 3.5rem;
+    /* margin-top: 3.5rem; */
     margin-bottom: 1.5rem;
   }
 
   h1 {
-    font-size: 1.4rem;
+    /* font-size: 1.4rem; */
+    font-size: 2rem;
   }
 
   h2 {
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
+    font-size: 1.75rem;
   }
 
   h3 {
-    font-size: 1.1rem;
+    /* font-size: 1.1rem; */
+    font-size: 1.5rem;
   }
 
-  h4,
-  h5,
+  h4 {
+    font-size: 1.25rem;
+  }
+  h5 {
+    font-size: 1.2rem;
+  }
   h6 {
     font-size: 1rem;
   }

@@ -3,10 +3,7 @@
 import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/lib/zustand/store";
 import {
-  AlignJustifyIcon,
   BoldIcon,
-  ChevronDown,
-  ChevronDownIcon,
   ItalicIcon,
   ListTodoIcon,
   LucideIcon,
@@ -18,11 +15,8 @@ import {
   Undo2Icon,
 } from "lucide-react";
 import { Separator } from "../ui/separator";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+import { FontFamilyButton } from "./custom/FontFamilyButton";
+import { HeadingLevelButton } from "./custom/HeadingLevelButton";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -44,49 +38,6 @@ const ToolbarButton = ({
     >
       <Icon className="w-8 h-8 m-2" />
     </button>
-  );
-};
-
-const FontFamilyButton = () => {
-  const editor = useEditorStore((state) => state.editor);
-
-  const fonts = [
-    { label: "Arial", value: "Arial" },
-    { label: "Times New Roman", value: "Times New Roman" },
-    { label: "Courier New", value: "Courier New" },
-    { label: "Georgia", value: "Georgia" },
-    { label: "Verdana", value: "Verdana" },
-  ];
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild className="flex items-center align-middle">
-        <button className="h-7 w-[120px] shrink-0 flex item-center justify-between rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
-          <span className="truncate">
-            {editor?.getAttributes("textStyle").fontFamily || "Arial"}
-          </span>
-          <ChevronDownIcon className="ml-1 w-5 h-5 shrink-0" />
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
-        {fonts.map(({ label, value }) => (
-          <button
-            key={value}
-            className={cn(
-              "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80",
-              editor?.getAttributes("textStyle").fontFamily === "value" &&
-                "bg-neutral-200/80"
-            )}
-            style={{
-              fontFamily: value,
-            }}
-            onClick={() => editor?.chain().focus().setFontFamily(value).run()}
-          >
-            <span>{label}</span>
-          </button>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
   );
 };
 
@@ -169,13 +120,13 @@ export const Toolbar = () => {
         <ToolbarButton key={item.label} {...item} />
       ))}
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
-      {/* TODO : Font family */}
       <FontFamilyButton />
       {sections[1].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Heading */}
+      <HeadingLevelButton />
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Text Align */}
 
