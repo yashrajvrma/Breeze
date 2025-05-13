@@ -22,6 +22,7 @@ import { SketchPicker, CirclePicker } from "react-color";
 import { TextColorButton } from "./custom/TextColorButton";
 import { HighlightColorButton } from "./custom/HighlightColorButton";
 import { LinkButton } from "./custom/LinkButton";
+import { ImageButton } from "./custom/ImageButton";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -154,6 +155,7 @@ export const Toolbar = () => {
       <LinkButton />
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Image */}
+      <ImageButton />
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Text Align */}
 
