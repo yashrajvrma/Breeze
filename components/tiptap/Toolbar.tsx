@@ -23,6 +23,7 @@ import { TextColorButton } from "./custom/TextColorButton";
 import { HighlightColorButton } from "./custom/HighlightColorButton";
 import { LinkButton } from "./custom/LinkButton";
 import { ImageButton } from "./custom/ImageButton";
+import { AlginButton } from "./custom/AlignButton";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -158,6 +159,7 @@ export const Toolbar = () => {
       <ImageButton />
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Text Align */}
+      <AlginButton />
 
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Font size */}

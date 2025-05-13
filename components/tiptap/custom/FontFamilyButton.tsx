@@ -38,7 +38,7 @@ export const FontFamilyButton = () => {
           <button
             key={value}
             className={cn(
-              "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80",
+              "flex items-center text-sm gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80",
               editor?.getAttributes("textStyle").fontFamily === "value" &&
                 "bg-neutral-200/80"
             )}

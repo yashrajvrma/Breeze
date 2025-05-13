@@ -11,18 +11,11 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { useEditorStore } from "@/lib/zustand/store";
-import {
-  ImageIcon,
-  Link2Icon,
-  SearchIcon,
-  UploadCloudIcon,
-  UploadIcon,
-} from "lucide-react";
+import { ImageIcon, SearchIcon, UploadIcon } from "lucide-react";
 import { useState } from "react";
 
 export const ImageButton = () => {
