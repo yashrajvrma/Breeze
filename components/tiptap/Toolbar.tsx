@@ -21,6 +21,7 @@ import { HeadingLevelButton } from "./custom/HeadingLevelButton";
 import { SketchPicker, CirclePicker } from "react-color";
 import { TextColorButton } from "./custom/TextColorButton";
 import { HighlightColorButton } from "./custom/HighlightColorButton";
+import { LinkButton } from "./custom/LinkButton";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -148,6 +149,11 @@ export const Toolbar = () => {
       <TextColorButton />
       <HighlightColorButton />
 
+      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      {/* TODO : Link */}
+      <LinkButton />
+      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      {/* TODO : Image */}
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Text Align */}
 

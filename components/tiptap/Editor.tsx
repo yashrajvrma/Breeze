@@ -18,6 +18,7 @@ import FontFamily from "@tiptap/extension-font-family";
 import TextStyle from "@tiptap/extension-text-style";
 import Highlight from "@tiptap/extension-highlight";
 import { Color } from "@tiptap/extension-color";
+import Link from "@tiptap/extension-link";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
@@ -56,6 +57,14 @@ export const Editor = () => {
       Color,
       Highlight.configure({
         multicolor: true,
+      }),
+      Link.configure({
+        linkOnPaste: true,
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: "https",
+        protocols: ["https", "http"],
+        shouldAutoLink: (url) => url.startsWith("https://"),
       }),
     ],
     onCreate({ editor }) {
