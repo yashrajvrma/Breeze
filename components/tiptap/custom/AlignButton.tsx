@@ -7,7 +7,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/lib/zustand/store";
-import { AlignJustifyIcon, AlignLeftIcon, AlignRightIcon } from "lucide-react";
+import {
+  AlignCenterIcon,
+  AlignJustifyIcon,
+  AlignLeftIcon,
+  AlignRightIcon,
+} from "lucide-react";
 
 export const AlginButton = () => {
   const editor = useEditorStore((state) => state.editor);
@@ -19,13 +24,18 @@ export const AlginButton = () => {
       icon: AlignLeftIcon,
     },
     {
+      label: "Align Center",
+      value: "center",
+      icon: AlignCenterIcon,
+    },
+    {
       label: "Align Right",
       value: "right",
       icon: AlignRightIcon,
     },
     {
       label: "Align Justify",
-      value: "center",
+      value: "justify",
       icon: AlignJustifyIcon,
     },
   ];
