@@ -25,6 +25,7 @@ import { LinkButton } from "./custom/LinkButton";
 import { ImageButton } from "./custom/ImageButton";
 import { AlginButton } from "./custom/AlignButton";
 import { ListButton } from "./custom/ListButton";
+import { FontSizeButton } from "./custom/FontSizeButton";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -167,6 +168,7 @@ export const Toolbar = () => {
 
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* TODO : Font size */}
+      <FontSizeButton />
 
       <Separator orientation="vertical" className="bg-neutral-300 h-10" />
       {/* task list */}

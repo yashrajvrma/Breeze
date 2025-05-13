@@ -1,6 +1,5 @@
 "use client";
 
-import { useEditorStore } from "@/lib/zustand/store";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Table from "@tiptap/extension-table";
@@ -19,6 +18,9 @@ import TextStyle from "@tiptap/extension-text-style";
 import Highlight from "@tiptap/extension-highlight";
 import { Color } from "@tiptap/extension-color";
 import Link from "@tiptap/extension-link";
+
+import { useEditorStore } from "@/lib/zustand/store";
+import { FontSizeExtension } from "@/extension/fontSize";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
@@ -66,6 +68,7 @@ export const Editor = () => {
         protocols: ["https", "http"],
         shouldAutoLink: (url) => url.startsWith("https://"),
       }),
+      FontSizeExtension,
     ],
     onCreate({ editor }) {
       setEditor(editor);
