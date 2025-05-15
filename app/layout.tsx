@@ -16,9 +16,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Aero - AI Document Editor",
   description: "An intelligent document editor powered by AI",
-  // icons: {
-  //   icon: "/assets/images/favicon.ico",
-  // },
+  icons: {
+    icon: "/assets/images/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -28,7 +28,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* <link rel="icon" href="/assets/images/favicon.ico" sizes="any" /> */}
       <body
         className={`dark ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
