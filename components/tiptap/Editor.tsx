@@ -21,6 +21,7 @@ import Link from "@tiptap/extension-link";
 
 import { useEditorStore } from "@/lib/zustand/store";
 import { FontSizeExtension } from "@/extension/fontSize";
+import { LineHeightExtension } from "@/extension/lineHeight";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
@@ -69,6 +70,10 @@ export const Editor = () => {
         shouldAutoLink: (url) => url.startsWith("https://"),
       }),
       FontSizeExtension,
+      LineHeightExtension.configure({
+        types: ["heading", "paragraph"],
+        defaultLineHeight: "normal",
+      }),
     ],
     onCreate({ editor }) {
       setEditor(editor);

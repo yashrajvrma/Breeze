@@ -26,6 +26,7 @@ import { ImageButton } from "./custom/ImageButton";
 import { AlginButton } from "./custom/AlignButton";
 import { ListButton } from "./custom/ListButton";
 import { FontSizeButton } from "./custom/FontSizeButton";
+import { LineHeightButton } from "./custom/LineHeightButton";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -175,6 +176,9 @@ export const Toolbar = () => {
       {sections[2].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
+      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      {/* line height  */}
+      <LineHeightButton />
     </div>
   );
 };
