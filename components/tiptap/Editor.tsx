@@ -22,6 +22,7 @@ import Link from "@tiptap/extension-link";
 import { useEditorStore } from "@/lib/zustand/store";
 import { FontSizeExtension } from "@/extension/fontSize";
 import { LineHeightExtension } from "@/extension/lineHeight";
+import { Ruler } from "./Ruler";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
@@ -113,8 +114,9 @@ export const Editor = () => {
 
   return (
     <div className="size-full overflow-x-auto bg-white px-4 print:p-1 print:bg-white print:overflow-visible">
+      <Toolbar />
+      <Ruler />
       <div className="min-w-max flex flex-col justify-center w-[816px] py-4 print:p-0 mx-auto print-w-full print:min-w-0">
-        <Toolbar />
         <EditorContent editor={editor} />
       </div>
     </div>
