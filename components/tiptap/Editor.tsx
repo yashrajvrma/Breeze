@@ -19,19 +19,21 @@ import Highlight from "@tiptap/extension-highlight";
 import { Color } from "@tiptap/extension-color";
 import Link from "@tiptap/extension-link";
 
-import { useEditorStore } from "@/lib/zustand/store";
+import { useEditorStore, useMargin } from "@/lib/zustand/store";
 import { FontSizeExtension } from "@/extension/fontSize";
 import { LineHeightExtension } from "@/extension/lineHeight";
 import { Ruler } from "./Ruler";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
+  const leftMargin = useMargin((state) => state.leftMargin);
+  const rightMargin = useMargin((state) => state.rightMargin);
 
   const editor = useEditor({
     immediatelyRender: false,
     editorProps: {
       attributes: {
-        style: "padding-left : 56px; padding-right:56px",
+        style: `padding-left : ${leftMargin}px; padding-right: ${rightMargin}px`,
         class:
           "focus:outline-none print:border-0 bg-white border-2 border-neutral-200 flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
       },
@@ -103,8 +105,9 @@ export const Editor = () => {
 
     content: `
         <p>This is a basic example of implementing images. Drag to re-order.</p>
-        <img src="https://placehold.co/800x400" />
-        <img src="https://placehold.co/800x400/6A00F5/white" />
+  
+        <img src="https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18yeDZGTzVLMG9XZ2JWcXdyZk15dEZjOTFiOGkifQ" />
+       
       `,
   });
 

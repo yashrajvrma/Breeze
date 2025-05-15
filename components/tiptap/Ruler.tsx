@@ -1,13 +1,18 @@
 "use client";
 
+import { useMargin } from "@/lib/zustand/store";
 import { useRef, useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
 
 const markers = Array.from({ length: 83 }, (_, i) => i);
 
 export const Ruler = () => {
-  const [leftMargin, setLeftMargin] = useState(56);
-  const [rightMargin, setRightMargin] = useState(56);
+  const leftMargin = useMargin((state) => state.leftMargin) ?? 56;
+  const rightMargin = useMargin((state) => state.rightMargin) ?? 56;
+
+  const setLeftMargin = useMargin((state) => state.setLeftMargin);
+
+  const setRightMargin = useMargin((state) => state.setRightMargin);
 
   const [isDraggingLeft, setIsDraggingLeft] = useState(false);
   const [isDraggingRight, setIsDraggingRight] = useState(false);
@@ -36,7 +41,9 @@ export const Ruler = () => {
         if (isDraggingLeft) {
           const maxLeftPosition = PAGE_WIDTH - rightMargin - MINIMUM_SPACE;
           const newLeftPosition = Math.min(rawPosition, maxLeftPosition);
-          setLeftMargin(newLeftPosition); // make collaborative
+
+          //   setLeftMargin(newLeftPosition); // make collaborative
+          setLeftMargin(newLeftPosition);
         } else if (isDraggingRight) {
           const maxRightPosition = PAGE_WIDTH - (leftMargin + MINIMUM_SPACE);
           const newRightPosition = Math.max(PAGE_WIDTH - rawPosition, 0);
@@ -57,11 +64,11 @@ export const Ruler = () => {
   };
 
   const handleLeftDoubleClick = () => {
-    setLeftMargin(56);
+    setLeftMargin(leftMargin);
   };
 
   const handleRightDoubleClick = () => {
-    setRightMargin(56);
+    setRightMargin(rightMargin);
   };
 
   return (
@@ -144,16 +151,16 @@ const Marker = ({
 }: MarkerProps) => {
   return (
     <div
-      className="absolute top-0 w-4 h-full cusror-ew-resize z-[5] groupt -ml-2 "
+      className="absolute top-0 w-4 h-full cursor-ew-resize z-[5] group -ml-2 "
       style={{
         [isLeft ? "left" : "right"]: `${position}px`,
       }}
       onMouseDown={onMouseDown}
       onDoubleClick={onDoubleClick}
     >
-      <FaCaretDown className="absolute left-1/2 top-0 h-full fill-blue-500 transform -translate -x-1/2" />
+      <FaCaretDown className="absolute left-1/2 top-0 h-full fill-blue-500 transform -translate-x-1/2" />
       <div
-        className="absolute left-[100%] top-4 transform -translate-x-1/2"
+        className="absolute left-1/2 top-4 transform -translate-x-1/2"
         style={{
           height: "100vh",
           width: "1px",
