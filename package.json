@@ -86,7 +86,6 @@
     "next-themes": "^0.3.0",
     "openai": "^4.97.0",
     "openai-edge": "^1.2.2",
-    "postcss": "8.4.30",
     "react": "18.2.0",
     "react-color": "^2.19.3",
     "react-day-picker": "^8.10.1",
@@ -112,6 +111,7 @@
   },
   "devDependencies": {
     "@types/react-color": "^3.0.13",
+    "postcss-nesting": "^13.0.1",
     "prisma": "^6.7.0",
     "tsx": "^4.19.4"
   }
