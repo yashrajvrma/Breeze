@@ -1,6 +1,6 @@
 "use client";
 
-import { useMargin } from "@/lib/zustand/store";
+import { useMargin } from "@/lib/store/margin";
 import { useRef, useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
 
@@ -77,9 +77,9 @@ export const Ruler = () => {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      className="w-[816px] mx-auto h-6 border-b border-gray-300 flex items-end relative select-none print:hidden font-sans"
+      className="print:hidden relative flex items-end mx-auto border-gray-300 border-b w-[816px] h-6 font-sans select-none"
     >
-      <div id="ruler-container" className="w-full h-full relative">
+      <div id="ruler-container" className="relative w-full h-full">
         <Marker
           position={leftMargin}
           isLeft={true}
@@ -95,32 +95,32 @@ export const Ruler = () => {
           onDoubleClick={handleRightDoubleClick}
         />
 
-        <div className="absolute inset-x-0 bottom-0 h-full">
-          <div className="relative h-full w-[816px]">
+        <div className="bottom-0 absolute inset-x-0 h-full">
+          <div className="relative w-[816px] h-full">
             {markers.map((marker) => {
               const position = (marker * 816) / 82;
 
               return (
                 <div
                   key={marker}
-                  className="absolute bottom-0"
+                  className="bottom-0 absolute"
                   style={{
                     left: `${position}px`,
                   }}
                 >
                   {marker % 10 === 0 && (
                     <>
-                      <div className="absolute bottom-0 w-[1px] h-2 bg-neutral-500" />
-                      <span className="absolute bottom-2 text-[10px] text-neutral-500 transform -translate-x-1/2">
+                      <div className="bottom-0 absolute bg-neutral-500 w-[1px] h-2" />
+                      <span className="bottom-2 absolute text-[10px] text-neutral-500 -translate-x-1/2 transform">
                         {marker / 10 + 1}
                       </span>
                     </>
                   )}
                   {marker % 5 === 0 && marker % 10 !== 0 && (
-                    <div className="absolute bottom-0 w-[1px] h-1.5 bg-neutral-500" />
+                    <div className="bottom-0 absolute bg-neutral-500 w-[1px] h-1.5" />
                   )}
                   {marker % 5 !== 0 && (
-                    <div className="absolute bottom-0 w-[1px] h-1 bg-neutral-500" />
+                    <div className="bottom-0 absolute bg-neutral-500 w-[1px] h-1" />
                   )}
                 </div>
               );
@@ -149,16 +149,16 @@ const Marker = ({
 }: MarkerProps) => {
   return (
     <div
-      className="absolute top-0 w-4 h-full cursor-ew-resize z-[5] group -ml-2 "
+      className="group top-0 z-[5] absolute -ml-2 w-4 h-full cursor-ew-resize"
       style={{
         [isLeft ? "left" : "right"]: `${position}px`,
       }}
       onMouseDown={onMouseDown}
       onDoubleClick={onDoubleClick}
     >
-      <FaCaretDown className="absolute left-1/2 top-0 h-full fill-blue-500 transform -translate-x-1/2" />
+      <FaCaretDown className="top-0 left-1/2 absolute fill-blue-500 h-full -translate-x-1/2 transform" />
       <div
-        className="absolute left-1/2 top-4 transform -translate-x-1/2"
+        className="top-4 left-1/2 absolute -translate-x-1/2 transform"
         style={{
           height: "100vh",
           width: "1px",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditorStore } from "@/lib/zustand/store";
+import { useEditorStore } from "@/lib/store/editor";
 import {
   CirclePicker,
   CompactPicker,
@@ -26,17 +26,17 @@ export const HighlightColorButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger
         asChild
-        className="flex items-center align-middle font-sans h-8"
+        className="flex items-center h-8 font-sans align-middle"
       >
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 py-1 overflow-hidden text-sm">
+        <button className="flex flex-col justify-center items-center hover:bg-neutral-200/80 px-1.5 py-1 rounded-sm min-w-7 h-7 overflow-hidden text-sm shrink-0">
           <HighlighterIcon className="w-4 h-5" />
           <div
-            className="w-5 h-0.5 bg-red-500"
+            className="bg-red-500 w-5 h-0.5"
             style={{ backgroundColor: value }}
           />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-neutral-50 text-neutral-900 border border-neutral-300 p-0">
+      <DropdownMenuContent className="bg-neutral-50 p-0 border border-neutral-300 text-neutral-900">
         <SketchPicker color={value} onChange={onChange} />
       </DropdownMenuContent>
     </DropdownMenu>

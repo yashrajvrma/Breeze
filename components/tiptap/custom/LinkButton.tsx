@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { useEditorStore } from "@/lib/zustand/store";
+import { useEditorStore } from "@/lib/store/editor";
 import { Link2Icon } from "lucide-react";
 import { useState } from "react";
 
@@ -31,21 +31,21 @@ export const LinkButton = () => {
     >
       <DropdownMenuTrigger
         asChild
-        className="flex items-center align-middle font-sans h-8"
+        className="flex items-center h-8 font-sans align-middle"
       >
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 py-1 overflow-hidden text-sm">
+        <button className="flex flex-col justify-center items-center hover:bg-neutral-200/80 px-1.5 py-1 rounded-sm min-w-7 h-7 overflow-hidden text-sm shrink-0">
           <Link2Icon className="w-4 h-5" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-2.5 flex items-center gap-x-2 bg-neutral-50 border border-neutral-300">
+      <DropdownMenuContent className="flex items-center gap-x-2 bg-neutral-50 p-2.5 border border-neutral-300">
         <Input
           placeholder="https://example.com"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className="text-neutral-900 bg-neutral-50 font-sans focus:outline-none outline-none focus:border-none outline-0"
+          className="bg-neutral-50 focus:border-none outline-0 outline-none focus:outline-none font-sans text-neutral-900"
         />
         <Button
-          className="font-sans text-blue-600 hover:bg-neutral-200/80"
+          className="hover:bg-neutral-200/80 font-sans text-blue-600"
           onClick={() => onChange(value)}
         >
           Apply

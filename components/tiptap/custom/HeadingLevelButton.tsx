@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/lib/zustand/store";
+import { useEditorStore } from "@/lib/store/editor";
 import { Level } from "@tiptap/extension-heading";
 import { ChevronDownIcon } from "lucide-react";
 
@@ -35,14 +35,14 @@ export const HeadingLevelButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger
         asChild
-        className="flex items-center align-middle font-sans h-8"
+        className="flex items-center h-8 font-sans align-middle"
       >
-        <button className="h-7 min-w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80 px-2 py-3 overflow-hidden text-sm">
+        <button className="flex justify-center items-center hover:bg-neutral-200/80 px-2 py-3 rounded-sm min-w-7 h-7 overflow-hidden text-sm shrink-0">
           <span className="truncate">{getCurrentHeading()}</span>
           <ChevronDownIcon className="ml-1 w-5 h-5 shrink-0" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-1 flex flex-col gap-y-1 bg-neutral-50 text-neutral-900 border border-neutral-300">
+      <DropdownMenuContent className="flex flex-col gap-y-1 bg-neutral-50 p-1 border border-neutral-300 text-neutral-900">
         {headings.map(({ label, value, fontSize }) => (
           <button
             key={value}

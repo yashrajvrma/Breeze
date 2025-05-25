@@ -19,13 +19,16 @@ import Highlight from "@tiptap/extension-highlight";
 import { Color } from "@tiptap/extension-color";
 import Link from "@tiptap/extension-link";
 
-import { useEditorStore, useMargin } from "@/lib/zustand/store";
+import { useMargin } from "@/lib/store/margin";
+import { useEditorContent, useEditorStore } from "@/lib/store/editor";
 import { FontSizeExtension } from "@/extension/fontSize";
 import { LineHeightExtension } from "@/extension/lineHeight";
 import { Ruler } from "./Ruler";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
+  const content = useEditorContent((state) => state.content);
+
   const leftMargin = useMargin((state) => state.leftMargin);
   const rightMargin = useMargin((state) => state.rightMargin);
 
@@ -103,12 +106,7 @@ export const Editor = () => {
       setEditor(editor);
     },
 
-    content: `
-        <p>This is a basic example of implementing images. Drag to re-order.</p>
-  
-        <img src="https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18yeDZGTzVLMG9XZ2JWcXdyZk15dEZjOTFiOGkifQ" />
-       
-      `,
+    content: content,
   });
 
   if (!editor) {
@@ -116,10 +114,10 @@ export const Editor = () => {
   }
 
   return (
-    <div className="size-full overflow-x-auto bg-white px-4 print:p-1 print:bg-white print:overflow-visible">
+    <div className="bg-white print:bg-white print:p-1 px-4 size-full print:overflow-visible overflow-x-auto">
       <Toolbar />
       <Ruler />
-      <div className="min-w-max flex flex-col justify-center w-[816px] py-4 print:p-0 mx-auto print-w-full print:min-w-0">
+      <div className="flex flex-col justify-center mx-auto print:p-0 py-4 print-w-full w-[816px] min-w-max print:min-w-0">
         <EditorContent editor={editor} />
       </div>
     </div>

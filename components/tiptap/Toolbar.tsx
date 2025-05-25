@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/lib/zustand/store";
+import { useEditorStore } from "@/lib/store/editor";
 import {
   BoldIcon,
   ItalicIcon,
@@ -46,7 +46,7 @@ const ToolbarButton = ({
         isActive && "bg-blue-200"
       )}
     >
-      <Icon className="w-8 h-8 m-2" />
+      <Icon className="m-2 w-8 h-8" />
     </button>
   );
 };
@@ -133,7 +133,7 @@ export const Toolbar = () => {
   ];
 
   return (
-    <div className="bg-neutral-200/30 px-2.5 py-2 rounded-md min-h-[40px] flex items-center gap-x-1 mb-2 max-w-full">
+    <div className="flex items-center gap-x-1 bg-neutral-200/30 mb-2 px-2.5 py-2 rounded-md max-w-full min-h-[40px]">
       {sections[0].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}

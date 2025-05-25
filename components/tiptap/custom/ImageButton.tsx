@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { useEditorStore } from "@/lib/zustand/store";
+import { useEditorStore } from "@/lib/store/editor";
 import { ImageIcon, SearchIcon, UploadIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -56,32 +56,32 @@ export const ImageButton = () => {
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
-          className="flex items-center align-middle font-sans h-8"
+          className="flex items-center h-8 font-sans align-middle"
         >
-          <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 py-1 overflow-hidden text-sm cursor-pointer">
+          <button className="flex flex-col justify-center items-center hover:bg-neutral-200/80 px-1.5 py-1 rounded-sm min-w-7 h-7 overflow-hidden text-sm cursor-pointer shrink-0">
             <ImageIcon className="w-4 h-5" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-neutral-50 text-neutral-900 border-neutral-300 font-sans">
+        <DropdownMenuContent className="bg-neutral-50 border-neutral-300 font-sans text-neutral-900">
           <Button
-            className="flex items-start justify-start cursor-pointer hover:bg-neutral-200/80 w-full"
+            className="flex justify-start items-start hover:bg-neutral-200/80 w-full cursor-pointer"
             onClick={onUpload}
           >
-            <UploadIcon className="w-4 h-4 mr-2" />
+            <UploadIcon className="mr-2 w-4 h-4" />
             Upload
           </Button>
           <Button
-            className="flex items-center justify-start cursor-pointer hover:bg-neutral-200/80"
+            className="flex justify-start items-center hover:bg-neutral-200/80 cursor-pointer"
             onClick={() => setIsDialogOpen(true)}
           >
-            <SearchIcon className="w-4 h-4 mr-2" />
+            <SearchIcon className="mr-2 w-4 h-4" />
             Paste Image URL
           </Button>
         </DropdownMenuContent>
       </DropdownMenu>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="bg-neutral-50 text-neutral-900 font-sans">
+        <DialogContent className="bg-neutral-50 font-sans text-neutral-900">
           <DialogHeader>
             <DialogTitle>Insert image URL</DialogTitle>
           </DialogHeader>
@@ -89,7 +89,7 @@ export const ImageButton = () => {
             placeholder="Insert Image URL"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
-            className="text-neutral-900 text-sm bg-neutral-50 font-sans focus:outline-none outline-none focus:border-none outline-0"
+            className="bg-neutral-50 focus:border-none outline-0 outline-none focus:outline-none font-sans text-neutral-900 text-sm"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleImageUrlSubmit();
@@ -98,7 +98,7 @@ export const ImageButton = () => {
           />
           <DialogFooter>
             <Button
-              className="cursor-pointer bg-neutral-200 hover:text-blue-600 hover:bg-neutral-200"
+              className="bg-neutral-200 hover:bg-neutral-200 hover:text-blue-600 cursor-pointer"
               onClick={handleImageUrlSubmit}
               disabled={!imageUrl}
             >

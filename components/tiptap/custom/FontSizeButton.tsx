@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditorStore } from "@/lib/zustand/store";
+import { useEditorStore } from "@/lib/store/editor";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -56,10 +56,10 @@ export const FontSizeButton = () => {
     <>
       <div className="flex items-center gap-x-0.5">
         <button
-          className="text-sm h-8 w-8 shrink-0 flex items-center justify-center roudned-sm hover:bg-neutral-200/80"
+          className="flex justify-center items-center hover:bg-neutral-200/80 w-8 h-8 text-sm shrink-0 roudned-sm"
           onClick={decrement}
         >
-          <MinusIcon className="w-8 h-8 m-2" />
+          <MinusIcon className="m-2 w-8 h-8" />
         </button>
         {isEditing ? (
           <input
@@ -68,7 +68,7 @@ export const FontSizeButton = () => {
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onKeyDown={handleKeyDown}
-            className="h-7 w-10 text-sm text-center border border-neutral-400 rounded-sm bg-transparent focus:outline-none focus:ring-0"
+            className="bg-transparent border border-neutral-400 rounded-sm focus:outline-none focus:ring-0 w-10 h-7 text-sm text-center"
           />
         ) : (
           <button
@@ -76,16 +76,16 @@ export const FontSizeButton = () => {
               setIsEditing(true);
               //   updateFontSize(currentFontSize);
             }}
-            className="text-sm h-8 w-10 text-center border border-neutral-400 rounded-sm bg-transparent cursor-text"
+            className="bg-transparent border border-neutral-400 rounded-sm w-10 h-8 text-sm text-center cursor-text"
           >
             {currentFontSize}
           </button>
         )}
         <button
-          className="text-sm h-8 w-8 shrink-0 flex items-center justify-center roudned-sm hover:bg-neutral-200/80"
+          className="flex justify-center items-center hover:bg-neutral-200/80 w-8 h-8 text-sm shrink-0 roudned-sm"
           onClick={increment}
         >
-          <PlusIcon className="w-8 h-8 m-2" />
+          <PlusIcon className="m-2 w-8 h-8" />
         </button>
       </div>
     </>

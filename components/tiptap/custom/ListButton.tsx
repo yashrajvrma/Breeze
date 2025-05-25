@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/lib/zustand/store";
+import { useEditorStore } from "@/lib/store/editor";
 import {
   AlignCenterIcon,
   AlignJustifyIcon,
@@ -39,13 +39,13 @@ export const ListButton = () => {
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
-          className="flex items-center align-middle font-sans h-8"
+          className="flex items-center h-8 font-sans align-middle"
         >
-          <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 py-1 overflow-hidden text-sm cursor-pointer">
+          <button className="flex flex-col justify-center items-center hover:bg-neutral-200/80 px-1.5 py-1 rounded-sm min-w-7 h-7 overflow-hidden text-sm cursor-pointer shrink-0">
             <ListIcon className="w-4 h-5" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="font-sans bg-neutral-50 text-neutral-900 border-neutral-300">
+        <DropdownMenuContent className="bg-neutral-50 border-neutral-300 font-sans text-neutral-900">
           {alignments.map(({ label, isActive, onClick, icon: Icon }) => (
             <button
               key={label}
