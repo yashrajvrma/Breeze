@@ -42,7 +42,7 @@ export default async function HomeChatLayout() {
           <form action={createChatSession} className="relative">
             <Textarea
               name="message"
-              placeholder="How can Aero help you today?"
+              placeholder="How can Breeze help you today?"
               className="font-medium text-sm p-5 min-h-[150px] max-h-[600px] resize-none focus:outline-none w-full"
               rows={1}
               required

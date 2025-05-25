@@ -96,7 +96,7 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
               Are you sure you want to log out?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Log out of Aero as {session?.user?.email}?
+              Log out of Breeze as {session?.user?.email}?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

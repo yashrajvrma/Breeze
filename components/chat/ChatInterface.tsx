@@ -169,7 +169,7 @@ export default function ChatInterface() {
           <SendMessageButton inputMessage={input} isLoading={isLoading} />
         </form>
         <div className="flex justify-center items-center font-sans text-xs text-muted-foreground py-2">
-          Aero may make mistakes. Please use with discretion.
+          Breeze may make mistakes. Please use with discretion.
         </div>
       </div>
     </div>

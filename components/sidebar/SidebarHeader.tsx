@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/assets/images/aero-icon.png";
+import logo1 from "../../public/assets/images/breeze.png";
 
 interface SidebarHeaderProps {
   isCollapsed: boolean;
@@ -19,11 +20,11 @@ export default function SidebarHeader({
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <Link href="/">
-            <Image src={logo} alt="logo" width={26} height={20} />
+            <Image src={logo1} alt="logo" width={26} height={20} />
           </Link>
           {!isCollapsed && (
             <span className="ml-2 font-semibold text-lg text-foreground ">
-              Aero
+              Breeze
             </span>
           )}
         </div>

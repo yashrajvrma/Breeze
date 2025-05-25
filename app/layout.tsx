@@ -14,10 +14,11 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Aero - AI Document Editor",
+  title: "Breeze - AI Document Editor",
   description: "An intelligent document editor powered by AI",
   icons: {
-    icon: "/assets/images/favicon.ico",
+    // icon: "/assets/images/favicon.ico",
+    icon: "/assets/images/breeze.png",
   },
 };
 

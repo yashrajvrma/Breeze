@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/lib/hook";
 import { showDocument } from "@/lib/features/documentEditor/documentSlice";
 import { generateJSON } from "@tiptap/html";
-import { extensions } from "../tiptap/extensions/extensions";
+// import { extensions } from "../tiptap/extensions/extensions";
 
 interface Message {
   id: string;
