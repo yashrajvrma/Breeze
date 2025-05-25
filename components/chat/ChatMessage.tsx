@@ -1,11 +1,8 @@
-// components/ChatMessage.tsx
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/lib/hook";
-import { showDocument } from "@/lib/features/documentEditor/documentSlice";
-import { generateJSON } from "@tiptap/html";
-// import { extensions } from "../tiptap/extensions/extensions";
+import { useEditorContent } from "@/lib/store/editor";
+import { useRouter } from "next/navigation";
 
 interface Message {
   id: string;
@@ -24,9 +21,11 @@ interface ParsedContent {
 }
 
 export default function ChatMessage({ message }: ChatMessageProps) {
-  const dispatch = useAppDispatch();
+  const setEditorContent = useEditorContent((state) => state.setEditorContent);
+  const router = useRouter();
+
   const [parsedContent, setParsedContent] = useState<ParsedContent>({
-    beforeDoc: message.content,
+    beforeDoc: "",
     docContent: null,
     afterDoc: null,
   });
@@ -51,43 +50,45 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     const endIdx = content.indexOf(endTag, startIdx);
 
     if (endIdx === -1) {
-      const partialDocContent = content
-        .slice(startIdx + startTag.length)
-        .trim();
       setParsedContent({
         beforeDoc,
-        docContent: partialDocContent,
+        docContent: content.slice(startIdx + startTag.length).trim(),
         afterDoc: null,
       });
       return;
     }
 
-    const docContent = content.slice(startIdx + startTag.length, endIdx).trim();
-    const afterDoc = content.slice(endIdx + endTag.length).trim();
-
     setParsedContent({
       beforeDoc,
-      docContent,
-      afterDoc,
+      docContent: content.slice(startIdx + startTag.length, endIdx).trim(),
+      afterDoc: content.slice(endIdx + endTag.length).trim(),
     });
   }, [message.content]);
 
-  const { beforeDoc, docContent, afterDoc } = parsedContent;
-
   const handleDocumentClick = () => {
-    if (docContent) {
-      // Extract a title from the first line or use a default
-      const title = docContent.split("\n")[0].trim() || "Generated Document";
+    if (parsedContent.docContent) {
+      try {
+        // Parse the JSON content if needed
+        const contentJson = JSON.parse(parsedContent.docContent);
+        // setEditorContent({
+        //   beforeDoc: parsedContent.beforeDoc,
+        //   docContent: contentJson,
+        //   afterDoc: parsedContent.afterDoc,
+        // });
+        setEditorContent(contentJson);
+        console.log("content is", contentJson);
+        router.push("/edit");
+      } catch (error) {
+        console.error("Error parsing document content:", error);
+        // Fallback to raw content if JSON parsing fails
+        // setEditorContent({
+        //   beforeDoc: parsedContent.beforeDoc,
+        //   docContent: parsedContent.docContent,
+        //   afterDoc: parsedContent.afterDoc,
+        // });
 
-      // Convert the content to Tiptap JSON format
-      const jsonContent = generateJSON(docContent, extensions);
-
-      dispatch(
-        showDocument({
-          content: jsonContent,
-          title: title.length > 50 ? title.substring(0, 50) + "..." : title,
-        })
-      );
+        router.push("/edit");
+      }
     }
   };
 
@@ -106,31 +107,33 @@ export default function ChatMessage({ message }: ChatMessageProps) {
             : "text-foreground max-w-[100%] font-sans"
         )}
       >
-        <div className="prose prose-sm dark:prose-invert max-w-none text-sm font-sans space-y-4">
-          {beforeDoc && <ReactMarkdown>{beforeDoc}</ReactMarkdown>}
+        <div className="space-y-4 dark:prose-invert max-w-none font-sans text-sm prose prose-sm">
+          {parsedContent.beforeDoc && (
+            <ReactMarkdown>{parsedContent.beforeDoc}</ReactMarkdown>
+          )}
 
-          {docContent !== null && (
+          {parsedContent.docContent && (
             <div
-              className="rounded-lg border bg-muted p-4 shadow-sm cursor-pointer hover:bg-muted/70 transition flex flex-col"
+              className="flex flex-col bg-muted hover:bg-muted/70 shadow-sm p-4 border rounded-lg transition cursor-pointer"
               onClick={handleDocumentClick}
             >
               <div className="flex justify-between items-center mb-2">
-                <p className="text-sm font-semibold">Document</p>
-                <div className="flex items-center gap-1 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded">
+                <p className="font-semibold text-sm">Document</p>
+                <div className="flex items-center gap-1 bg-primary/10 px-2 py-0.5 rounded text-primary text-xs">
                   <span>Click to edit</span>
                 </div>
               </div>
-              <div className="text-xs text-muted-foreground bg-background/70 p-2 rounded border border-border/50 max-h-20 overflow-hidden">
-                {docContent
-                  ? docContent.length > 200
-                    ? `${docContent.slice(0, 200)}...`
-                    : docContent
-                  : "Loading document content..."}
+              <div className="bg-background/70 p-2 border border-border/50 rounded max-h-20 overflow-hidden text-muted-foreground text-xs">
+                {parsedContent.docContent.length > 200
+                  ? `${parsedContent.docContent.slice(0, 200)}...`
+                  : parsedContent.docContent}
               </div>
             </div>
           )}
 
-          {afterDoc && <ReactMarkdown>{afterDoc}</ReactMarkdown>}
+          {parsedContent.afterDoc && (
+            <ReactMarkdown>{parsedContent.afterDoc}</ReactMarkdown>
+          )}
         </div>
       </div>
     </div>
