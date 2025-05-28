@@ -53,7 +53,7 @@
 "use client";
 
 import ChatInterface from "@/components/chat/ChatInterface";
-import DocumentEditor from "@/components/editor/DocumentEditor";
+// import DocumentEditor from "@/components/editor/DocumentEditor";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -61,9 +61,12 @@ import {
 } from "@/components/ui/resizable";
 import MainSidebarLayout from "../chat/MainSidebarLayout";
 import { useAppSelector } from "@/lib/hook";
+import { Editor } from "@/components/tiptap/Editor";
 
 export default function MainLayout() {
-  const { isVisible } = useAppSelector((state) => state.document);
+  // const { isVisible } = useAppSelector((state) => state.document);
+
+  const isVisible = true;
 
   return (
     <div className="flex h-screen bg-background overflow-hidden font-sans">
@@ -71,12 +74,13 @@ export default function MainLayout() {
       <div className="flex-1 overflow-hidden">
         {isVisible ? (
           <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel defaultSize={50} minSize={30} maxSize={70}>
-              <ChatInterface />
+            <ResizablePanel defaultSize={70} minSize={50}>
+              {/* <DocumentEditor /> */}
+              <Editor />
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={50} minSize={30}>
-              <DocumentEditor />
+            <ResizablePanel defaultSize={30} minSize={30} maxSize={40}>
+              <ChatInterface />
             </ResizablePanel>
           </ResizablePanelGroup>
         ) : (

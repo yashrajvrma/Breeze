@@ -20,7 +20,7 @@ export default function SidebarHeader({
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <Link href="/">
-            <Image src={logo1} alt="logo" width={26} height={20} />
+            <Image src={logo1} alt="logo" width={24} height={24} />
           </Link>
           {!isCollapsed && (
             <span className="ml-2 font-semibold text-lg text-foreground ">

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "An intelligent document editor powered by AI",
   icons: {
     // icon: "/assets/images/favicon.ico",
-    icon: "/assets/images/breeze.png",
+    icon: "/assets/images/breeze.ico",
   },
 };
 
