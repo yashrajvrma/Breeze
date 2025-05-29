@@ -4,19 +4,16 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   useInfiniteQuery,
   QueryFunctionContext,
-  useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
-import { Edit3, Ellipsis, Share, Star, StarIcon, Trash2 } from "lucide-react";
+import { useEffect } from "react";
+import { Ellipsis } from "lucide-react";
 import { useParams, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
-import toast from "react-hot-toast";
 import ShareButton from "../button/shareButton";
 import { DeleteButton } from "../button/deleteButton";
 import FavouriteButton from "../button/favouriteButton";
@@ -92,7 +89,7 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="px-6 py-2 flex-shrink-0 text-xs text-muted-foreground leading-none">
+      <div className="px-6 py-2 flex-shrink-0 text-sm text-muted-foreground leading-none">
         Recents
       </div>
 
@@ -112,7 +109,7 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                 )}
                 onClick={() => router.push(`/chat/${chat.id}`)}
               >
-                <div className="relative flex-1 min-w-0 px-3 py-2 overflow-hidden">
+                <div className="relative flex-1 min-w-0 px-3 py-1.5 overflow-hidden">
                   <span className="block overflow-hidden whitespace-nowrap pr-6">
                     {chat.title || "New chat"}
                   </span>
@@ -136,11 +133,9 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                       : "opacity-0 group-hover:opacity-100"
                   )}
                 >
-                  {/* <Popover>
+                  <Popover>
                     <PopoverTrigger>
-                      <button className="p-1">
-                        <Ellipsis size={15} className="text-current" />
-                      </button>
+                      <Ellipsis size={15} className="text-current" />
                     </PopoverTrigger>
                     <PopoverContent
                       side="bottom"
@@ -154,33 +149,6 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                         <RenameChatButton id={chat.id} title={chat.title} />
                         <FavouriteButton chatId={chat.id} />
                         <DeleteButton chatId={chat.id} />
-                      </div>
-                    </PopoverContent>
-                  </Popover> */}
-                  <Popover>
-                    <PopoverTrigger>
-                      <Ellipsis size={15} className="text-current" />
-                    </PopoverTrigger>
-                    <PopoverContent
-                      side="bottom"
-                      sideOffset={-15}
-                      align="start"
-                      alignOffset={20}
-                      className="w-44 border-neutral-600 rounded-2xl shadow-xl px-1.5 py-1.5 font-sans"
-                    >
-                      <div className="space-y-1">
-                        <div>
-                          <ShareButton />
-                        </div>
-                        <div>
-                          <RenameChatButton id={chat.id} title={chat.title} />
-                        </div>
-                        <div>
-                          <FavouriteButton chatId={chat.id} />
-                        </div>
-                        <div>
-                          <DeleteButton chatId={chat.id} />
-                        </div>
                       </div>
                     </PopoverContent>
                   </Popover>

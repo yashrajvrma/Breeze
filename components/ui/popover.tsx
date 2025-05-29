@@ -23,7 +23,13 @@ const PopoverContent = React.forwardRef<
         className
       )}
       {...props}
-    />
+      onClick={(e) => e.stopPropagation()} // Prevent clicks from bubbling to the document
+    >
+      {/* Wrap children in a Close component */}
+      <PopoverPrimitive.Close asChild>
+        <div>{props.children}</div>
+      </PopoverPrimitive.Close>
+    </PopoverPrimitive.Content>
   </PopoverPrimitive.Portal>
 ));
 PopoverContent.displayName = PopoverPrimitive.Content.displayName;

@@ -24,6 +24,7 @@ export default function ShareButton() {
   const handleShare = () => {
     const link = process.env.NEXT_PUBLIC_APP_BASE_URL + path;
     setLink(link);
+
     // navigator.clipboard.writeText(link);
     // toast.success("Copied to clipboard");
   };
