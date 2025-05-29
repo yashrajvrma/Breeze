@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-query";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Edit3, Ellipsis, Share, Star, StarIcon, Trash2 } from "lucide-react";
 import { useParams, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import toast from "react-hot-toast";
+import ShareButton from "../button/shareButton";
 
 interface RecentChatsProps {
   isCollapsed: boolean;
@@ -44,22 +45,38 @@ const fetchRecentChats = async (
   return res.data;
 };
 
-const addToFavourite = async (chatId: string) => {
+const addToFavouriteFn = (chatId: string) => {
   return axios.post(`/api/chat/fav`, { chatId });
+};
+
+const addToDeleteFn = (chatId: string) => {
+  return axios.post(`/api/chat/del`, { chatId });
 };
 
 export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const params = useParams();
   const path = usePathname();
   const chatId = params.chatId as string;
+  const [isOpen, setIsOpen] = useState(false);
 
   const queryClient = useQueryClient();
 
   const router = useRouter();
 
-  const { mutate: addToFavoruite, isSuccess } = useMutation({
-    mutationFn: addToFavourite,
+  const { mutate: addToFavoruite } = useMutation({
+    mutationFn: addToFavouriteFn,
     onSuccess: () => {
+      toast.success("Chat added to fav");
+      queryClient.invalidateQueries({
+        queryKey: ["recentChats"],
+      });
+    },
+  });
+
+  const { mutate: addToDelete } = useMutation({
+    mutationFn: addToDeleteFn,
+    onSuccess: () => {
+      toast.success("Chat deleted successfully");
       queryClient.invalidateQueries({
         queryKey: ["recentChats"],
       });
@@ -106,9 +123,10 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const handleFavourite = async (chatId: string) => {
     console.log("chatid", chatId);
     addToFavoruite(chatId);
-    if (isSuccess) {
-      toast.success("Chat id deleted successfully");
-    }
+  };
+
+  const handleDelete = async (chatId: string) => {
+    addToDelete(chatId);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -171,13 +189,15 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                       alignOffset={20}
                       className="w-44 border-neutral-600 rounded-2xl shadow-xl px-1.5 py-1.5 font-sans"
                     >
-                      <button
+                      {/* <button
                         onClick={() => handleShare()}
                         className="flex justify-start items-center py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl w-full px-1.5"
                       >
                         <Share className="w-4 h-4 mr-2.5" />
                         <span className="text-sm">Share</span>
-                      </button>
+                      </button> */}
+
+                      <ShareButton />
 
                       <button className="flex items-center  py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full">
                         <Edit3 className="w-4 h-4 mr-2.5" />
@@ -192,7 +212,10 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                         <span className="text-sm">Favorite</span>
                       </button>
 
-                      <button className="flex items-center  py-2 text-red-400 hover:bg-red-900 hover:bg-opacity-30 hover:text-red-300 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full ">
+                      <button
+                        onClick={() => handleDelete(chat.id)}
+                        className="flex items-center  py-2 text-red-400 hover:bg-red-900 hover:bg-opacity-30 hover:text-red-300 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full "
+                      >
                         <Trash2 className="w-4 h-4 mr-2.5" />
                         <span className="text-sm">Delete</span>
                       </button>
