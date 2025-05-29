@@ -10,7 +10,7 @@ import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { Ellipsis } from "lucide-react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
