@@ -81,15 +81,14 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const chats = data?.pages.flatMap((page) => page.chats);
 
   const handleShare = () => {
-    console.log("pathname", path);
-    console.log("base url", process.env.NEXT_PUBLIC_APP_BASE_URL);
-
     const link = process.env.NEXT_PUBLIC_APP_BASE_URL + path;
-
     navigator.clipboard.writeText(link);
     toast.success("Copied to clipboard");
   };
 
+  const handleFavorite = async (chatId) => {
+    const response = await axios.post();
+  };
   return (
     <div className="flex flex-col h-full">
       <div className="px-6 py-2 flex-shrink-0 text-sm text-muted-foreground leading-none">
@@ -160,7 +159,10 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                         <span className="text-sm">Rename</span>
                       </button>
 
-                      <button className="flex items-center s py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full ">
+                      <button
+                        onClick={() => handleFavorite(chat.id)}
+                        className="flex items-center s py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full "
+                      >
                         <Star className="w-4 h-4 mr-2.5" />
                         <span className="text-sm">Favorite</span>
                       </button>
