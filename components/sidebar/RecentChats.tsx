@@ -5,10 +5,13 @@ import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-import { Ellipsis } from "lucide-react";
-import { useParams } from "next/navigation";
+import { Edit3, Ellipsis, Share, Star, StarIcon, Trash2 } from "lucide-react";
+import { useParams, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
+import toast from "react-hot-toast";
 
 interface RecentChatsProps {
   isCollapsed: boolean;
@@ -38,6 +41,7 @@ const fetchRecentChats = async (
 
 export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const params = useParams();
+  const path = usePathname();
   const chatId = params.chatId as string;
 
   const router = useRouter();
@@ -75,6 +79,16 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   if (isError) return <div>{error.message}</div>;
 
   const chats = data?.pages.flatMap((page) => page.chats);
+
+  const handleShare = () => {
+    console.log("pathname", path);
+    console.log("base url", process.env.NEXT_PUBLIC_APP_BASE_URL);
+
+    const link = process.env.NEXT_PUBLIC_APP_BASE_URL + path;
+
+    navigator.clipboard.writeText(link);
+    toast.success("Copied to clipboard");
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -122,7 +136,41 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                       : "opacity-0 group-hover:opacity-100"
                   )}
                 >
-                  <Ellipsis size={15} className="text-current" />
+                  <Popover>
+                    <PopoverTrigger>
+                      <Ellipsis size={15} className="text-current" />
+                    </PopoverTrigger>
+                    <PopoverContent
+                      side="bottom"
+                      sideOffset={-15}
+                      align="start"
+                      alignOffset={20}
+                      className="w-44 border-neutral-600 rounded-2xl shadow-xl px-1.5 py-1.5 font-sans"
+                    >
+                      <button
+                        onClick={() => handleShare()}
+                        className="flex justify-start items-center py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl w-full px-1.5"
+                      >
+                        <Share className="w-4 h-4 mr-2.5" />
+                        <span className="text-sm">Share</span>
+                      </button>
+
+                      <button className="flex items-center  py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full">
+                        <Edit3 className="w-4 h-4 mr-2.5" />
+                        <span className="text-sm">Rename</span>
+                      </button>
+
+                      <button className="flex items-center s py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full ">
+                        <Star className="w-4 h-4 mr-2.5" />
+                        <span className="text-sm">Favorite</span>
+                      </button>
+
+                      <button className="flex items-center  py-2 text-red-400 hover:bg-red-900 hover:bg-opacity-30 hover:text-red-300 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full ">
+                        <Trash2 className="w-4 h-4 mr-2.5" />
+                        <span className="text-sm">Delete</span>
+                      </button>
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
             );
