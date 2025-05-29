@@ -92,7 +92,7 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="px-6 py-2 flex-shrink-0 text-sm text-muted-foreground leading-none">
+      <div className="px-6 py-2 flex-shrink-0 text-xs text-muted-foreground leading-none">
         Recents
       </div>
 
@@ -136,6 +136,27 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                       : "opacity-0 group-hover:opacity-100"
                   )}
                 >
+                  {/* <Popover>
+                    <PopoverTrigger>
+                      <button className="p-1">
+                        <Ellipsis size={15} className="text-current" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      side="bottom"
+                      sideOffset={-15}
+                      align="start"
+                      alignOffset={20}
+                      className="w-44 border-neutral-600 rounded-2xl shadow-xl px-1.5 py-1.5 font-sans"
+                    >
+                      <div>
+                        <ShareButton />
+                        <RenameChatButton id={chat.id} title={chat.title} />
+                        <FavouriteButton chatId={chat.id} />
+                        <DeleteButton chatId={chat.id} />
+                      </div>
+                    </PopoverContent>
+                  </Popover> */}
                   <Popover>
                     <PopoverTrigger>
                       <Ellipsis size={15} className="text-current" />
@@ -147,32 +168,20 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                       alignOffset={20}
                       className="w-44 border-neutral-600 rounded-2xl shadow-xl px-1.5 py-1.5 font-sans"
                     >
-                      {/* <button
-                        onClick={() => handleShare()}
-                        className="flex justify-start items-center py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl w-full px-1.5"
-                      >
-                        <Share className="w-4 h-4 mr-2.5" />
-                        <span className="text-sm">Share</span>
-                      </button> */}
-
-                      <ShareButton />
-
-                      <button className="flex items-center py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full">
-                        <Edit3 className="w-4 h-4 mr-2.5" />
-                        <span className="text-sm">Rename</span>
-                      </button>
-                      <RenameChatButton chatId={chat.id} title={chat.title} />
-
-                      <FavouriteButton chatId={chat.id} />
-
-                      <DeleteButton chatId={chat.id} />
-                      {/* <button
-                        onClick={() => handleDelete(chat.id)}
-                        className="flex items-center  py-2 text-red-400 hover:bg-red-900 hover:bg-opacity-30 hover:text-red-300 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full "
-                      >
-                        <Trash2 className="w-4 h-4 mr-2.5" />
-                        <span className="text-sm">Delete</span>
-                      </button> */}
+                      <div className="space-y-1">
+                        <div>
+                          <ShareButton />
+                        </div>
+                        <div>
+                          <RenameChatButton id={chat.id} title={chat.title} />
+                        </div>
+                        <div>
+                          <FavouriteButton chatId={chat.id} />
+                        </div>
+                        <div>
+                          <DeleteButton chatId={chat.id} />
+                        </div>
+                      </div>
                     </PopoverContent>
                   </Popover>
                 </div>

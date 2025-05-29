@@ -12,37 +12,62 @@ import {
 import { Button } from "@/components/ui/button";
 import { Edit3Icon } from "lucide-react";
 import { Input } from "../ui/input";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-type ChatId = {
-  chatId: string;
+type Chat = {
+  id: string;
   title: string;
 };
 
-export function RenameChatButton({ chatId, title }: ChatId) {
-  const [id, setId] = useState(chatId);
+const renameChatFn = ({ id, title }: Chat) => {
+  return axios.post(`/api/chat/rename`, { id, title });
+};
+
+export function RenameChatButton({ id, title }: Chat) {
   const [chatTitle, setChatTitle] = useState(title);
 
-  const handleRenameChat = async ({ chatId, title }: ChatId) => {};
+  const queryClient = useQueryClient();
+
+  const { mutate: renameChat } = useMutation({
+    mutationFn: renameChatFn,
+    onSuccess: () => {
+      toast.success("Chat renamed successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["recentChats"],
+      });
+    },
+    onError: () => {
+      toast.error("Failed to rename chat");
+    },
+  });
+
+  const handleRenameChat = () => {
+    if (chatTitle.trim()) {
+      renameChat({ id, title: chatTitle });
+    }
+  };
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <button className="flex items-center  py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full">
-          <Edit3Icon className="w-4 h-4 mr-2.5" />
-          <span className="text-sm">Rename</span>
-        </button>{" "}
+      <AlertDialogTrigger className="flex font-sans items-center py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full">
+        <Edit3Icon className="w-4 h-4 mr-2.5" />
+        <span className="text-sm">Rename</span>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="font-sans">
         <AlertDialogHeader>
           <AlertDialogTitle>Rename Chat</AlertDialogTitle>
           <AlertDialogDescription>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid pt-1 pb-4 font-sans">
+              <div className="grid items-center">
                 <Input
-                  id="username"
-                  defaultValue={title}
+                  id="chatTitle"
+                  value={chatTitle}
+                  onChange={(e) => setChatTitle(e.target.value)}
                   className="col-span-3"
+                  placeholder="Enter new chat title"
                 />
               </div>
             </div>
@@ -50,11 +75,7 @@ export function RenameChatButton({ chatId, title }: ChatId) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>
-            <button onClick={() => handleRenameChat({ id, chatTitle })}>
-              Save
-            </button>
-          </AlertDialogAction>
+          <AlertDialogAction onClick={handleRenameChat}>Save</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
