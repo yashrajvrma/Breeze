@@ -18,6 +18,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import ShareButton from "../button/shareButton";
+import { DeleteButton } from "../button/deleteButton";
+import FavouriteButton from "../button/favouriteButton";
 
 interface RecentChatsProps {
   isCollapsed: boolean;
@@ -45,43 +47,13 @@ const fetchRecentChats = async (
   return res.data;
 };
 
-const addToFavouriteFn = (chatId: string) => {
-  return axios.post(`/api/chat/fav`, { chatId });
-};
-
-const addToDeleteFn = (chatId: string) => {
-  return axios.post(`/api/chat/del`, { chatId });
-};
-
 export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const params = useParams();
-  const path = usePathname();
   const chatId = params.chatId as string;
-  const [isOpen, setIsOpen] = useState(false);
 
   const queryClient = useQueryClient();
 
   const router = useRouter();
-
-  const { mutate: addToFavoruite } = useMutation({
-    mutationFn: addToFavouriteFn,
-    onSuccess: () => {
-      toast.success("Chat added to fav");
-      queryClient.invalidateQueries({
-        queryKey: ["recentChats"],
-      });
-    },
-  });
-
-  const { mutate: addToDelete } = useMutation({
-    mutationFn: addToDeleteFn,
-    onSuccess: () => {
-      toast.success("Chat deleted successfully");
-      queryClient.invalidateQueries({
-        queryKey: ["recentChats"],
-      });
-    },
-  });
 
   const {
     data,
@@ -113,21 +85,6 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const chats = data?.pages.flatMap((page) => page.chats);
-
-  const handleShare = () => {
-    const link = process.env.NEXT_PUBLIC_APP_BASE_URL + path;
-    navigator.clipboard.writeText(link);
-    toast.success("Copied to clipboard");
-  };
-
-  const handleFavourite = async (chatId: string) => {
-    console.log("chatid", chatId);
-    addToFavoruite(chatId);
-  };
-
-  const handleDelete = async (chatId: string) => {
-    addToDelete(chatId);
-  };
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>{error.message}</div>;
@@ -204,21 +161,16 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                         <span className="text-sm">Rename</span>
                       </button>
 
-                      <button
-                        onClick={() => handleFavourite(chat.id)}
-                        className="flex items-center s py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full "
-                      >
-                        <Star className="w-4 h-4 mr-2.5" />
-                        <span className="text-sm">Favorite</span>
-                      </button>
+                      <FavouriteButton chatId={chat.id} />
 
-                      <button
+                      <DeleteButton chatId={chat.id} />
+                      {/* <button
                         onClick={() => handleDelete(chat.id)}
                         className="flex items-center  py-2 text-red-400 hover:bg-red-900 hover:bg-opacity-30 hover:text-red-300 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full "
                       >
                         <Trash2 className="w-4 h-4 mr-2.5" />
                         <span className="text-sm">Delete</span>
-                      </button>
+                      </button> */}
                     </PopoverContent>
                   </Popover>
                 </div>
