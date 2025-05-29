@@ -1,7 +1,12 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  QueryFunctionContext,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
@@ -39,12 +44,27 @@ const fetchRecentChats = async (
   return res.data;
 };
 
+const addToFavourite = async (chatId: string) => {
+  return axios.post(`/api/chat/fav`, { chatId });
+};
+
 export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const params = useParams();
   const path = usePathname();
   const chatId = params.chatId as string;
 
+  const queryClient = useQueryClient();
+
   const router = useRouter();
+
+  const { mutate: addToFavoruite, isSuccess } = useMutation({
+    mutationFn: addToFavourite,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["recentChats"],
+      });
+    },
+  });
 
   const {
     data,
@@ -75,9 +95,6 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>{error.message}</div>;
-
   const chats = data?.pages.flatMap((page) => page.chats);
 
   const handleShare = () => {
@@ -86,9 +103,17 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
     toast.success("Copied to clipboard");
   };
 
-  const handleFavorite = async (chatId) => {
-    const response = await axios.post();
+  const handleFavourite = async (chatId: string) => {
+    console.log("chatid", chatId);
+    addToFavoruite(chatId);
+    if (isSuccess) {
+      toast.success("Chat id deleted successfully");
+    }
   };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>{error.message}</div>;
+
   return (
     <div className="flex flex-col h-full">
       <div className="px-6 py-2 flex-shrink-0 text-sm text-muted-foreground leading-none">
@@ -160,7 +185,7 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                       </button>
 
                       <button
-                        onClick={() => handleFavorite(chat.id)}
+                        onClick={() => handleFavourite(chat.id)}
                         className="flex items-center s py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full "
                       >
                         <Star className="w-4 h-4 mr-2.5" />

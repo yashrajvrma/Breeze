@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const chatId = await req.json();
+  const { chatId } = await req.json();
 
   try {
     const session = await getServerSession(authConfig);

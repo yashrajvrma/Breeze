@@ -3,7 +3,7 @@ import { authConfig } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authConfig);
 
@@ -13,7 +13,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const userId = session.user.id;
 
-    const chatId = await res.json();
+    console.log("user id is ", userId);
+
+    const { chatId } = await req.json();
+
+    console.log("chat id is", chatId);
 
     const isChatIdValid = await prisma.chat.findUnique({
       where: {
