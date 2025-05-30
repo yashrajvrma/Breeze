@@ -45,7 +45,7 @@ const fetchRecentChats = async (
 export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const params = useParams();
   const router = useRouter();
-  const { data: session } = useSession(); // Add session hook
+  const { data: session } = useSession();
 
   const { ref, inView } = useInView();
 

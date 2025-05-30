@@ -25,10 +25,11 @@ import { FontSizeExtension } from "@/extension/fontSize";
 import { LineHeightExtension } from "@/extension/lineHeight";
 import { Ruler } from "./Ruler";
 
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"; // ✅ import scroll area
+
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
   const content = useEditorContent((state) => state.content);
-
   const leftMargin = useMargin((state) => state.leftMargin);
   const rightMargin = useMargin((state) => state.rightMargin);
 
@@ -36,9 +37,9 @@ export const Editor = () => {
     immediatelyRender: false,
     editorProps: {
       attributes: {
-        style: `padding-left : ${leftMargin}px; padding-right: ${rightMargin}px`,
+        style: `padding-left: ${leftMargin}px; padding-right: ${rightMargin}px`,
         class:
-          "focus:outline-none print:border-0 bg-white border-2 border-neutral-200 flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
+          "focus:outline-none print:border-0 bg-black border border-neutral-700 flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
       },
     },
     extensions: [
@@ -54,19 +55,13 @@ export const Editor = () => {
       Image,
       ImageResize,
       Underline,
-      TaskItem.configure({
-        nested: true,
-      }),
+      TaskItem.configure({ nested: true }),
       TaskList,
-      TextAlign.configure({
-        types: ["heading", "paragraph"],
-      }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
       FontFamily,
       TextStyle,
       Color,
-      Highlight.configure({
-        multicolor: true,
-      }),
+      Highlight.configure({ multicolor: true }),
       Link.configure({
         linkOnPaste: true,
         openOnClick: false,
@@ -87,38 +82,64 @@ export const Editor = () => {
     onDestroy() {
       setEditor(null);
     },
-    onBlur({ editor }) {
-      setEditor(editor);
-    },
     onUpdate({ editor }) {
       setEditor(editor);
     },
-    onSelectionUpdate({ editor }) {
-      setEditor(editor);
-    },
-    onTransaction({ editor }) {
-      setEditor(editor);
-    },
-    onFocus({ editor }) {
-      setEditor(editor);
-    },
-    onContentError({ editor }) {
-      setEditor(editor);
-    },
-
-    content: content,
+    content,
   });
 
-  if (!editor) {
-    return null;
-  }
+  if (!editor) return null;
 
+  // return (
+  //   <div className="flex flex-col items h-full bg-foreground print:bg-white overflow-hidden">
+  //     {/* Toolbar */}
+  //     <div className="flex-shrink-0 bg-white border-b z-10">
+  //       <Toolbar />
+  //     </div>
+
+  //     {/* Scrollable Area with ScrollArea from ShadCN */}
+  //     <div className="flex-1 min-h-0 overflow-y-auto">
+  //       <ScrollArea className="h-full w-full px-4 py-4 print:p-0 print:overflow-visible">
+  //         <div className="w-fit min-w-[816px]">
+  //           {/* Ruler */}
+  //           <div className="sticky top-0 bg-white z-10">
+  //             <Ruler />
+  //           </div>
+
+  //           {/* Editor */}
+  //           <div className="flex justify-center pt-4 pb-10">
+  //             <EditorContent editor={editor} />
+  //           </div>
+  //         </div>
+  //         <ScrollBar orientation="horizontal" />
+  //       </ScrollArea>
+  //     </div>
+  //   </div>
+  // );
   return (
-    <div className="bg-white print:bg-white print:p-1 px-4 size-full print:overflow-visible overflow-x-auto">
-      <Toolbar />
-      <Ruler />
-      <div className="flex flex-col justify-center mx-auto print:p-0 py-4 print-w-full w-[816px] min-w-max print:min-w-0">
-        <EditorContent editor={editor} />
+    <div className="flex flex-col h-full bg-background print:bg-white overflow-hidden">
+      {/* Toolbar */}
+      <div className="flex-shrink-0 bg-background border-b border-neutral-700 z-10 flex justify-center">
+        <Toolbar />
+      </div>
+
+      {/* Scrollable Area */}
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        <ScrollArea className="h-full w-full px-4 py-4 print:p-0 print:overflow-visible">
+          <div className="min-w-[816px] mx-auto">
+            {" "}
+            {/* ✅ Center everything here */}
+            {/* Ruler */}
+            <div className="sticky top-0 bg-background z-10 flex justify-center">
+              <Ruler />
+            </div>
+            {/* Editor content */}
+            <div className="flex justify-center pt-4 pb-20">
+              <EditorContent editor={editor} />
+            </div>
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </div>
     </div>
   );

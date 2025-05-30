@@ -33,7 +33,7 @@ export default function SidebarHeader({
           </Link>
           {!isCollapsed && (
             <span className="ml-2 font-semibold text-lg text-foreground ">
-              Breeze
+              breeze
             </span>
           )}
         </div>

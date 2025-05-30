@@ -33,6 +33,7 @@ interface ToolbarButtonProps {
   isActive?: boolean;
   icon: LucideIcon;
 }
+
 const ToolbarButton = ({
   onClick,
   isActive,
