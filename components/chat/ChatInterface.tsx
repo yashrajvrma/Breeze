@@ -54,7 +54,7 @@ export default function ChatInterface() {
 
   const { messages, input, handleInputChange, append, setMessages, isLoading } =
     useChat({
-      api: "/api/chat/message",
+      api: "/api/v1/chat/message",
       body: {
         chatId,
       },

@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
 import { useEditorContent } from "@/lib/store/editor";
-import { useRouter } from "next/navigation";
 
 interface Message {
   id: string;
@@ -22,7 +21,6 @@ interface ParsedContent {
 
 export default function ChatMessage({ message }: ChatMessageProps) {
   const setEditorContent = useEditorContent((state) => state.setEditorContent);
-  const router = useRouter();
 
   const [parsedContent, setParsedContent] = useState<ParsedContent>({
     beforeDoc: "",
@@ -68,26 +66,11 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   const handleDocumentClick = () => {
     if (parsedContent.docContent) {
       try {
-        // Parse the JSON content if needed
         const contentJson = JSON.parse(parsedContent.docContent);
-        // setEditorContent({
-        //   beforeDoc: parsedContent.beforeDoc,
-        //   docContent: contentJson,
-        //   afterDoc: parsedContent.afterDoc,
-        // });
         setEditorContent(contentJson);
-        console.log("content is", contentJson);
-        router.push("/edit");
+        console.log("Document content set to editor:", contentJson);
       } catch (error) {
         console.error("Error parsing document content:", error);
-        // Fallback to raw content if JSON parsing fails
-        // setEditorContent({
-        //   beforeDoc: parsedContent.beforeDoc,
-        //   docContent: parsedContent.docContent,
-        //   afterDoc: parsedContent.afterDoc,
-        // });
-
-        router.push("/edit");
       }
     }
   };
@@ -114,7 +97,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
           {parsedContent.docContent && (
             <div
-              className="flex flex-col bg-muted hover:bg-muted/70 shadow-sm p-4 border rounded-lg transition cursor-pointer"
+              className="flex flex-col bg-muted hover:bg-muted/70 shadow-sm p-4 border rounded-lg transition-colors cursor-pointer"
               onClick={handleDocumentClick}
             >
               <div className="flex justify-between items-center mb-2">
