@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import NewChat from "./NewChat";
+import NewChat from "../button/newChatButton";
 import Favourite from "./FavouriteChats";
 import RecentChats from "./RecentChats";
 

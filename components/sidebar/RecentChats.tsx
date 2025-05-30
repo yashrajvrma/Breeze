@@ -47,11 +47,11 @@ const fetchRecentChats = async (
 
 export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const params = useParams();
-  const chatId = params.chatId as string;
-
-  const queryClient = useQueryClient();
-
   const router = useRouter();
+
+  const { ref, inView } = useInView();
+
+  const chatId = params.chatId as string;
 
   const {
     data,
@@ -74,8 +74,6 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
     },
   });
 
-  const { ref, inView } = useInView();
-
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -89,7 +87,7 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="px-6 py-2 flex-shrink-0 text-sm text-muted-foreground leading-none">
+      <div className="px-5 py-1 flex-shrink-0 text-sm text-muted-foreground leading-none">
         Recents
       </div>
 
@@ -102,56 +100,58 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
               <div
                 key={chat.id}
                 className={cn(
-                  "group relative flex items-center rounded-lg transition-colors cursor-pointer text-sm font-sans",
+                  "group relative flex items-center justify-between rounded-lg transition-all duration-200 cursor-pointer",
+                  "hover:bg-accent/50",
                   isActive
-                    ? "bg-accent text-accent-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    ? "bg-accent text-accent-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
                 )}
                 onClick={() => router.push(`/chat/${chat.id}`)}
               >
-                <div className="relative flex-1 min-w-0 px-3 py-1.5 overflow-hidden">
-                  <span className="block overflow-hidden whitespace-nowrap pr-6">
-                    {chat.title || "New chat"}
-                  </span>
+                <div className="flex-1 min-w-0 px-2 py-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium truncate">
+                      {chat.title || "New chat"}
+                    </span>
 
-                  {/* Ultra-smooth, narrow fade gradient */}
-                  <div
-                    className={cn(
-                      "absolute right-0 top-0 h-full w-5 pointer-events-none",
-                      isActive
-                        ? "bg-gradient-to-l from-accent via-accent to-transparent"
-                        : "bg-gradient-to-l from-background via-background to-transparent group-hover:bg-gradient-to-l group-hover:from-accent group-hover:via-accent group-hover:to-transparent"
-                    )}
-                  />
-                </div>
-
-                <div
-                  className={cn(
-                    "transition-opacity duration-200 pr-2",
-                    isActive
-                      ? "opacity-100"
-                      : "opacity-0 group-hover:opacity-100"
-                  )}
-                >
-                  <Popover>
-                    <PopoverTrigger>
-                      <Ellipsis size={15} className="text-current" />
-                    </PopoverTrigger>
-                    <PopoverContent
-                      side="bottom"
-                      sideOffset={-15}
-                      align="start"
-                      alignOffset={20}
-                      className="w-44 border-neutral-600 rounded-2xl shadow-xl px-1.5 py-1.5 font-sans"
+                    <div
+                      className={cn(
+                        "flex-shrink-0 transition-opacity duration-200",
+                        isActive
+                          ? "opacity-100"
+                          : "opacity-0 group-hover:opacity-100"
+                      )}
                     >
-                      <div>
-                        <ShareButton />
-                        <RenameChatButton id={chat.id} title={chat.title} />
-                        <FavouriteButton chatId={chat.id} />
-                        <DeleteButton chatId={chat.id} />
-                      </div>
-                    </PopoverContent>
-                  </Popover>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            className={cn(
+                              "p-1 rounded-md transition-colors duration-200 text-foreground",
+                              "hover:bg-background/50 focus:outline-none ",
+                              isActive
+                                ? "hover:bg-accent-foreground/10"
+                                : "hover:bg-accent"
+                            )}
+                          >
+                            <Ellipsis size={16} className="text-current" />
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent
+                          side="right"
+                          sideOffset={8}
+                          align="start"
+                          className="w-44 border-neutral-800 rounded-2xl shadow-xl px-1.5 py-1.5 backdrop-blur-sm font-sans"
+                        >
+                          <div className="space-y-0.5">
+                            <ShareButton />
+                            <RenameChatButton id={chat.id} title={chat.title} />
+                            <FavouriteButton chatId={chat.id} />
+                            <DeleteButton chatId={chat.id} />
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  </div>
                 </div>
               </div>
             );
@@ -160,7 +160,14 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
 
         {hasNextPage && (
           <div ref={ref} className="text-center text-muted-foreground py-4">
-            {isFetchingNextPage ? "Loading more..." : "Scroll to load more"}
+            {isFetchingNextPage ? (
+              <div className="flex items-center justify-center space-x-2">
+                <div className="w-4 h-4 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin"></div>
+                <span className="text-sm">Loading more...</span>
+              </div>
+            ) : (
+              <span className="text-sm">Scroll to load more</span>
+            )}
           </div>
         )}
       </ScrollArea>
