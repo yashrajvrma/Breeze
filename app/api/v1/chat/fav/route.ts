@@ -66,7 +66,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     const userId = session.user.id;
 
-    const favChats = await prisma.chat.findMany({
+    const favourite = await prisma.chat.findMany({
       where: {
         userId: userId as string,
         favourite: true,
@@ -87,7 +87,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     return NextResponse.json(
       {
         success: true,
-        data: favChats,
+        favourite,
       },
       {
         status: 200,

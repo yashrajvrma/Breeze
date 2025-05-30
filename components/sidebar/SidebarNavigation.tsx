@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import NewChat from "../button/newChatButton";
-import Favourite from "./FavouriteChats";
 import RecentChats from "./RecentChats";
+import FavouriteChats from "./FavouriteChats";
 
 interface SidebarNavigationProps {
   isCollapsed: boolean;
@@ -14,18 +14,14 @@ export default function SidebarNavigation({
   return (
     <div className="flex flex-col h-full">
       {/* Fixed top section */}
-      <div className="px-3 py-2 flex-shrink-0">
+      <div className="flex-shrink-0 px-3 py-2">
         <NewChat isCollapsed={isCollapsed} />
-
-        {/* Favourite Chat List */}
-        <div className="space-y-1 font-sans">
-          <Favourite isCollapsed={isCollapsed} />
-        </div>
       </div>
 
-      {/* Scrollable recent chats section */}
+      {/* Favourite and Recent Chats - Scrollable content */}
       {!isCollapsed && (
-        <div className="flex-1 overflow-hidden flex flex-col">
+        <div className="flex-1 overflow-hidden flex flex-col font-sans gap-y-10">
+          <FavouriteChats isCollapsed={isCollapsed} />
           <RecentChats isCollapsed={isCollapsed} />
         </div>
       )}

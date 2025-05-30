@@ -25,6 +25,7 @@ export default function FavouriteButton({ chatId }: ChatId) {
       queryClient.invalidateQueries({
         queryKey: ["recentChats"],
       });
+      queryClient.invalidateQueries({ queryKey: ["favChats"] });
     },
   });
 

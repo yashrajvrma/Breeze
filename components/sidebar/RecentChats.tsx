@@ -23,7 +23,7 @@ interface RecentChatsProps {
 interface Chat {
   id: string;
   title: string;
-  createdAt: string;
+  updatedAt: string;
 }
 
 interface ChatResponse {
@@ -83,7 +83,7 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="px-5 py-1 flex-shrink-0 text-sm text-muted-foreground leading-none">
+      <div className="px-5 py-1  flex-shrink-0 text-sm text-muted-foreground leading-none">
         Recents
       </div>
 
@@ -107,11 +107,13 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                       ? "bg-accent text-accent-foreground shadow-sm"
                       : "text-muted-foreground hover:text-foreground"
                   )}
-                  onClick={() => router.push(`/chat/${chat.id}`)}
                 >
                   <div className="flex-1 min-w-0 px-2 py-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium truncate">
+                      <span
+                        className="text-sm font-medium truncate"
+                        onClick={() => router.push(`/chat/${chat.id}`)}
+                      >
                         {chat.title || "New chat"}
                       </span>
 

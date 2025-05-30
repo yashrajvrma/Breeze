@@ -27,7 +27,7 @@ interface Thread {
 }
 
 async function fetchThread(chatId: string) {
-  const response = await fetch(`/api/chat/thread?chatId=${chatId}`);
+  const response = await fetch(`/api/v1/chat/thread?chatId=${chatId}`);
   if (!response.ok) {
     throw new Error("Failed to fetch conversation");
   }

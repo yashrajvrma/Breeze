@@ -43,6 +43,7 @@ export async function GET(req: NextRequest) {
       where: {
         userId: userId!,
         isActive: true,
+        favourite: false,
       },
     });
 
