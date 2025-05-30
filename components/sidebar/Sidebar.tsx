@@ -1,5 +1,11 @@
 import { cn } from "@/lib/utils";
-import { ArrowRightFromLine, ChevronRight } from "lucide-react";
+import {
+  ArrowRightFromLine,
+  ArrowRightToLineIcon,
+  ChevronRight,
+  PanelLeftIcon,
+  PanelRightIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -35,10 +41,11 @@ export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 mb-2 mx-auto"
+                className="h-6 w-6 mb-2 mx-auto group relative"
                 onClick={toggleSidebar}
               >
-                <ArrowRightFromLine className="h-4 w-4" />
+                <PanelLeftIcon className="h-5 w-5 text-foreground/70 group-hover:hidden" />
+                <ArrowRightToLineIcon className="h-5 w-5 p-0.5 text-foreground/70 hidden group-hover:block absolute inset-0 m-auto" />
                 <span className="sr-only">Expand sidebar</span>
               </Button>
             </TooltipTrigger>

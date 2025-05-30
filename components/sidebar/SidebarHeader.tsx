@@ -1,5 +1,16 @@
 import { cn } from "@/lib/utils";
-import { ArrowLeftFromLine, ChevronLeft } from "lucide-react";
+import {
+  ArrowLeftToLineIcon,
+  ArrowRightToLineIcon,
+  PanelLeftIcon,
+  PanelRightIcon,
+} from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -29,16 +40,29 @@ export default function SidebarHeader({
           )}
         </div>
         {!isCollapsed && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8"
-            onClick={toggleSidebar}
-          >
-            {/* <ChevronLeft className="h-4 w-4" /> */}
-            <ArrowLeftFromLine className="h-4 w-4" />
-            <span className="sr-only">Collapse sidebar</span>
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6 group relative"
+                  onClick={toggleSidebar}
+                >
+                  {/* Default icon */}
+                  <PanelRightIcon className="h-5 w-5 text-foreground/70 group-hover:hidden" />
+
+                  {/* Icon shown on hover */}
+                  <ArrowLeftToLineIcon className="h-5 w-5 p-0.5 text-foreground/70 hidden group-hover:block absolute inset-0 m-auto" />
+
+                  <span className="sr-only">Collapse sidebar</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>Collapse sidebar</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
       </div>
     </div>

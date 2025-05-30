@@ -25,11 +25,11 @@ export default function NewChat({ isCollapsed }: SidebarNavigationProps) {
         // <div className="h-7 w-7 flex items-center justify-center rounded-md bg-muted-foreground text-foreground hover:bg-">
         //   <Plus className="h-5 w-5" strokeWidth={2} />
         // </div>
-        <Button className="px-2 py-0.5" variant="outline">
+        <Button className="h-7 w-7 px-0" variant="outline">
           <Plus className="w-5 h-5" strokeWidth={2} />
         </Button>
       ) : (
-        <Button className="w-full text-foreground py-1" variant="outline">
+        <Button className="w-full text-foreground" variant="outline">
           New Chat
         </Button>
       )}
