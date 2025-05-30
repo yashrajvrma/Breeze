@@ -2413,6 +2413,7 @@ export namespace Prisma {
     userId: string | null
     title: string | null
     isActive: boolean | null
+    favourite: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2422,6 +2423,7 @@ export namespace Prisma {
     userId: string | null
     title: string | null
     isActive: boolean | null
+    favourite: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2431,6 +2433,7 @@ export namespace Prisma {
     userId: number
     title: number
     isActive: number
+    favourite: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2442,6 +2445,7 @@ export namespace Prisma {
     userId?: true
     title?: true
     isActive?: true
+    favourite?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2451,6 +2455,7 @@ export namespace Prisma {
     userId?: true
     title?: true
     isActive?: true
+    favourite?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2460,6 +2465,7 @@ export namespace Prisma {
     userId?: true
     title?: true
     isActive?: true
+    favourite?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2542,6 +2548,7 @@ export namespace Prisma {
     userId: string
     title: string | null
     isActive: boolean
+    favourite: boolean
     createdAt: Date
     updatedAt: Date
     _count: ChatCountAggregateOutputType | null
@@ -2568,6 +2575,7 @@ export namespace Prisma {
     userId?: boolean
     title?: boolean
     isActive?: boolean
+    favourite?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2581,6 +2589,7 @@ export namespace Prisma {
     userId?: boolean
     title?: boolean
     isActive?: boolean
+    favourite?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2591,6 +2600,7 @@ export namespace Prisma {
     userId?: boolean
     title?: boolean
     isActive?: boolean
+    favourite?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2601,11 +2611,12 @@ export namespace Prisma {
     userId?: boolean
     title?: boolean
     isActive?: boolean
+    favourite?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ChatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["chat"]>
+  export type ChatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "isActive" | "favourite" | "createdAt" | "updatedAt", ExtArgs["result"]["chat"]>
   export type ChatInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     Message?: boolean | Chat$MessageArgs<ExtArgs>
@@ -2631,6 +2642,7 @@ export namespace Prisma {
       userId: string
       title: string | null
       isActive: boolean
+      favourite: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["chat"]>
@@ -3063,6 +3075,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"Chat", 'String'>
     readonly title: FieldRef<"Chat", 'String'>
     readonly isActive: FieldRef<"Chat", 'Boolean'>
+    readonly favourite: FieldRef<"Chat", 'Boolean'>
     readonly createdAt: FieldRef<"Chat", 'DateTime'>
     readonly updatedAt: FieldRef<"Chat", 'DateTime'>
   }
@@ -5789,6 +5802,7 @@ export namespace Prisma {
     userId: 'userId',
     title: 'title',
     isActive: 'isActive',
+    favourite: 'favourite',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -6020,6 +6034,7 @@ export namespace Prisma {
     userId?: StringFilter<"Chat"> | string
     title?: StringNullableFilter<"Chat"> | string | null
     isActive?: BoolFilter<"Chat"> | boolean
+    favourite?: BoolFilter<"Chat"> | boolean
     createdAt?: DateTimeFilter<"Chat"> | Date | string
     updatedAt?: DateTimeFilter<"Chat"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -6032,6 +6047,7 @@ export namespace Prisma {
     userId?: SortOrder
     title?: SortOrderInput | SortOrder
     isActive?: SortOrder
+    favourite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -6047,6 +6063,7 @@ export namespace Prisma {
     userId?: StringFilter<"Chat"> | string
     title?: StringNullableFilter<"Chat"> | string | null
     isActive?: BoolFilter<"Chat"> | boolean
+    favourite?: BoolFilter<"Chat"> | boolean
     createdAt?: DateTimeFilter<"Chat"> | Date | string
     updatedAt?: DateTimeFilter<"Chat"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -6059,6 +6076,7 @@ export namespace Prisma {
     userId?: SortOrder
     title?: SortOrderInput | SortOrder
     isActive?: SortOrder
+    favourite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ChatCountOrderByAggregateInput
@@ -6074,6 +6092,7 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Chat"> | string
     title?: StringNullableWithAggregatesFilter<"Chat"> | string | null
     isActive?: BoolWithAggregatesFilter<"Chat"> | boolean
+    favourite?: BoolWithAggregatesFilter<"Chat"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Chat"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Chat"> | Date | string
   }
@@ -6300,6 +6319,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     isActive?: boolean
+    favourite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutChatInput
@@ -6312,6 +6332,7 @@ export namespace Prisma {
     userId: string
     title?: string | null
     isActive?: boolean
+    favourite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     Message?: MessageUncheckedCreateNestedManyWithoutChatInput
@@ -6322,6 +6343,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutChatNestedInput
@@ -6334,6 +6356,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Message?: MessageUncheckedUpdateManyWithoutChatNestedInput
@@ -6345,6 +6368,7 @@ export namespace Prisma {
     userId: string
     title?: string | null
     isActive?: boolean
+    favourite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6353,6 +6377,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6362,6 +6387,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6677,6 +6703,7 @@ export namespace Prisma {
     userId?: SortOrder
     title?: SortOrder
     isActive?: SortOrder
+    favourite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6686,6 +6713,7 @@ export namespace Prisma {
     userId?: SortOrder
     title?: SortOrder
     isActive?: SortOrder
+    favourite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6695,6 +6723,7 @@ export namespace Prisma {
     userId?: SortOrder
     title?: SortOrder
     isActive?: SortOrder
+    favourite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7343,6 +7372,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     isActive?: boolean
+    favourite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     Message?: MessageCreateNestedManyWithoutChatInput
@@ -7353,6 +7383,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     isActive?: boolean
+    favourite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     Message?: MessageUncheckedCreateNestedManyWithoutChatInput
@@ -7451,6 +7482,7 @@ export namespace Prisma {
     userId?: StringFilter<"Chat"> | string
     title?: StringNullableFilter<"Chat"> | string | null
     isActive?: BoolFilter<"Chat"> | boolean
+    favourite?: BoolFilter<"Chat"> | boolean
     createdAt?: DateTimeFilter<"Chat"> | Date | string
     updatedAt?: DateTimeFilter<"Chat"> | Date | string
   }
@@ -7668,6 +7700,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     isActive?: boolean
+    favourite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutChatInput
@@ -7679,6 +7712,7 @@ export namespace Prisma {
     userId: string
     title?: string | null
     isActive?: boolean
+    favourite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     Favourite?: FavouriteUncheckedCreateNestedManyWithoutChatInput
@@ -7731,6 +7765,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutChatNestedInput
@@ -7742,6 +7777,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Favourite?: FavouriteUncheckedUpdateManyWithoutChatNestedInput
@@ -7784,6 +7820,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     isActive?: boolean
+    favourite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutChatInput
@@ -7795,6 +7832,7 @@ export namespace Prisma {
     userId: string
     title?: string | null
     isActive?: boolean
+    favourite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     Message?: MessageUncheckedCreateNestedManyWithoutChatInput
@@ -7847,6 +7885,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutChatNestedInput
@@ -7858,6 +7897,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Message?: MessageUncheckedUpdateManyWithoutChatNestedInput
@@ -7900,6 +7940,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     isActive?: boolean
+    favourite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7927,6 +7968,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Message?: MessageUpdateManyWithoutChatNestedInput
@@ -7937,6 +7979,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Message?: MessageUncheckedUpdateManyWithoutChatNestedInput
@@ -7947,6 +7990,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -1,11 +1,7 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  useInfiniteQuery,
-  QueryFunctionContext,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
@@ -18,7 +14,7 @@ import ShareButton from "../button/shareButton";
 import { DeleteButton } from "../button/deleteButton";
 import FavouriteButton from "../button/favouriteButton";
 import { RenameChatButton } from "../button/renameButton";
-import { useSession } from "next-auth/react"; // Add this import
+import { useSession } from "next-auth/react";
 
 interface RecentChatsProps {
   isCollapsed: boolean;

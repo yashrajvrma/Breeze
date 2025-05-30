@@ -1,10 +1,4 @@
-import { cn } from "@/lib/utils";
-import {
-  ArrowLeftToLineIcon,
-  ArrowRightToLineIcon,
-  PanelLeftIcon,
-  PanelRightIcon,
-} from "lucide-react";
+import { ArrowLeftToLineIcon, PanelRightIcon } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -14,7 +8,6 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../public/assets/images/aero-icon.png";
 import logo1 from "../../public/assets/images/breeze.png";
 
 interface SidebarHeaderProps {

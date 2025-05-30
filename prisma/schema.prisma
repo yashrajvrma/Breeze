@@ -47,6 +47,8 @@ model Chat {
   title    String?
   isActive Boolean @default(true)
 
+  favourite Boolean @default(false)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
