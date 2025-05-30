@@ -10,10 +10,10 @@ type ChatId = {
 };
 
 const addToFavouriteFn = (chatId: string) => {
-  return axios.post(`/api/v1/chat/favourite`, { chatId });
+  return axios.post(`/api/v1/chat/unfavourite`, { chatId });
 };
 
-export default function FavouriteButton({ chatId }: ChatId) {
+export default function UnFavouriteButton({ chatId }: ChatId) {
   const id = chatId;
 
   const queryClient = useQueryClient();
@@ -39,8 +39,8 @@ export default function FavouriteButton({ chatId }: ChatId) {
       onClick={() => handleFavourite(id)}
       className="flex items-center s py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full "
     >
-      <StarIcon className="w-4 h-4 mr-2.5" />
-      <span className="text-sm">Favorite</span>
+      <StarIcon color="#ffc800" fill="#ffc800" className="w-4 h-4 mr-2.5" />
+      <span className="text-sm">Unfavorite</span>
     </button>
   );
 }

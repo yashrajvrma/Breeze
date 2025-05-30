@@ -82,8 +82,8 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const chats = data?.pages.flatMap((page) => page.chats);
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="px-5 py-1  flex-shrink-0 text-sm text-muted-foreground leading-none">
+    <div className="flex flex-col h-full ">
+      <div className="px-5 pb-1  flex-shrink-0 text-sm text-muted-foreground leading-none">
         Recents
       </div>
 

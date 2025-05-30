@@ -21,7 +21,7 @@ type ChatId = {
 };
 
 const addToDeleteFn = (chatId: string) => {
-  return axios.post(`/api/v1/chat/del`, { chatId });
+  return axios.post(`/api/v1/chat/delete`, { chatId });
 };
 
 export function DeleteButton({ chatId }: ChatId) {
@@ -35,6 +35,9 @@ export function DeleteButton({ chatId }: ChatId) {
       toast.success("Chat deleted successfully");
       queryClient.invalidateQueries({
         queryKey: ["recentChats"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["favChats"],
       });
     },
   });

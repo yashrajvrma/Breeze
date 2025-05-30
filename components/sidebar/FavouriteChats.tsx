@@ -12,6 +12,7 @@ import { RenameChatButton } from "../button/renameButton";
 import FavouriteButton from "../button/favouriteButton";
 import { DeleteButton } from "../button/deleteButton";
 import { EllipsisIcon } from "lucide-react";
+import UnFavouriteButton from "../button/unFavourite";
 
 interface SidebarNavigationProps {
   isCollapsed: boolean;
@@ -26,7 +27,7 @@ type FavChats = {
 };
 
 const favChatsFn = async () => {
-  return axios.get("/api/v1/chat/fav");
+  return axios.get("/api/v1/chat/favourite");
 };
 
 export default function FavouriteChats({
@@ -42,7 +43,6 @@ export default function FavouriteChats({
     queryFn: favChatsFn,
   });
 
-  console.log("data is ", JSON.stringify(data));
   return (
     <div className="flex flex-col">
       <div className="px-5 py-1 flex-shrink-0 text-sm text-muted-foreground leading-none">
@@ -69,11 +69,13 @@ export default function FavouriteChats({
                       ? "bg-accent text-accent-foreground shadow-sm"
                       : "text-muted-foreground hover:text-foreground"
                   )}
-                  onClick={() => router.push(`/chat/${chat.id}`)}
                 >
                   <div className="flex-1 min-w-0 px-2 py-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium truncate">
+                      <span
+                        onClick={() => router.push(`/chat/${chat.id}`)}
+                        className="text-sm font-medium truncate"
+                      >
                         {chat.title || "New chat"}
                       </span>
 
@@ -114,7 +116,7 @@ export default function FavouriteChats({
                                 id={chat.id}
                                 title={chat.title}
                               />
-                              {/* <FavouriteButton chatId={chat.id} /> */}
+                              <UnFavouriteButton chatId={chat.id} />
                               <DeleteButton chatId={chat.id} />
                             </div>
                           </PopoverContent>
