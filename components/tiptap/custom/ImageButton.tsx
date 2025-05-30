@@ -56,22 +56,22 @@ export const ImageButton = () => {
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
-          className="flex items-center h-8 font-sans align-middle"
+          className="flex items-center h-8 font-sans align-middle text-muted-foreground"
         >
-          <button className="flex flex-col justify-center items-center hover:bg-neutral-200/80 px-1.5 py-1 rounded-sm min-w-7 h-7 overflow-hidden text-sm cursor-pointer shrink-0">
+          <button className="flex flex-col justify-center items-center hover:bg-background hover:text-foreground px-1.5 py-1 rounded-sm min-w-7 h-7 overflow-hidden text-sm cursor-pointer shrink-0">
             <ImageIcon className="w-4 h-5" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-neutral-50 border-neutral-300 font-sans text-neutral-900">
+        <DropdownMenuContent className="bg-neutral-900 border-neutral-700 font-sans text-muted-foreground">
           <Button
-            className="flex justify-start items-start hover:bg-neutral-200/80 w-full cursor-pointer"
+            className="flex justify-start items-start bg-neutral-900 text-muted-foreground hover:bg-background w-full cursor-pointer"
             onClick={onUpload}
           >
             <UploadIcon className="mr-2 w-4 h-4" />
             Upload
           </Button>
           <Button
-            className="flex justify-start items-center hover:bg-neutral-200/80 cursor-pointer"
+            className="flex justify-start items-center cursor-pointer bg-neutral-900 text-muted-foreground hover:bg-background"
             onClick={() => setIsDialogOpen(true)}
           >
             <SearchIcon className="mr-2 w-4 h-4" />
@@ -81,7 +81,7 @@ export const ImageButton = () => {
       </DropdownMenu>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="bg-neutral-50 font-sans text-neutral-900">
+        <DialogContent className="font-sans bg-neutral-900 border border-neutral-700 text-muted-foreground">
           <DialogHeader>
             <DialogTitle>Insert image URL</DialogTitle>
           </DialogHeader>
@@ -89,7 +89,7 @@ export const ImageButton = () => {
             placeholder="Insert Image URL"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
-            className="bg-neutral-50 focus:border-none outline-0 outline-none focus:outline-none font-sans text-neutral-900 text-sm"
+            className="bg-neutral-900 focus:border-none outline-0 outline-none focus:outline-none font-sans text-foreground text-sm"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleImageUrlSubmit();
@@ -98,7 +98,8 @@ export const ImageButton = () => {
           />
           <DialogFooter>
             <Button
-              className="bg-neutral-200 hover:bg-neutral-200 hover:text-blue-600 cursor-pointer"
+              variant="secondary"
+              className="hover:bg-foreground font-sans text-blue-600 cursor-pointer"
               onClick={handleImageUrlSubmit}
               disabled={!imageUrl}
             >

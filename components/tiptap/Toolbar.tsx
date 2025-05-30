@@ -43,8 +43,8 @@ const ToolbarButton = ({
     <button
       onClick={onClick}
       className={cn(
-        "text-sm h-8 min-w-8 w-8 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
-        isActive && "bg-blue-200"
+        "text-sm h-8 min-w-8 w-8 flex items-center justify-center text-muted-foreground rounded-sm hover:text-foreground",
+        isActive && "bg-foreground text-background hover:text-background"
       )}
     >
       <Icon className="m-2 w-8 h-8" />
@@ -134,50 +134,50 @@ export const Toolbar = () => {
   ];
 
   return (
-    <div className="flex items-center gap-x-1 bg-neutral-200/30 mb-2 px-2.5 py-2 rounded-md max-w-full min-h-[40px]">
+    <div className="flex items-center gap-x-1 bg-neutral-900 mb-2 px-2.5 py-2 rounded-md max-w-full min-h-[40px]">
       {sections[0].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
 
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
       <FontFamilyButton />
 
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
       <HeadingLevelButton />
 
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
       {sections[1].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
 
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
 
       <TextColorButton />
       <HighlightColorButton />
 
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
       {/* TODO : Link */}
       <LinkButton />
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
       {/* TODO : Image */}
       <ImageButton />
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
       {/* TODO : Text Align */}
       <AlginButton />
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
       {/* TODO : List  */}
       <ListButton />
 
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
       {/* TODO : Font size */}
       <FontSizeButton />
 
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
       {/* task list */}
       {sections[2].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
-      <Separator orientation="vertical" className="bg-neutral-300 h-10" />
+      <Separator orientation="vertical" className="bg-neutral-700 h-10" />
       {/* line height  */}
       <LineHeightButton />
     </div>

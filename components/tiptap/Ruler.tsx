@@ -77,7 +77,7 @@ export const Ruler = () => {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      className="print:hidden relative flex items-end mx-auto border-gray-300 border-b w-[816px] h-6 font-sans select-none"
+      className="print:hidden relative flex items-end mx-auto border-neutral-700 border-b w-[816px] h-6 font-sans select-none"
     >
       <div id="ruler-container" className="relative w-full h-full">
         <Marker
@@ -111,16 +111,16 @@ export const Ruler = () => {
                   {marker % 10 === 0 && (
                     <>
                       <div className="bottom-0 absolute bg-neutral-500 w-[1px] h-2" />
-                      <span className="bottom-2 absolute text-[10px] text-neutral-500 -translate-x-1/2 transform">
+                      <span className="bottom-2 absolute text-[10px] text-muted-foreground -translate-x-1/2 transform">
                         {marker / 10 + 1}
                       </span>
                     </>
                   )}
                   {marker % 5 === 0 && marker % 10 !== 0 && (
-                    <div className="bottom-0 absolute bg-neutral-500 w-[1px] h-1.5" />
+                    <div className="bottom-0 absolute bg-muted-foreground w-[1px] h-1.5" />
                   )}
                   {marker % 5 !== 0 && (
-                    <div className="bottom-0 absolute bg-neutral-500 w-[1px] h-1" />
+                    <div className="bottom-0 absolute bg-muted-foreground w-[1px] h-1" />
                   )}
                 </div>
               );

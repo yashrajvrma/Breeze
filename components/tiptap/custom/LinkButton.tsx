@@ -31,21 +31,22 @@ export const LinkButton = () => {
     >
       <DropdownMenuTrigger
         asChild
-        className="flex items-center h-8 font-sans align-middle"
+        className="flex items-center h-8 font-sans align-middle text-muted-foreground"
       >
-        <button className="flex flex-col justify-center items-center hover:bg-neutral-200/80 px-1.5 py-1 rounded-sm min-w-7 h-7 overflow-hidden text-sm shrink-0">
+        <button className="flex flex-col justify-center items-center hover:bg-background hover:text-foreground px-1.5 py-1 rounded-sm min-w-7 h-7 overflow-hidden text-sm shrink-0">
           <Link2Icon className="w-4 h-5" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="flex items-center gap-x-2 bg-neutral-50 p-2.5 border border-neutral-300">
+      <DropdownMenuContent className="flex items-center gap-x-2 p-2.5 bg-neutral-900 border border-neutral-700 text-muted-foreground">
         <Input
           placeholder="https://example.com"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className="bg-neutral-50 focus:border-none outline-0 outline-none focus:outline-none font-sans text-neutral-900"
+          className="bg-neutral-900 focus:border-none outline-0 outline-none focus:outline-none font-sans text-foreground"
         />
         <Button
-          className="hover:bg-neutral-200/80 font-sans text-blue-600"
+          variant="secondary"
+          className="hover:bg-foreground font-sans text-blue-600 cursor-pointer"
           onClick={() => onChange(value)}
         >
           Apply

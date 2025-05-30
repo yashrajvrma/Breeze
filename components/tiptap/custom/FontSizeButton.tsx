@@ -56,7 +56,7 @@ export const FontSizeButton = () => {
     <>
       <div className="flex items-center gap-x-0.5">
         <button
-          className="flex justify-center items-center hover:bg-neutral-200/80 w-8 h-8 text-sm shrink-0 roudned-sm"
+          className="flex justify-center items-center w-8 h-8 text-sm shrink-0 roudned-sm text-muted-foreground hover:text-foreground"
           onClick={decrement}
         >
           <MinusIcon className="m-2 w-8 h-8" />
@@ -68,7 +68,7 @@ export const FontSizeButton = () => {
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onKeyDown={handleKeyDown}
-            className="bg-transparent border border-neutral-400 rounded-sm focus:outline-none focus:ring-0 w-10 h-7 text-sm text-center"
+            className="bg-transparent border border-neutral-700 text-muted-foreground rounded-sm focus:outline-none focus:ring-0 w-10 h-7 text-sm text-center"
           />
         ) : (
           <button
@@ -76,13 +76,13 @@ export const FontSizeButton = () => {
               setIsEditing(true);
               //   updateFontSize(currentFontSize);
             }}
-            className="bg-transparent border border-neutral-400 rounded-sm w-10 h-8 text-sm text-center cursor-text"
+            className="bg-transparent border border-neutral-700 text-muted-foreground rounded-sm w-10 h-8 text-sm text-center cursor-text"
           >
             {currentFontSize}
           </button>
         )}
         <button
-          className="flex justify-center items-center hover:bg-neutral-200/80 w-8 h-8 text-sm shrink-0 roudned-sm"
+          className="flex justify-center items-center text-muted-foreground hover:text-foreground w-8 h-8 text-sm shrink-0 roudned-sm"
           onClick={increment}
         >
           <PlusIcon className="m-2 w-8 h-8" />
