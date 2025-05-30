@@ -45,7 +45,7 @@ const fetchRecentChats = async (
 export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const params = useParams();
   const router = useRouter();
-  const { data: session, status } = useSession(); // Add session hook
+  const { data: session } = useSession(); // Add session hook
 
   const { ref, inView } = useInView();
 
@@ -81,14 +81,24 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
 
   const chats = data?.pages.flatMap((page) => page.chats);
 
+  if (!session) {
+    return (
+      <div className="flex flex-col px-5 py-1">
+        <div className="flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
+          Recent
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full ">
-      <div className="px-5 pb-1  flex-shrink-0 text-sm text-muted-foreground leading-none">
+      <div className="px-5 pb-1 flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
         Recents
       </div>
 
       {isLoading ? (
-        <div className="px-5 py-2 font-sans text-center text-sm text-muted-foreground">
+        <div className="px-4 py-2 font-sans text-center text-sm text-muted-foreground">
           Loading...
         </div>
       ) : (

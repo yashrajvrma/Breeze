@@ -13,6 +13,7 @@ import FavouriteButton from "../button/favouriteButton";
 import { DeleteButton } from "../button/deleteButton";
 import { EllipsisIcon } from "lucide-react";
 import UnFavouriteButton from "../button/unFavourite";
+import { useSession } from "next-auth/react";
 
 interface SidebarNavigationProps {
   isCollapsed: boolean;
@@ -35,22 +36,37 @@ export default function FavouriteChats({
 }: SidebarNavigationProps) {
   const params = useParams();
   const router = useRouter();
+  const { data: session } = useSession();
 
   const chatId = params.chatId as string;
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["favChats"],
     queryFn: favChatsFn,
+    enabled: !!session,
   });
 
+  if (!session) {
+    return (
+      <div className="flex flex-col px-5 py-1 mb-2">
+        <div className="flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
+          Favourite
+        </div>
+        <div className="border border-dashed text-center mt-3 px-4 py-4  text-xs text-muted-foreground rounded-lg">
+          Favourites chats that you use often.
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col">
-      <div className="px-5 py-1 flex-shrink-0 text-sm text-muted-foreground leading-none">
+    <div className="flex flex-col mb-10">
+      <div className="px-5 py-1 flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
         Favourite
       </div>
 
       {isLoading ? (
-        <div className="px-5 py-2 font-sans text-center text-sm text-muted-foreground">
+        <div className="px-4 py-2 font-sans text-center text-sm text-muted-foreground">
           Loading...
         </div>
       ) : (
