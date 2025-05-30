@@ -50,7 +50,7 @@ export default function SidebarHeader({
                   onClick={toggleSidebar}
                 >
                   {/* Default icon */}
-                  <PanelRightIcon className="h-5 w-5 text-foreground/70 group-hover:hidden" />
+                  <PanelRightIcon className="h-5 w-5 p-0.5 text-foreground/70 group-hover:hidden" />
 
                   {/* Icon shown on hover */}
                   <ArrowLeftToLineIcon className="h-5 w-5 p-0.5 text-foreground/70 hidden group-hover:block absolute inset-0 m-auto" />

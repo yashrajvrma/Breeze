@@ -41,7 +41,7 @@ export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-6 w-6 mb-2 mx-auto group relative"
+                className="h-6 w-6 mx-auto group relative"
                 onClick={toggleSidebar}
               >
                 <PanelLeftIcon className="h-5 w-5 text-foreground/70 group-hover:hidden" />

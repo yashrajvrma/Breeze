@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
+import LoginButton from "../button/loginButton";
 
 interface SidebarFooterProps {
   isCollapsed: boolean;
@@ -32,23 +33,28 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
   const { data: session } = useSession();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
+  if (!session) {
+    return <div className="px-3 py-3">{!isCollapsed && <LoginButton />}</div>;
+  }
+
   return (
-    <div className="p-4">
+    <div className="px-3 py-2">
       <div className="flex flex-row items-center align-middle">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div className="flex flex-row items-center gap-x-2.5 hover:cursor-pointer">
-              <Avatar className="h-8 w-8">
-                <AvatarImage
-                  src={session?.user?.image || ""}
-                  referrerPolicy="no-referrer"
-                  alt="User"
-                />
-                <AvatarFallback>
-                  <User className="h-4 w-4" />
-                </AvatarFallback>
-              </Avatar>
-              {!isCollapsed && (
+            {!isCollapsed ? (
+              <div className="flex flex-row items-center gap-x-2.5 hover:cursor-pointer w-full p-2 rounded-md hover:bg-primary-foreground ">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage
+                    src={session?.user?.image || ""}
+                    referrerPolicy="no-referrer"
+                    alt="User"
+                  />
+                  <AvatarFallback>
+                    <User className="h-4 w-4" />
+                  </AvatarFallback>
+                </Avatar>
+
                 <div className="text-sm font-semibold">
                   <p className="text-foreground">
                     {session?.user?.name?.[0]?.toUpperCase()! +
@@ -56,8 +62,21 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
                   </p>
                   <p className="text-muted-foreground">Free Plan</p>
                 </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className="flex flex-row items-center hover:cursor-pointer w-full py-2">
+                <Avatar className="h-8 w-8 flex items-center">
+                  <AvatarImage
+                    src={session?.user?.image || ""}
+                    referrerPolicy="no-referrer"
+                    alt="User"
+                  />
+                  <AvatarFallback>
+                    <User className="h-4 w-4" />
+                  </AvatarFallback>
+                </Avatar>
+              </div>
+            )}
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="w-56 font-sans">

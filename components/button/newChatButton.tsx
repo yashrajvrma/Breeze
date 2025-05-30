@@ -22,9 +22,6 @@ export default function NewChat({ isCollapsed }: SidebarNavigationProps) {
       onClick={() => router.push("/")}
     >
       {isCollapsed ? (
-        // <div className="h-7 w-7 flex items-center justify-center rounded-md bg-muted-foreground text-foreground hover:bg-">
-        //   <Plus className="h-5 w-5" strokeWidth={2} />
-        // </div>
         <Button className="h-7 w-7 px-0" variant="outline">
           <Plus className="w-5 h-5" strokeWidth={2} />
         </Button>
