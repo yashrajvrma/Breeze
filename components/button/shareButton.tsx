@@ -1,5 +1,6 @@
-import { CopyIcon, ShareIcon } from "lucide-react";
+"use client";
 
+import { CopyIcon, ShareIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
