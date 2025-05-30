@@ -38,12 +38,12 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
   }
 
   return (
-    <div className="px-3 py-2">
+    <div className="px-3 py-2 border-t">
       <div className="flex flex-row items-center align-middle">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             {!isCollapsed ? (
-              <div className="flex flex-row items-center gap-x-2.5 hover:cursor-pointer w-full p-2 rounded-md hover:bg-primary-foreground ">
+              <div className="flex flex-row items-center gap-x-2.5 hover:cursor-pointer w-full p-2 rounded-md hover:bg-primary-foreground">
                 <Avatar className="h-8 w-8">
                   <AvatarImage
                     src={session?.user?.image || ""}

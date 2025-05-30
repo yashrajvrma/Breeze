@@ -1,4 +1,9 @@
-import { ArrowLeftToLineIcon, PanelRightIcon } from "lucide-react";
+import {
+  ArrowLeftToLineIcon,
+  ArrowRightToLineIcon,
+  PanelLeftIcon,
+  PanelRightIcon,
+} from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -20,8 +25,8 @@ export default function SidebarHeader({
   toggleSidebar,
 }: SidebarHeaderProps) {
   return (
-    <div className="p-4">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col">
+      <div className="flex items-center justify-between my-3 px-4">
         <div className="flex items-center">
           <Link href="/">
             <Image src={logo1} alt="logo" width={24} height={24} />
@@ -39,14 +44,20 @@ export default function SidebarHeader({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-6 w-6 group relative"
+                  className="h-7 w-7 group relative"
                   onClick={toggleSidebar}
                 >
                   {/* Default icon */}
-                  <PanelRightIcon className="h-5 w-5 p-0.5 text-foreground/70 group-hover:hidden" />
+                  <PanelRightIcon
+                    size={18}
+                    className="text-foreground/70 group-hover:hidden"
+                  />
 
                   {/* Icon shown on hover */}
-                  <ArrowLeftToLineIcon className="h-5 w-5 p-0.5 text-foreground/70 hidden group-hover:block absolute inset-0 m-auto" />
+                  <ArrowLeftToLineIcon
+                    size={18}
+                    className="text-foreground/70 hidden group-hover:block absolute inset-0 m-auto"
+                  />
 
                   <span className="sr-only">Collapse sidebar</span>
                 </Button>
@@ -54,6 +65,33 @@ export default function SidebarHeader({
               <TooltipContent side="right">
                 <p>Collapse sidebar</p>
               </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+      </div>
+      <div className="flex items-center">
+        {isCollapsed && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-7 w-7 mx-auto group relative my-1"
+                  onClick={toggleSidebar}
+                >
+                  <PanelLeftIcon
+                    size={18}
+                    className="text-foreground/70 group-hover:hidden"
+                  />
+                  <ArrowRightToLineIcon
+                    size={18}
+                    className="text-foreground/70 hidden group-hover:block absolute inset-0 m-auto"
+                  />
+                  <span className="sr-only">Expand sidebar</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="right">Expand sidebar</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         )}
