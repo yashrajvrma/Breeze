@@ -30,8 +30,6 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    console.log("chat id is sjssj", isChatIdValid);
-
     if (!isChatIdValid) {
       return NextResponse.json(
         {

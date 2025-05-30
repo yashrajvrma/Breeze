@@ -29,10 +29,13 @@ export async function POST(req: NextRequest) {
       return new Response("Invalid chat id", { status: 400 });
     }
 
-    const favourite = await prisma.favourite.create({
-      data: {
-        chatId: chatId,
+    const addToFavourite = await prisma.chat.update({
+      where: {
         userId: userId as string,
+        id: chatId,
+      },
+      data: {
+        favourite: true,
       },
     });
 
@@ -63,9 +66,21 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     const userId = session.user.id;
 
-    const favChats = await prisma.favourite.findMany({
+    const favChats = await prisma.chat.findMany({
       where: {
         userId: userId as string,
+        favourite: true,
+        isActive: true,
+      },
+      orderBy: {
+        updatedAt: "asc",
+      },
+      select: {
+        id: true,
+        userId: true,
+        title: true,
+        favourite: true,
+        updatedAt: true,
       },
     });
 

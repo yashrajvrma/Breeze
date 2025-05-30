@@ -38,7 +38,7 @@ const fetchRecentChats = async (
   context: QueryFunctionContext
 ): Promise<ChatResponse> => {
   const pageParam = (context.pageParam as number) || 1;
-  const res = await axios.get(`/api/chat?page=${pageParam}&size=10`);
+  const res = await axios.get(`/api/v1/chat?page=${pageParam}&size=10`);
   return res.data;
 };
 

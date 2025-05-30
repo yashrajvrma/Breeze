@@ -10,7 +10,7 @@ type ChatId = {
 };
 
 const addToFavouriteFn = (chatId: string) => {
-  return axios.post(`/api/chat/fav`, { chatId });
+  return axios.post(`/api/v1/chat/fav`, { chatId });
 };
 
 export default function FavouriteButton({ chatId }: ChatId) {

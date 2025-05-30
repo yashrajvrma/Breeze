@@ -52,4 +52,3 @@ export async function createChatSession(formData: FormData) {
 
   redirect(`/chat/${chat.id}`);
 }
-

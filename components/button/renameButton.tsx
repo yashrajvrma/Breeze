@@ -24,7 +24,7 @@ type Chat = {
 };
 
 const renameChatFn = ({ id, title }: Chat) => {
-  return axios.post(`/api/chat/rename`, { id, title });
+  return axios.post(`/api/v1/chat/rename`, { id, title });
 };
 
 export function RenameChatButton({ id, title }: Chat) {

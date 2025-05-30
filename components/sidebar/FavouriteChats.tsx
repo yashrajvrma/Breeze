@@ -8,7 +8,7 @@ interface SidebarNavigationProps {
 }
 
 const favChatsFn = async () => {
-  return axios.get("/api//chat/fav");
+  return axios.get("/api/v1/chat/fav");
 };
 export default function Favourite({ isCollapsed }: SidebarNavigationProps) {
   const { data, isLoading, isError, error } = useQuery({
@@ -22,11 +22,7 @@ export default function Favourite({ isCollapsed }: SidebarNavigationProps) {
           {isLoading ? (
             <div className="text-center text-sm">Loading...</div>
           ) : (
-            <div>
-              {data.map((item,index) => {
-                
-              })}
-            </div>
+            <div>{data.map((item, index) => {})}</div>
           )}
         </div>
       )}

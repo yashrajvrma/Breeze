@@ -25,14 +25,15 @@ export async function GET(req: NextRequest) {
       where: {
         userId: userId!,
         isActive: true,
+        favourite: false,
       },
       orderBy: {
-        createdAt: "asc",
+        updatedAt: "asc",
       },
       select: {
         id: true,
         title: true,
-        createdAt: true,
+        updatedAt: true,
       },
       take: size,
       skip: skip,
@@ -57,7 +58,6 @@ export async function GET(req: NextRequest) {
     );
   } catch (error) {
     console.error("Failed to fetch chats:", error);
-    return new Response("Internal Server Error", { status: 500 });
+    return new Response("Sorry something went wrong", { status: 500 });
   }
 }
-
