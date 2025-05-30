@@ -119,7 +119,7 @@ export const Editor = () => {
   return (
     <div className="flex flex-col h-full bg-background print:bg-white overflow-hidden">
       {/* Toolbar */}
-      <div className="flex-shrink-0 bg-background border-b border-neutral-700 z-10 flex justify-center">
+      <div className="flex-shrink-0 bg-background border-b border-neutral-700 z-10 flex justify-center pt-2 px-2">
         <Toolbar />
       </div>
 
@@ -127,15 +127,16 @@ export const Editor = () => {
       <div className="flex-1 min-h-0 overflow-y-auto">
         <ScrollArea className="h-full w-full px-4 py-4 print:p-0 print:overflow-visible">
           <div className="min-w-[816px] mx-auto">
-            {" "}
-            {/* ✅ Center everything here */}
             {/* Ruler */}
             <div className="sticky top-0 bg-background z-10 flex justify-center">
               <Ruler />
             </div>
             {/* Editor content */}
             <div className="flex justify-center pt-4 pb-20">
-              <EditorContent editor={editor} />
+              <EditorContent
+                className="text-accent-foreground"
+                editor={editor}
+              />
             </div>
           </div>
           <ScrollBar orientation="horizontal" />

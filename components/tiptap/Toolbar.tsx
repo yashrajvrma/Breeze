@@ -134,7 +134,7 @@ export const Toolbar = () => {
   ];
 
   return (
-    <div className="flex items-center gap-x-1 bg-neutral-900 mb-2 px-2.5 py-2 rounded-md max-w-full min-h-[40px]">
+    <div className="flex flex-wrap items-center gap-x-1 gap-y-2 bg-neutral-900 mb-2 px-2.5 py-2 rounded-xl max-w-full min-h-[40px]">
       {sections[0].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}

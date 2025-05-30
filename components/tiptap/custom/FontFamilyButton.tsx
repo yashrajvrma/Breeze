@@ -26,7 +26,7 @@ export const FontFamilyButton = () => {
         asChild
         className="flex items-center h-8 font-sans align-middle text-muted-foreground"
       >
-        <button className="flex justify-between hover:bg-background hover:text-foreground px-2 py-3 rounded-sm w-[100px] h-7 overflow-hidden text-sm shrink-0 item-center">
+        <button className="flex justify-between hover:text-foreground px-2 py-3 rounded-sm w-[100px] h-7 overflow-hidden text-sm shrink-0 item-center">
           <span className="truncate">
             {editor?.getAttributes("textStyle").fontFamily || "Arial"}
           </span>
@@ -39,7 +39,7 @@ export const FontFamilyButton = () => {
             key={value}
             className={cn(
               "flex items-center text-sm gap-x-2 px-2 py-1 rounded-sm hover:bg-background hover:text-foreground",
-              editor?.getAttributes("textStyle").fontFamily === "value" &&
+              editor?.getAttributes("textStyle").fontFamily === value &&
                 "bg-foreground text-background hover:bg-foreground hover:text-background"
             )}
             style={{
