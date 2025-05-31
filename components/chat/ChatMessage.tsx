@@ -2,11 +2,13 @@ import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
 import { useEditorContent } from "@/lib/store/editor";
+import DocsContent from "./button/docsContentButton";
 
 interface Message {
   id: string;
   content: string;
   sender: string;
+  isStreaming?: boolean; // Add this prop to track streaming state
 }
 
 interface ChatMessageProps {
@@ -28,6 +30,8 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     afterDoc: null,
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const content = message.content;
     const startTag = "<<start-doc>>";
@@ -41,6 +45,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         docContent: null,
         afterDoc: null,
       });
+      setIsLoading(false);
       return;
     }
 
@@ -48,32 +53,44 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     const endIdx = content.indexOf(endTag, startIdx);
 
     if (endIdx === -1) {
+      // Document is still being generated (no end tag found)
       setParsedContent({
         beforeDoc,
         docContent: content.slice(startIdx + startTag.length).trim(),
         afterDoc: null,
       });
+      setIsLoading(true); // Document is still loading
       return;
     }
 
+    // Document is complete (both start and end tags found)
     setParsedContent({
       beforeDoc,
       docContent: content.slice(startIdx + startTag.length, endIdx).trim(),
       afterDoc: content.slice(endIdx + endTag.length).trim(),
     });
-  }, [message.content]);
+
+    // Check if message is still streaming or if document generation is complete
+    setIsLoading(message.isStreaming || false);
+  }, [message.content, message.isStreaming]);
 
   const handleDocumentClick = () => {
-    if (parsedContent.docContent) {
-      try {
-        const contentJson = JSON.parse(parsedContent.docContent);
-        setEditorContent(contentJson);
-        console.log("Document content set to editor:", contentJson);
-      } catch (error) {
-        console.error("Error parsing document content:", error);
-      }
+    // Only allow click when not loading and docContent exists
+    if (isLoading || !parsedContent.docContent) {
+      console.log("Document still loading or no content available");
+      return;
+    }
+
+    try {
+      const contentJson = JSON.parse(parsedContent.docContent);
+      setEditorContent(contentJson);
+      console.log("Document content set to editor:", contentJson);
+    } catch (error) {
+      console.error("Error parsing document content:", error);
     }
   };
+
+  const isDocumentReady = parsedContent.docContent && !isLoading;
 
   return (
     <div
@@ -97,20 +114,15 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
           {parsedContent.docContent && (
             <div
-              className="flex flex-col bg-muted hover:bg-muted/70 shadow-sm p-4 border rounded-lg transition-colors cursor-pointer"
-              onClick={handleDocumentClick}
+              className={cn(
+                "flex flex-col bg-muted shadow-sm rounded-lg transition-colors",
+                isDocumentReady
+                  ? "hover:bg-muted/70 cursor-pointer"
+                  : "cursor-not-allowed opacity-75"
+              )}
+              onClick={isDocumentReady ? handleDocumentClick : undefined}
             >
-              <div className="flex justify-between items-center mb-2">
-                <p className="font-semibold text-sm">Document</p>
-                <div className="flex items-center gap-1 bg-primary/10 px-2 py-0.5 rounded text-primary text-xs">
-                  <span>Click to edit</span>
-                </div>
-              </div>
-              <div className="bg-background/70 p-2 border border-border/50 rounded max-h-20 overflow-hidden text-muted-foreground text-xs">
-                {parsedContent.docContent.length > 200
-                  ? `${parsedContent.docContent.slice(0, 200)}...`
-                  : parsedContent.docContent}
-              </div>
+              <DocsContent isLoading={isLoading} />
             </div>
           )}
 

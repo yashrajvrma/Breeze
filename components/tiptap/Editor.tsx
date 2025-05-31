@@ -18,7 +18,6 @@ import TextStyle from "@tiptap/extension-text-style";
 import Highlight from "@tiptap/extension-highlight";
 import { Color } from "@tiptap/extension-color";
 import Link from "@tiptap/extension-link";
-import { useEffect } from "react";
 
 import { useMargin } from "@/lib/store/margin";
 import { useEditorContent, useEditorStore } from "@/lib/store/editor";
@@ -26,11 +25,11 @@ import { FontSizeExtension } from "@/extension/fontSize";
 import { LineHeightExtension } from "@/extension/lineHeight";
 import { Ruler } from "./Ruler";
 
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"; // ✅ import scroll area
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
-  const editorContent = useEditorContent((state) => state.content);
+  const content = useEditorContent((state) => state.content);
   const leftMargin = useMargin((state) => state.leftMargin);
   const rightMargin = useMargin((state) => state.rightMargin);
 
@@ -40,7 +39,7 @@ export const Editor = () => {
       attributes: {
         style: `padding-left: ${leftMargin}px; padding-right: ${rightMargin}px`,
         class:
-          "focus:outline-none print:border-0 border border-neutral-700 flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
+          "focus:outline-none print:border-0 bg-white border-2 border-neutral-200 flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
       },
     },
     extensions: [
@@ -86,24 +85,15 @@ export const Editor = () => {
     onUpdate({ editor }) {
       setEditor(editor);
     },
-    // Remove content from useEditor to prevent reinitalization
-    content: null,
+    content,
   });
-
-  // Handle content updates separately with useEffect
-  useEffect(() => {
-    if (editor && editorContent) {
-      // Use commands to update content without reinitializing
-      editor.commands.setContent(editorContent);
-    }
-  }, [editor, editorContent]);
 
   if (!editor) return null;
 
   return (
     <div className="flex flex-col h-full bg-background print:bg-white overflow-hidden">
       {/* Toolbar */}
-      <div className="flex-shrink-0 bg-background border-b border-neutral-700 z-10 flex justify-center pt-2 px-2">
+      <div className="flex-shrink-0 bg-background border-b z-10 flex justify-center pt-2 px-2">
         <Toolbar />
       </div>
 

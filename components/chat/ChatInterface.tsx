@@ -137,11 +137,11 @@ export default function ChatInterface() {
 
   return (
     <div className="flex flex-col h-full border-r border-border font-sans">
-      <div className="py-3 px-12 text-base font-medium">
+      <div className="py-4 px-7 text-base font-semibold border-b">
         {threadData?.thread?.title || "Untitled Chat"}
       </div>
-      <ScrollArea className="flex-1 p-4 pb-0 px-14">
-        <div className="space-y-4">
+      <ScrollArea className="flex-1 p-0 pb-0 px-7">
+        <div className="space-y-4 pt-4">
           {messages.map((msg, index) => (
             <ChatMessage
               key={msg.id || index}

@@ -25,8 +25,8 @@ export default function SidebarHeader({
   toggleSidebar,
 }: SidebarHeaderProps) {
   return (
-    <div className="flex flex-col">
-      <div className="flex items-center justify-between my-3 px-4">
+    <div className="flex flex-col border-b">
+      <div className="flex items-center justify-between my-3.5 px-4">
         <div className="flex items-center">
           <Link href="/">
             <Image src={logo1} alt="logo" width={24} height={24} />
