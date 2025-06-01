@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
         favourite: false,
       },
       orderBy: {
-        updatedAt: "asc",
+        createdAt: "desc",
       },
       select: {
         id: true,

@@ -27,6 +27,7 @@ import { Ruler } from "./Ruler";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"; // ✅ import scroll area
 import { useEffect } from "react";
+import EditorHeader from "../editor/editorHeader";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
@@ -102,6 +103,7 @@ export const Editor = () => {
 
   return (
     <div className="flex flex-col h-full bg-background print:bg-white overflow-hidden">
+      <EditorHeader />
       <div className="flex-shrink-0 bg-background border-b z-10 flex justify-center pt-2 px-2">
         <Toolbar />
       </div>

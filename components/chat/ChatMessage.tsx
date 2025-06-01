@@ -115,7 +115,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           {parsedContent.docContent && (
             <div
               className={cn(
-                "flex flex-col bg-muted shadow-sm rounded-lg transition-colors",
+                "flex flex-col bg-muted shadow-sm rounded-lg transition-colors w-full",
                 isDocumentReady
                   ? "hover:bg-muted/70 cursor-pointer"
                   : "cursor-not-allowed opacity-75"
