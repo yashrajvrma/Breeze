@@ -168,7 +168,7 @@ export default function ChatInterface() {
           />
           <SendMessageButton inputMessage={input} isLoading={isLoading} />
         </form>
-        <div className="flex justify-center items-center font-sans text-xs text-muted-foreground py-2">
+        <div className="flex justify-center items-center font-sans text-center text-xs text-muted-foreground py-2">
           Breeze may make mistakes. Please use with discretion.
         </div>
       </div>

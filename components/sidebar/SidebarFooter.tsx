@@ -43,8 +43,8 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             {!isCollapsed ? (
-              <div className="flex flex-row items-center gap-x-2.5 hover:cursor-pointer w-full p-2 rounded-md hover:bg-primary-foreground">
-                <Avatar className="h-8 w-8">
+              <div className="flex flex-row items-center gap-x-2 hover:cursor-pointer w-full p-2 hover:bg-primary-foreground rounded-lg">
+                <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
                     src={session?.user?.image || ""}
                     referrerPolicy="no-referrer"
@@ -55,12 +55,14 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
                   </AvatarFallback>
                 </Avatar>
 
-                <div className="text-sm font-semibold">
+                <div className="text-sm">
                   <p className="text-foreground">
                     {session?.user?.name?.[0]?.toUpperCase()! +
                       session?.user?.name?.slice(1)}
                   </p>
-                  <p className="text-muted-foreground">Free Plan</p>
+                  <p className="text-muted-foreground text-xs">
+                    {session?.user?.email}
+                  </p>
                 </div>
               </div>
             ) : (
