@@ -27,6 +27,7 @@ import { AlginButton } from "./custom/AlignButton";
 import { ListButton } from "./custom/ListButton";
 import { FontSizeButton } from "./custom/FontSizeButton";
 import { LineHeightButton } from "./custom/LineHeightButton";
+import { useEffect } from "react";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -54,7 +55,6 @@ const ToolbarButton = ({
 
 export const Toolbar = () => {
   const editor = useEditorStore((state) => state.editor);
-  console.log("Editor :", editor);
 
   const sections: {
     label: string;

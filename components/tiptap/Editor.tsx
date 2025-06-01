@@ -26,6 +26,7 @@ import { LineHeightExtension } from "@/extension/lineHeight";
 import { Ruler } from "./Ruler";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"; // ✅ import scroll area
+import { useEffect } from "react";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
@@ -34,14 +35,14 @@ export const Editor = () => {
   const rightMargin = useMargin((state) => state.rightMargin);
 
   const editor = useEditor({
-    immediatelyRender: false,
     editorProps: {
       attributes: {
         style: `padding-left: ${leftMargin}px; padding-right: ${rightMargin}px`,
         class:
-          "focus:outline-none print:border-0 bg-white border-2 border-neutral-200 flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
+          "focus:outline-none print:border-0 border border-neutral-700 flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
       },
     },
+    immediatelyRender: false,
     extensions: [
       StarterKit,
       Table.configure({
@@ -79,33 +80,38 @@ export const Editor = () => {
     onCreate({ editor }) {
       setEditor(editor);
     },
-    onDestroy() {
-      setEditor(null);
-    },
-    onUpdate({ editor }) {
-      setEditor(editor);
-    },
-    content,
+    // onDestroy() {
+    //   setEditor(null);
+    // },
+    content: content, // fallback to empty string
   });
+
+  // ✅ Sync editor content when store `content` changes
+  useEffect(() => {
+    if (editor && content) {
+      const current = editor.getJSON();
+      const isSameContent = JSON.stringify(current) === JSON.stringify(content);
+      if (!isSameContent) {
+        editor.commands.setContent(content);
+        console.log("Editor content updated from store");
+      }
+    }
+  }, [editor, content]);
 
   if (!editor) return null;
 
   return (
     <div className="flex flex-col h-full bg-background print:bg-white overflow-hidden">
-      {/* Toolbar */}
       <div className="flex-shrink-0 bg-background border-b z-10 flex justify-center pt-2 px-2">
         <Toolbar />
       </div>
 
-      {/* Scrollable Area */}
       <div className="flex-1 min-h-0 overflow-y-auto">
         <ScrollArea className="h-full w-full px-4 py-4 print:p-0 print:overflow-visible">
           <div className="min-w-[816px] mx-auto">
-            {/* Ruler */}
             <div className="sticky top-0 bg-background z-10 flex justify-center">
               <Ruler />
             </div>
-            {/* Editor content */}
             <div className="flex justify-center pt-4 pb-20">
               <EditorContent
                 className="text-accent-foreground bg-background"
