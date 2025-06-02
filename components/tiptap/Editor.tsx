@@ -23,9 +23,10 @@ import { useMargin } from "@/lib/store/margin";
 import { useEditorContent, useEditorStore } from "@/lib/store/editor";
 import { FontSizeExtension } from "@/extension/fontSize";
 import { LineHeightExtension } from "@/extension/lineHeight";
+import { DocxExporter } from "@/extension/exportToDocx"; // Import your DOCX exporter
 import { Ruler } from "./Ruler";
 
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"; // ✅ import scroll area
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useEffect } from "react";
 import EditorHeader from "../editor/editorHeader";
 
@@ -77,6 +78,7 @@ export const Editor = () => {
         types: ["heading", "paragraph"],
         defaultLineHeight: "normal",
       }),
+      DocxExporter, // Add the DOCX exporter extension
     ],
     onCreate({ editor }) {
       setEditor(editor);
@@ -84,10 +86,10 @@ export const Editor = () => {
     // onDestroy() {
     //   setEditor(null);
     // },
-    content: content, // fallback to empty string
+    content: content,
   });
 
-  // ✅ Sync editor content when store `content` changes
+  // Sync editor content when store `content` changes
   useEffect(() => {
     if (editor && content) {
       const current = editor.getJSON();
