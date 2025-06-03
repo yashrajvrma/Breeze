@@ -1,3 +1,5 @@
+"use client";
+
 import { ShareIcon } from "lucide-react";
 import { useEditorStore } from "@/lib/store/editor";
 import { exportToPdf } from "@/extension/exportToPdf";
@@ -7,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useMargin } from "@/lib/store/margin";
 
 interface EditorHeaderProps {
   title?: string;
@@ -16,6 +19,8 @@ export default function EditorHeader({
   title = "Rust Programming",
 }: EditorHeaderProps) {
   const editor = useEditorStore((state) => state.editor);
+  const leftMargin = useMargin((state) => state.leftMargin);
+  const rightMargin = useMargin((state) => state.rightMargin);
 
   const isEditorEmpty = !editor || editor.getText().trim().length === 0;
 
@@ -26,9 +31,9 @@ export default function EditorHeader({
       console.error("Editor instance not available");
       return;
     }
+    const htmlContent = editor?.getHTML();
 
-    const html = editor.getHTML();
-    await exportToPdf(html);
+    await exportToPdf({ htmlContent, leftMargin, rightMargin });
   };
 
   return (
@@ -51,7 +56,7 @@ export default function EditorHeader({
             </button>
           ) : (
             <DropdownMenuTrigger asChild>
-              <button className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 py-2 bg-cyan-600 hover:bg-cyan-500 text-foreground">
+              <button className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 py-2 bg-cyan-600 hover:bg-cyan-500 text-foreground cursor-default">
                 <ShareIcon size={16} />
                 Export
               </button>

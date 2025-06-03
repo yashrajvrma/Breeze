@@ -1,8 +1,21 @@
-export const exportToPdf = async (editorHtml: string) => {
-  if (!editorHtml) {
+type ExportPdf = {
+  htmlContent: string;
+  leftMargin: number;
+  rightMargin: number;
+};
+
+export const exportToPdf = async ({
+  htmlContent,
+  leftMargin,
+  rightMargin,
+}: ExportPdf) => {
+  if (!htmlContent) {
     console.error("No editor HTML content to export.");
     return;
   }
+
+  console.log("left margin is", leftMargin);
+  console.log("right margin is", rightMargin);
 
   const html2pdf = await require("html2pdf.js");
 
@@ -157,11 +170,11 @@ export const exportToPdf = async (editorHtml: string) => {
     }
   `;
 
-  console.log("editor content is ", editorHtml);
+  console.log("editor content is ", htmlContent);
   const wrappedHTML = `
     <div class="pdfStyles">
       <style>${styles}</style>
-      ${editorHtml}
+      ${htmlContent}
     </div>
   `;
 
@@ -182,7 +195,7 @@ export const exportToPdf = async (editorHtml: string) => {
         scrollX: 0,
         scrollY: 0,
       },
-      margin: [15, 15, 15, 15], // top, right, bottom, left
+      margin: [10, rightMargin, 10, leftMargin], // top, right, bottom, left
       filename: "document.pdf",
       image: { type: "jpeg", quality: 0.98 },
       jsPDF: {
