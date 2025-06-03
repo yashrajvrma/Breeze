@@ -4,6 +4,10 @@ type ExportPdf = {
   rightMargin: number;
 };
 
+function pxToMm(px: number) {
+  return (px * 25.4) / 96;
+}
+
 export const exportToPdf = async ({
   htmlContent,
   leftMargin,
@@ -14,8 +18,11 @@ export const exportToPdf = async ({
     return;
   }
 
-  console.log("left margin is", leftMargin);
-  console.log("right margin is", rightMargin);
+  const leftMarginMm = pxToMm(leftMargin);
+  const rightMarginMm = pxToMm(rightMargin);
+
+  console.log("left margin is", leftMarginMm);
+  console.log("right margin is", rightMarginMm);
 
   const html2pdf = await require("html2pdf.js");
 
@@ -24,6 +31,11 @@ export const exportToPdf = async ({
       color: black;
       background: white;
       font-family: Arial, sans-serif;
+      max-width: 816px;
+      width: 100%;
+      margin: 0 auto;
+      padding-left: ${leftMargin}px;
+      padding-right: ${rightMargin}px;
     }
     
     .pdfStyles :first-child {
@@ -195,7 +207,7 @@ export const exportToPdf = async ({
         scrollX: 0,
         scrollY: 0,
       },
-      margin: [10, rightMargin, 10, leftMargin], // top, right, bottom, left
+      margin: [10, rightMarginMm, 10, leftMarginMm], // top, right, bottom, left
       filename: "document.pdf",
       image: { type: "jpeg", quality: 0.98 },
       jsPDF: {
