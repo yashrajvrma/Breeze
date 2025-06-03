@@ -183,12 +183,13 @@
     padding: 0;
 
     li {
-      align-items: center;
+      align-items: flex-start;
       display: flex;
 
       > label {
         flex: 0 0 auto;
         margin-right: 0.5rem;
+        margin-top: 0.3rem;
         user-select: none;
       }
 
@@ -232,6 +233,7 @@
 
     .selectedCell:after {
       background: #e2e2e2;
+      opacity: 0.75;
       content: "";
       left: 0;
       right: 0;
@@ -243,7 +245,8 @@
     }
 
     .column-resize-handle {
-      background-color: #828282;
+      /* background-color: #828282; */
+      background-color: var(--background);
       bottom: -2px;
       pointer-events: none;
       position: absolute;
@@ -267,11 +270,11 @@
   img {
     display: block;
     height: auto;
-    margin: 1.5rem 0;
+    /* margin: 1.5rem 0; */
     max-width: 100%;
 
     &.ProseMirror-selectednode {
-      outline: 3px solid var(--purple);
+      outline: 3px solid var(--primary);
     }
   }
 
@@ -290,4 +293,12 @@
   img {
     display: initial;
   }
+}
+
+.tiptap-image-toolbar {
+  position: absolute;
+  top: -40px; /* adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }

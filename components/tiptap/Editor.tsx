@@ -54,7 +54,9 @@ export const Editor = () => {
       TableCell,
       TableHeader,
       TableRow,
-      Image,
+      Image.extend({
+        name: "image-editor",
+      }),
       ImageResize,
       Underline,
       TaskItem.configure({ nested: true }),
@@ -79,11 +81,13 @@ export const Editor = () => {
       }),
     ],
     onCreate({ editor }) {
+      editor?.commands.setFontFamily("Verdana");
       setEditor(editor);
     },
     // onDestroy() {
     //   setEditor(null);
     // },
+    autofocus: true,
     content: content,
   });
 
