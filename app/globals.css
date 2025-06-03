@@ -212,7 +212,7 @@
 
     td,
     th {
-      border: 1px solid rgb(0, 0, 0);
+      border: 1px solid rgb(255, 255, 255);
       box-sizing: border-box;
       min-width: 1em;
       padding: 6px 8px;
@@ -225,7 +225,7 @@
     }
 
     th {
-      background-color: rgb(247, 247, 247);
+      background-color: rgb(40, 42, 42);
       font-weight: bold;
       text-align: left;
     }
@@ -283,5 +283,11 @@
     &:hover {
       @apply underline;
     }
+  }
+}
+
+@layer base {
+  img {
+    display: initial;
   }
 }

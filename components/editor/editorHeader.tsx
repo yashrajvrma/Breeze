@@ -1,6 +1,6 @@
 import { ShareIcon } from "lucide-react";
-import { Button } from "../ui/button";
 import { useEditorStore } from "@/lib/store/editor";
+import { exportToPdf } from "@/extension/exportToPdf";
 
 interface EditorHeaderProps {
   title?: string;
@@ -11,26 +11,15 @@ export default function EditorHeader({
 }: EditorHeaderProps) {
   const editor = useEditorStore((state) => state.editor);
 
-  const handleExportToDocx = () => {
+  const handleExportToPdf = async () => {
     if (!editor) {
       console.error("Editor instance not available");
       return;
     }
 
-    console.log("Editor JSON:", editor.getJSON());
+    const html = editor.getHTML();
 
-    try {
-      // Export with custom options
-      editor.commands.exportToDocx({
-        filename: `${title.replace(/\s+/g, "_").toLowerCase()}.docx`,
-        header: title,
-        footer: `Generated on ${new Date().toLocaleDateString()}`,
-        download: true,
-      });
-    } catch (error) {
-      console.error("Failed to export to DOCX:", error);
-      // You could add a toast notification here
-    }
+    await exportToPdf(html);
   };
 
   return (
@@ -41,12 +30,12 @@ export default function EditorHeader({
           Save
         </button>
         <button
-          onClick={handleExportToDocx}
+          onClick={handleExportToPdf}
           className="flex justify-center items-center text-sm bg-cyan-600 hover:bg-cyan-500 text-foreground gap-x-1.5 rounded-lg px-2.5 py-2"
           disabled={!editor}
         >
           <ShareIcon size={16} />
-          Export to DOCX
+          Export
         </button>
       </div>
     </div>
