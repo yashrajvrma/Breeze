@@ -81,6 +81,7 @@
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.1",
     "file-saver": "^2.0.5",
+    "html-to-docx": "^1.8.0",
     "html2pdf.js": "^0.10.3",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.446.0",
@@ -115,6 +116,7 @@
     "zustand": "^5.0.4"
   },
   "devDependencies": {
+    "@types/html-to-docx": "^1.8.0",
     "@types/react-color": "^3.0.13",
     "postcss-nesting": "^13.0.1",
     "prisma": "^6.8.2",

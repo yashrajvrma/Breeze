@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useMargin } from "@/lib/store/margin";
+import { useExportDocx } from "@/extension/exportToDocx";
 
 interface EditorHeaderProps {
   title?: string;
@@ -22,9 +23,19 @@ export default function EditorHeader({
   const leftMargin = useMargin((state) => state.leftMargin);
   const rightMargin = useMargin((state) => state.rightMargin);
 
+  const exportDocxMutation = useExportDocx();
+
   const isEditorEmpty = !editor || editor.getText().trim().length === 0;
 
-  const handleExportToWord = () => {};
+  const handleExportToWord = async () => {
+    if (!editor) {
+      console.error("Editor instance not available");
+      return;
+    }
+
+    const htmlContent = editor.getHTML();
+    exportDocxMutation.mutate({ htmlContent, leftMargin, rightMargin });
+  };
 
   const handleExportToPdf = async () => {
     if (!editor) {
