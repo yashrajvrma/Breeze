@@ -35,9 +35,9 @@ export const HighlightColorButton = () => {
           <div className="w-5 h-0.5" style={{ backgroundColor: value }} />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-20 bg-neutral-900 border border-neutral-700 text-muted-foreground">
-        <SwatchesPicker
-          className="bg-black text-white"
+      <DropdownMenuContent className="bg-neutral-900 border border-neutral-700 text-muted-foreground">
+        <CompactPicker
+          className="bg-neutral-900"
           color={value}
           onChange={onChange}
         />

@@ -64,7 +64,7 @@ export const ImageButton = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-neutral-900 border-neutral-700 font-sans text-muted-foreground">
           <Button
-            className="flex justify-start items-start bg-neutral-900 text-muted-foreground hover:bg-background w-full cursor-pointer"
+            className="flex justify-start items-center bg-neutral-900 text-muted-foreground hover:bg-background w-full cursor-pointer"
             onClick={onUpload}
           >
             <UploadIcon className="mr-2 w-4 h-4" />
