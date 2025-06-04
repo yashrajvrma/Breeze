@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useMargin } from "@/lib/store/margin";
 import { useExportDocx } from "@/extension/exportToDocx";
+import SaveButton from "../button/saveButton";
 
 interface EditorHeaderProps {
   title?: string;
@@ -56,12 +57,13 @@ export default function EditorHeader({
       <div className="text-lg font-medium">{title}</div>
 
       <div className="flex justify-between gap-x-2.5">
-        <button
+        <SaveButton />
+        {/* <button
           onClick={() => handleSave()}
           className="flex justify-center items-center text-sm px-2.5 py-2 text-foreground rounded-lg bg-primary-foreground hover:bg-muted-foreground/20"
         >
           Save
-        </button>
+        </button> */}
 
         <DropdownMenu>
           {isEditorEmpty ? (
