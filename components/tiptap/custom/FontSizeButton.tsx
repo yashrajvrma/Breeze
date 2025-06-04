@@ -3,6 +3,11 @@
 import { useEditorStore } from "@/lib/store/editor";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const FontSizeButton = () => {
   const editor = useEditorStore((state) => state.editor);
@@ -59,7 +64,14 @@ export const FontSizeButton = () => {
           className="flex justify-center items-center w-8 h-8 text-sm shrink-0 roudned-sm text-muted-foreground hover:text-foreground"
           onClick={decrement}
         >
-          <MinusIcon className="m-2 w-8 h-8" />
+          <Tooltip>
+            <TooltipTrigger className="flex justify-center items-center w-8 h-8 text-sm shrink-0 roudned-sm text-muted-foreground hover:text-foreground">
+              <MinusIcon className="m-2 w-8 h-8" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Decrease font size</p>
+            </TooltipContent>
+          </Tooltip>
         </button>
         {isEditing ? (
           <input
@@ -85,7 +97,14 @@ export const FontSizeButton = () => {
           className="flex justify-center items-center text-muted-foreground hover:text-foreground w-8 h-8 text-sm shrink-0 roudned-sm"
           onClick={increment}
         >
-          <PlusIcon className="m-2 w-8 h-8" />
+          <Tooltip>
+            <TooltipTrigger className="flex justify-center items-center text-muted-foreground hover:text-foreground w-8 h-8 text-sm shrink-0 roudned-sm">
+              <PlusIcon className="m-2 w-8 h-8" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Increase font size</p>
+            </TooltipContent>
+          </Tooltip>
         </button>
       </div>
     </>

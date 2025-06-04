@@ -8,6 +8,11 @@ import {
 import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/lib/store/editor";
 import { ChevronDownIcon } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const FontFamilyButton = () => {
   const editor = useEditorStore((state) => state.editor);
@@ -26,11 +31,18 @@ export const FontFamilyButton = () => {
         asChild
         className="flex items-center h-8 font-sans align-middle text-muted-foreground"
       >
-        <button className="flex justify-between hover:text-foreground px-2 py-3 rounded-sm w-[100px] h-7 overflow-hidden text-sm shrink-0 item-center">
-          <span className="truncate">
-            {editor?.getAttributes("textStyle").fontFamily || "Arial"}
-          </span>
-          <ChevronDownIcon className="ml-1 w-5 h-5 shrink-0" />
+        <button className="flex justify-between hover:text-foreground rounded-sm w-[100px] h-7 overflow-hidden text-sm shrink-0 item-center">
+          <Tooltip>
+            <TooltipTrigger className="flex justify-between items-center w-[100px] shrink-0 px-2 py-3">
+              <span className="truncate">
+                {editor?.getAttributes("textStyle").fontFamily || "Arial"}
+              </span>
+              <ChevronDownIcon className="ml-1 w-5 h-5 shrink-0" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Font</p>
+            </TooltipContent>
+          </Tooltip>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex flex-col gap-y-1 bg-neutral-900 p-1 border border-neutral-700 text-muted-foreground">

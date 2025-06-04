@@ -18,7 +18,6 @@ import {
 import { Separator } from "../ui/separator";
 import { FontFamilyButton } from "./custom/FontFamilyButton";
 import { HeadingLevelButton } from "./custom/HeadingLevelButton";
-import { SketchPicker, CirclePicker } from "react-color";
 import { TextColorButton } from "./custom/TextColorButton";
 import { HighlightColorButton } from "./custom/HighlightColorButton";
 import { LinkButton } from "./custom/LinkButton";
@@ -28,6 +27,7 @@ import { ListButton } from "./custom/ListButton";
 import { FontSizeButton } from "./custom/FontSizeButton";
 import { LineHeightButton } from "./custom/LineHeightButton";
 import { useEffect } from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -73,13 +73,9 @@ export const Toolbar = () => {
         icon: Redo2Icon,
         onClick: () => editor?.chain().focus().redo().run(),
       },
+
       {
-        label: "Print",
-        icon: PrinterIcon,
-        onClick: () => window.print(),
-      },
-      {
-        label: "Spell Check",
+        label: "Spelling check",
         icon: SpellCheckIcon,
         onClick: () => {
           const currentCheck = editor?.view.dom.getAttribute("spellcheck");
@@ -88,6 +84,11 @@ export const Toolbar = () => {
             currentCheck === "false" ? "true" : "false"
           );
         },
+      },
+      {
+        label: "Clear Formatting",
+        icon: RemoveFormattingIcon,
+        onClick: () => editor?.chain().focus().unsetAllMarks().run(),
       },
     ],
     [
@@ -112,15 +113,10 @@ export const Toolbar = () => {
     ],
     [
       {
-        label: "List Todo",
+        label: "Checklist",
         icon: ListTodoIcon,
         onClick: () => editor?.chain().focus().toggleTaskList().run(),
         isActive: editor?.isActive("taskList"),
-      },
-      {
-        label: "Remove Formatting",
-        icon: RemoveFormattingIcon,
-        onClick: () => editor?.chain().focus().unsetAllMarks().run(),
       },
     ],
     [
@@ -136,7 +132,12 @@ export const Toolbar = () => {
   return (
     <div className="flex flex-wrap items-center gap-x-1 gap-y-2 bg-neutral-900 mb-2 px-2.5 py-0 rounded-xl max-w-full min-h-[40px]">
       {sections[0].map((item) => (
-        <ToolbarButton key={item.label} {...item} />
+        <Tooltip>
+          <TooltipTrigger>
+            <ToolbarButton key={item.label} {...item} />
+          </TooltipTrigger>
+          <TooltipContent side="top">{item.label}</TooltipContent>
+        </Tooltip>
       ))}
 
       <Separator orientation="vertical" className="bg-neutral-700 h-6" />
@@ -146,8 +147,17 @@ export const Toolbar = () => {
       <HeadingLevelButton />
 
       <Separator orientation="vertical" className="bg-neutral-700 h-6" />
+      {/* TODO : Font size */}
+      <FontSizeButton />
+
+      <Separator orientation="vertical" className="bg-neutral-700 h-6" />
       {sections[1].map((item) => (
-        <ToolbarButton key={item.label} {...item} />
+        <Tooltip>
+          <TooltipTrigger>
+            <ToolbarButton key={item.label} {...item} />
+          </TooltipTrigger>
+          <TooltipContent side="top">{item.label}</TooltipContent>
+        </Tooltip>
       ))}
 
       <Separator orientation="vertical" className="bg-neutral-700 h-6" />
@@ -165,21 +175,23 @@ export const Toolbar = () => {
       {/* TODO : Text Align */}
       <AlginButton />
       <Separator orientation="vertical" className="bg-neutral-700 h-6" />
+
+      <LineHeightButton />
+      <Separator orientation="vertical" className="bg-neutral-700 h-6" />
+
       {/* TODO : List  */}
       <ListButton />
 
       <Separator orientation="vertical" className="bg-neutral-700 h-6" />
-      {/* TODO : Font size */}
-      <FontSizeButton />
-
-      <Separator orientation="vertical" className="bg-neutral-700 h-6" />
       {/* task list */}
       {sections[2].map((item) => (
-        <ToolbarButton key={item.label} {...item} />
+        <Tooltip>
+          <TooltipTrigger>
+            <ToolbarButton key={item.label} {...item} />
+          </TooltipTrigger>
+          <TooltipContent side="top">{item.label}</TooltipContent>
+        </Tooltip>
       ))}
-      <Separator orientation="vertical" className="bg-neutral-700 h-6" />
-      {/* line height  */}
-      <LineHeightButton />
     </div>
   );
 };

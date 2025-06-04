@@ -9,6 +9,11 @@ import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/lib/store/editor";
 import { Level } from "@tiptap/extension-heading";
 import { ChevronDownIcon } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const HeadingLevelButton = () => {
   const editor = useEditorStore((state) => state.editor);
@@ -37,9 +42,16 @@ export const HeadingLevelButton = () => {
         asChild
         className="flex items-center h-8 font-sans align-middle text-muted-foreground"
       >
-        <button className="flex justify-center items-center hover:text-foreground px-2 py-3 rounded-sm min-w-7 h-7 overflow-hidden text-sm shrink-0">
-          <span className="truncate">{getCurrentHeading()}</span>
-          <ChevronDownIcon className="ml-1 w-5 h-5 shrink-0" />
+        <button className="flex justify-center items-center hover:text-foreground rounded-sm min-w-7 h-7 overflow-hidden text-sm shrink-0">
+          <Tooltip>
+            <TooltipTrigger className="flex justify-center items-center hover:text-foreground px-2 py-3 overflow-hidden text-sm shrink-0">
+              <span className="truncate">{getCurrentHeading()}</span>
+              <ChevronDownIcon className="ml-1 w-5 h-5 shrink-0" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Text styles</p>
+            </TooltipContent>
+          </Tooltip>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex flex-col gap-y-1 bg-neutral-900 p-1 border border-neutral-700 text-muted-foreground">
