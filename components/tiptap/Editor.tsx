@@ -19,8 +19,8 @@ import Highlight from "@tiptap/extension-highlight";
 import { Color } from "@tiptap/extension-color";
 import Link from "@tiptap/extension-link";
 
-import { useMargin } from "@/lib/store/margin";
-import { useEditorContent, useEditorStore } from "@/lib/store/editor";
+import { useMargin } from "@/lib/store/marginStore";
+import { useEditorContent, useEditorStore } from "@/lib/store/editorStore";
 import { FontSizeExtension } from "@/extension/fontSize";
 import { LineHeightExtension } from "@/extension/lineHeight";
 import { Ruler } from "./Ruler";

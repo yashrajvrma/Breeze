@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/lib/store/editor";
+import { useEditorStore } from "@/lib/store/editorStore";
 import {
   AlignCenterIcon,
   AlignJustifyIcon,
@@ -51,7 +51,7 @@ export const ListButton = () => {
               <TooltipTrigger>
                 <ListIcon className="w-4 h-5" />
               </TooltipTrigger>
-              <TooltipContent>  
+              <TooltipContent>
                 <p>List</p>
               </TooltipContent>
             </Tooltip>

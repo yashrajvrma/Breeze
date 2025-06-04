@@ -1,14 +1,15 @@
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
-import { useEditorContent } from "@/lib/store/editor";
+import { useEditorContent } from "@/lib/store/editorStore";
 import DocsContent from "./button/docsContentButton";
+import { extractTitleFromDoc } from "@/lib/utils/docx-title";
 
 interface Message {
   id: string;
   content: string;
   sender: string;
-  isStreaming?: boolean; // Add this prop to track streaming state
+  isStreaming?: boolean;
 }
 
 interface ChatMessageProps {
@@ -23,6 +24,7 @@ interface ParsedContent {
 
 export default function ChatMessage({ message }: ChatMessageProps) {
   const setContentId = useEditorContent((state) => state.setContentId);
+  const setContentTitle = useEditorContent((state) => state.setContentTitle);
   const setEditorContent = useEditorContent((state) => state.setEditorContent);
 
   const [parsedContent, setParsedContent] = useState<ParsedContent>({
@@ -87,6 +89,14 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       const contentJson = JSON.parse(parsedContent.docContent);
       setContentId(message.id);
       setEditorContent(contentJson);
+
+      const extractedTitle = extractTitleFromDoc(contentJson);
+      console.log("title is", extractedTitle);
+      if (extractedTitle) {
+        setContentTitle(extractedTitle);
+        console.log("Document title set:", extractedTitle);
+      }
+
       console.log("content id is ", message.id);
       console.log("Document content set to editor:", contentJson);
     } catch (error) {

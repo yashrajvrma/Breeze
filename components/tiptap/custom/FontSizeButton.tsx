@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditorStore } from "@/lib/store/editor";
+import { useEditorStore } from "@/lib/store/editorStore";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import {

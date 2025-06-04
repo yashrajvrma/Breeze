@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/lib/store/editor";
+import { useEditorStore } from "@/lib/store/editorStore";
 import {
   BoldIcon,
   ItalicIcon,

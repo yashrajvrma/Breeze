@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditorContent, useEditorStore } from "@/lib/store/editor";
+import { useEditorContent, useEditorStore } from "@/lib/store/editorStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";

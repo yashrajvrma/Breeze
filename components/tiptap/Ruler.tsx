@@ -1,6 +1,6 @@
 "use client";
 
-import { useMargin } from "@/lib/store/margin";
+import { useMargin } from "@/lib/store/marginStore";
 import { useRef, useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
 

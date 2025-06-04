@@ -8,8 +8,10 @@ type EditorState = {
 
 type EditorContent = {
   id: string | null;
+  title: string;
   content: JSONContent | null;
   setContentId: (id: string | null) => void;
+  setContentTitle: (title: string) => void;
   setEditorContent: (content: JSONContent | null) => void;
 };
 
@@ -20,7 +22,9 @@ export const useEditorStore = create<EditorState>((set) => ({
 
 export const useEditorContent = create<EditorContent>((set) => ({
   id: null,
+  title: "Untitled Doc",
   content: null,
   setContentId: (id) => set({ id }),
+  setContentTitle: (title) => set({ title }),
   setEditorContent: (content) => set({ content }),
 }));

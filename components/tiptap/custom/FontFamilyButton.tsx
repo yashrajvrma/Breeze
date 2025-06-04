@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/lib/store/editor";
+import { useEditorStore } from "@/lib/store/editorStore";
 import { ChevronDownIcon } from "lucide-react";
 import {
   Tooltip,

@@ -1,7 +1,7 @@
 "use client";
 
 import { ShareIcon } from "lucide-react";
-import { useEditorStore } from "@/lib/store/editor";
+import { useEditorContent, useEditorStore } from "@/lib/store/editorStore";
 import { exportToPdf } from "@/extension/exportToPdf";
 import {
   DropdownMenu,
@@ -9,17 +9,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useMargin } from "@/lib/store/margin";
+import { useMargin } from "@/lib/store/marginStore";
 import { useExportDocx } from "@/extension/exportToDocx";
 import SaveButton from "../button/saveButton";
 
-interface EditorHeaderProps {
-  title?: string;
-}
-
-export default function EditorHeader({
-  title = "Rust Programming",
-}: EditorHeaderProps) {
+export default function EditorHeader() {
+  const title = useEditorContent((state) => state.title);
   const editor = useEditorStore((state) => state.editor);
   const leftMargin = useMargin((state) => state.leftMargin);
   const rightMargin = useMargin((state) => state.rightMargin);
@@ -48,22 +43,14 @@ export default function EditorHeader({
     await exportToPdf({ htmlContent, leftMargin, rightMargin });
   };
 
-  const handleSave = () => {
-    console.log("updated editor content is", editor?.getJSON());
-  };
-
   return (
     <div className="flex flex-row justify-between items-center px-5 py-2.5 border-b">
-      <div className="text-lg font-medium">{title}</div>
+      <div className="text-lg font-medium">
+        {title ? title : "Untitled Doc"}
+      </div>
 
       <div className="flex justify-between gap-x-2.5">
         <SaveButton />
-        {/* <button
-          onClick={() => handleSave()}
-          className="flex justify-center items-center text-sm px-2.5 py-2 text-foreground rounded-lg bg-primary-foreground hover:bg-muted-foreground/20"
-        >
-          Save
-        </button> */}
 
         <DropdownMenu>
           {isEditorEmpty ? (
