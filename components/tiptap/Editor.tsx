@@ -2,6 +2,7 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Placeholder from "@tiptap/extension-placeholder";
 import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
@@ -46,6 +47,10 @@ export const Editor = () => {
     immediatelyRender: false,
     extensions: [
       StarterKit,
+      Placeholder.configure({
+        placeholder: "start writing here...",
+        emptyEditorClass: "is-editor-empty",
+      }),
       Table.configure({
         resizable: true,
         handleWidth: 5,

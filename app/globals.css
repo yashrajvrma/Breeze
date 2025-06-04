@@ -100,6 +100,15 @@
 }
 
 /* Basic editor styles */
+.tiptap p.is-editor-empty:first-child::before {
+  color: #676969;
+
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
 .tiptap {
   :first-child {
     margin-top: 0;
