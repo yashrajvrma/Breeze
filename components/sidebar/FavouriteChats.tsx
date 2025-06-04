@@ -48,7 +48,7 @@ export default function FavouriteChats({
 
   if (!session) {
     return (
-      <div className="flex flex-col px-5 py-1 mb-2">
+      <div className="flex flex-col px-5 py-1 mb-2 mt-5">
         <div className="flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
           Favourite
         </div>
@@ -60,7 +60,7 @@ export default function FavouriteChats({
   }
 
   return (
-    <div className="flex flex-col mb-10">
+    <div className="flex flex-col mb-5 mt-5">
       <div className="px-5 py-1 flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
         Favourite
       </div>
