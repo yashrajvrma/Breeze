@@ -60,7 +60,6 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import MainSidebarLayout from "../chat/MainSidebarLayout";
-import { useAppSelector } from "@/lib/hook";
 import { Editor } from "@/components/tiptap/Editor";
 
 export default function MainLayout() {
