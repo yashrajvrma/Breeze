@@ -63,7 +63,7 @@ export default function EditorHeader() {
             </button>
           ) : (
             <DropdownMenuTrigger asChild>
-              <button className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 py-2 bg-cyan-600 hover:bg-cyan-500 text-foreground cursor-default">
+              <button className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 py-2 bg-sky-600 hover:bg-sky-500 text-foreground cursor-default">
                 <ShareIcon size={16} />
                 Export
               </button>

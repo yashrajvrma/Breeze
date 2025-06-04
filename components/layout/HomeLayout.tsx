@@ -5,7 +5,7 @@ export default function HomeLayout() {
   return (
     <div className="flex h-screen bg-background overflow-hidden font-sans">
       <HomeSidebarLayout />
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1">
         <HomeChatLayout />
       </div>
     </div>

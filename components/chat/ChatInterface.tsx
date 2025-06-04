@@ -180,7 +180,7 @@ export default function ChatInterface() {
             value={input}
             onChange={handleTextareaChange}
             placeholder="Ask a follow up..."
-            className="pr-10 min-h-[44px] max-h-[200px] resize-none"
+            className="pr-10 max-h-[250px] resize-none"
             rows={1}
             disabled={isLoading}
           />
