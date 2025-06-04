@@ -47,12 +47,19 @@ export default function EditorHeader({
     await exportToPdf({ htmlContent, leftMargin, rightMargin });
   };
 
+  const handleSave = () => {
+    console.log("updated editor content is", editor?.getJSON());
+  };
+
   return (
     <div className="flex flex-row justify-between items-center px-5 py-2.5 border-b">
       <div className="text-lg font-medium">{title}</div>
 
       <div className="flex justify-between gap-x-2.5">
-        <button className="flex justify-center items-center text-sm px-2.5 py-2 text-foreground rounded-lg bg-primary-foreground hover:bg-muted-foreground/20">
+        <button
+          onClick={() => handleSave()}
+          className="flex justify-center items-center text-sm px-2.5 py-2 text-foreground rounded-lg bg-primary-foreground hover:bg-muted-foreground/20"
+        >
           Save
         </button>
 

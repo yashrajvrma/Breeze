@@ -22,6 +22,7 @@ interface ParsedContent {
 }
 
 export default function ChatMessage({ message }: ChatMessageProps) {
+  const setContentId = useEditorContent((state) => state.setContentId);
   const setEditorContent = useEditorContent((state) => state.setEditorContent);
 
   const [parsedContent, setParsedContent] = useState<ParsedContent>({
@@ -34,6 +35,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
   useEffect(() => {
     const content = message.content;
+    1;
     const startTag = "<<start-doc>>";
     const endTag = "<<end-doc>>";
 
@@ -83,7 +85,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
     try {
       const contentJson = JSON.parse(parsedContent.docContent);
+      setContentId(message.id);
       setEditorContent(contentJson);
+      console.log("content id is ", message.id);
       console.log("Document content set to editor:", contentJson);
     } catch (error) {
       console.error("Error parsing document content:", error);
