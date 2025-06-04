@@ -97,7 +97,13 @@ export default function ChatInterface() {
   }, [threadData, append]);
 
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length > 0) {
+      // Small delay ensures DOM is rendered before scrolling
+      const timeout = setTimeout(() => {
+        scrollToBottom();
+      }, 100); // 100ms delay is usually safe
+      return () => clearTimeout(timeout);
+    }
   }, [messages]);
 
   const scrollToBottom = () => {
@@ -134,13 +140,13 @@ export default function ChatInterface() {
         </div>
         <div className="flex flex-col w-full gap-y-4 px-7 pt-4">
           <div className="flex justify-end">
-            <Skeleton className="items-end h-8 w-[60%]" />
+            <Skeleton className="items-end h-8 w-[80%]" />
           </div>
 
           <div className="flex flex-col items-start gap-y-2">
             <Skeleton className="flex items-start h-8 w-[90%]" />
-            <Skeleton className="flex items-start h-8 w-[85%]" />
-            <Skeleton className="flex items-start h-8 w-[80%]" />
+            <Skeleton className="flex items-start h-8 w-[90%]" />
+            <Skeleton className="flex items-start h-8 w-[90%]" />
           </div>
         </div>
       </div>
