@@ -24,15 +24,23 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import LoginButton from "../button/loginButton";
+import { Skeleton } from "../ui/skeleton";
 
 interface SidebarFooterProps {
   isCollapsed: boolean;
 }
 
 export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
+  if (status === "loading") {
+    return (
+      <div className="flex justify-center px-3 py-2">
+        <Skeleton className="flex items-center h-16 w-full" />
+      </div>
+    );
+  }
   if (!session) {
     return <div className="px-3 py-3">{!isCollapsed && <LoginButton />}</div>;
   }

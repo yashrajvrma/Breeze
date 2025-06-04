@@ -15,6 +15,8 @@ import { DeleteButton } from "../button/deleteButton";
 import FavouriteButton from "../button/favouriteButton";
 import { RenameChatButton } from "../button/renameButton";
 import { useSession } from "next-auth/react";
+import { Spinner } from "../loader/spinner";
+import { Skeleton } from "../ui/skeleton";
 
 interface RecentChatsProps {
   isCollapsed: boolean;
@@ -45,33 +47,24 @@ const fetchRecentChats = async (
 export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const params = useParams();
   const router = useRouter();
-  const { data: session } = useSession();
-
+  const { data: session, status } = useSession();
   const { ref, inView } = useInView();
 
   const chatId = params.chatId as string;
 
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery<ChatResponse, Error>({
-    queryKey: ["recentChats"],
-    initialPageParam: 1,
-    queryFn: fetchRecentChats,
-    getNextPageParam: (lastPage, allPages) => {
-      const totalLoaded = allPages.flatMap((p) => p.chats).length;
-      if (totalLoaded < lastPage.totalChats) {
-        return allPages.length + 1;
-      }
-      return undefined;
-    },
-    enabled: !!session, // Only fetch when session exists
-  });
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery<ChatResponse, Error>({
+      queryKey: ["recentChats"],
+      initialPageParam: 1,
+      queryFn: fetchRecentChats,
+      getNextPageParam: (lastPage, allPages) => {
+        const totalLoaded = allPages.flatMap((p) => p.chats).length;
+        return totalLoaded < lastPage.totalChats
+          ? allPages.length + 1
+          : undefined;
+      },
+      enabled: !!session,
+    });
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -81,113 +74,127 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
 
   const chats = data?.pages.flatMap((page) => page.chats);
 
-  if (!session) {
+  if (status === "loading" || isLoading) {
     return (
       <div className="flex flex-col px-5 py-1">
         <div className="flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
-          Recent
+          Recents
+        </div>
+
+        <div className="flex flex-col  py-4 font-sans text-center text-sm text-muted-foreground gap-y-2">
+          <Skeleton className="flex items-center h-7 w-full" />
+          <Skeleton className="flex items-center h-7 w-full" />
+          <Skeleton className="flex items-center h-7 w-full" />
+          {/* <Skeleton className="flex items-center h-8 w-full" /> */}
         </div>
       </div>
     );
   }
 
+  // If session is not available after loading
+  if (!session) {
+    return (
+      <div className="flex flex-col px-5 py-1">
+        <div className="flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
+          Recents
+        </div>
+        <div className="border border-dashed text-center mt-3 px-4 py-4  text-xs text-muted-foreground rounded-lg">
+          Your recent chats will appear here once you're logged in.
+        </div>
+      </div>
+    );
+  }
+
+  // Render chat list
   return (
     <div className="flex flex-col h-full ">
       <div className="px-5 pb-1 flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
         Recents
       </div>
 
-      {isLoading ? (
-        <div className="px-4 py-2 font-sans text-center text-sm text-muted-foreground">
-          Loading...
-        </div>
-      ) : (
-        <ScrollArea className="flex-1">
-          <div className="px-3 py-2 space-y-1">
-            {chats?.map((chat: Chat) => {
-              const isActive = chat.id === chatId;
+      <ScrollArea className="flex-1">
+        <div className="px-3 py-2 space-y-1">
+          {chats?.map((chat: Chat) => {
+            const isActive = chat.id === chatId;
 
-              return (
-                <div
-                  key={chat.id}
-                  className={cn(
-                    "group relative flex items-center justify-between rounded-lg transition-all duration-200 cursor-pointer",
-                    "hover:bg-accent/50",
-                    isActive
-                      ? "bg-accent text-accent-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <div className="flex-1 min-w-0 px-2 py-1">
-                    <div className="flex items-center justify-between">
-                      <span
-                        className="text-sm font-medium truncate"
-                        onClick={() => router.push(`/chat/${chat.id}`)}
-                      >
-                        {chat.title || "New chat"}
-                      </span>
+            return (
+              <div
+                key={chat.id}
+                className={cn(
+                  "group relative flex items-center justify-between rounded-lg transition-all duration-200 cursor-pointer",
+                  "hover:bg-accent/50",
+                  isActive
+                    ? "bg-accent text-accent-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <div className="flex-1 min-w-0 px-2 py-1">
+                  <div className="flex items-center justify-between">
+                    <span
+                      className="text-sm font-medium truncate"
+                      onClick={() => router.push(`/chat/${chat.id}`)}
+                    >
+                      {chat.title || "New chat"}
+                    </span>
 
-                      <div
-                        className={cn(
-                          "flex-shrink-0 transition-opacity duration-200",
-                          isActive
-                            ? "opacity-100"
-                            : "opacity-0 group-hover:opacity-100"
-                        )}
-                      >
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <button
-                              className={cn(
-                                "p-1 rounded-md transition-colors duration-200 text-foreground",
-                                "hover:bg-background/50 focus:outline-none ",
-                                isActive
-                                  ? "hover:bg-accent-foreground/10"
-                                  : "hover:bg-accent"
-                              )}
-                            >
-                              <Ellipsis size={16} className="text-current" />
-                            </button>
-                          </PopoverTrigger>
-                          <PopoverContent
-                            side="right"
-                            sideOffset={8}
-                            align="start"
-                            className="w-44 border-neutral-800 rounded-2xl shadow-xl px-1.5 py-1.5 backdrop-blur-sm font-sans"
+                    <div
+                      className={cn(
+                        "flex-shrink-0 transition-opacity duration-200",
+                        isActive
+                          ? "opacity-100"
+                          : "opacity-0 group-hover:opacity-100"
+                      )}
+                    >
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            className={cn(
+                              "p-1 rounded-md transition-colors duration-200 text-foreground",
+                              "hover:bg-background/50 focus:outline-none ",
+                              isActive
+                                ? "hover:bg-accent-foreground/10"
+                                : "hover:bg-accent"
+                            )}
                           >
-                            <div className="space-y-0.5">
-                              <ShareButton />
-                              <RenameChatButton
-                                id={chat.id}
-                                title={chat.title}
-                              />
-                              <FavouriteButton chatId={chat.id} />
-                              <DeleteButton chatId={chat.id} />
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      </div>
+                            <Ellipsis size={16} className="text-current" />
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent
+                          side="right"
+                          sideOffset={8}
+                          align="start"
+                          className="w-44 border-neutral-800 rounded-2xl shadow-xl px-1.5 py-1.5 backdrop-blur-sm font-sans"
+                        >
+                          <div className="space-y-0.5">
+                            <ShareButton />
+                            <RenameChatButton id={chat.id} title={chat.title} />
+                            <FavouriteButton chatId={chat.id} />
+                            <DeleteButton chatId={chat.id} />
+                          </div>
+                        </PopoverContent>
+                      </Popover>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
+        </div>
 
-          {hasNextPage && (
-            <div ref={ref} className="text-center text-muted-foreground py-4">
-              {isFetchingNextPage ? (
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-4 h-4 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin"></div>
-                  <span className="text-sm">Loading more...</span>
-                </div>
-              ) : (
-                <span className="text-sm">Scroll to load more</span>
-              )}
-            </div>
-          )}
-        </ScrollArea>
-      )}
+        {hasNextPage && (
+          <div ref={ref} className="text-center text-muted-foreground py-4">
+            {isFetchingNextPage ? (
+              <div className="flex items-center justify-center space-x-2 py-5 pb-10">
+                <Spinner />
+              </div>
+            ) : (
+              <span className="text-xs text-muted-foreground">
+                Scroll to load more
+              </span>
+            )}
+          </div>
+        )}
+      </ScrollArea>
     </div>
   );
 }

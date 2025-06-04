@@ -117,8 +117,8 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         className={cn(
           "p-3 rounded-lg",
           message.sender === "user"
-            ? "bg-secondary text-secondary-foreground max-w-[100%]"
-            : "text-foreground max-w-[100%] font-sans"
+            ? "bg-secondary text-secondary-foreground max-w-[90%]"
+            : "text-foreground max-w-[90%] font-sans py-0 px-0"
         )}
       >
         <div className="space-y-4 dark:prose-invert max-w-none font-sans text-sm prose prose-sm">

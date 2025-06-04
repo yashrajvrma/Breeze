@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { useChat } from "@ai-sdk/react";
 import { useQuery } from "@tanstack/react-query";
 import SendMessageButton from "./button/SendMessageButton";
+import { Skeleton } from "../ui/skeleton";
 
 interface Messages {
   id: string;
@@ -128,8 +129,19 @@ export default function ChatInterface() {
   if (isThreadLoading) {
     return (
       <div className="flex flex-col h-full border-r border-border font-sans">
-        <div className="p-4 border-b border-border">
-          <h2 className="text-md font-medium">Loading conversation...</h2>
+        <div className="p-4 border-b">
+          <Skeleton className="flex items-center h-8 w-full" />
+        </div>
+        <div className="flex flex-col w-full gap-y-4 px-7 pt-4">
+          <div className="flex justify-end">
+            <Skeleton className="items-end h-8 w-[60%]" />
+          </div>
+
+          <div className="flex flex-col items-start gap-y-2">
+            <Skeleton className="flex items-start h-8 w-[90%]" />
+            <Skeleton className="flex items-start h-8 w-[85%]" />
+            <Skeleton className="flex items-start h-8 w-[80%]" />
+          </div>
         </div>
       </div>
     );
