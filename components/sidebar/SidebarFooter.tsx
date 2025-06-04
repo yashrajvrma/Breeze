@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, Settings, User } from "lucide-react";
+import { EllipsisVerticalIcon, LogOut, Settings, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -43,31 +43,34 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             {!isCollapsed ? (
-              <div className="flex flex-row items-center gap-x-2 hover:cursor-pointer w-full p-2 hover:bg-primary-foreground rounded-lg">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage
-                    src={session?.user?.image || ""}
-                    referrerPolicy="no-referrer"
-                    alt="User"
-                  />
-                  <AvatarFallback>
-                    <User className="h-4 w-4" />
-                  </AvatarFallback>
-                </Avatar>
+              <div className="flex justify-between w-full p-2 hover:bg-primary-foreground rounded-lg hover:cursor-default">
+                <div className="flex gap-x-2 items-center">
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage
+                      src={session?.user?.image || ""}
+                      referrerPolicy="no-referrer"
+                      alt="User"
+                    />
+                    <AvatarFallback>
+                      <User className="h-4 w-4" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="text-sm">
+                    <p className="text-foreground">
+                      {session?.user?.name?.[0]?.toUpperCase()! +
+                        session?.user?.name?.slice(1)}
+                    </p>
 
-                <div className="text-sm">
-                  <p className="text-foreground">
-                    {session?.user?.name?.[0]?.toUpperCase()! +
-                      session?.user?.name?.slice(1)}
-                  </p>
-                  <p className="text-muted-foreground text-xs">
-                    {session?.user?.email}
-                  </p>
+                    <p className="text-muted-foreground text-xs">Free Plan</p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <EllipsisVerticalIcon size={18} />
                 </div>
               </div>
             ) : (
               <div className="flex flex-row items-center hover:cursor-pointer w-full py-2">
-                <Avatar className="h-8 w-8 flex items-center">
+                <Avatar className="h-8 w-8 flex items-center rounded-lg">
                   <AvatarImage
                     src={session?.user?.image || ""}
                     referrerPolicy="no-referrer"
