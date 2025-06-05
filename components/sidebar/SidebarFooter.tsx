@@ -1,6 +1,13 @@
 "use client";
 
-import { EllipsisVerticalIcon, LogOut, Settings, User } from "lucide-react";
+import {
+  EllipsisVerticalIcon,
+  LogOut,
+  Settings,
+  User,
+  UserRound,
+  UserRoundIcon,
+} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -92,28 +99,53 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
             )}
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent className="w-56 font-sans">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuContent className="w-64 font-sans rounded-xl">
+            <DropdownMenuLabel>
+              <div className="flex justify-between w-full">
+                <div className="flex gap-x-2 items-center">
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage
+                      src={session?.user?.image || ""}
+                      referrerPolicy="no-referrer"
+                      alt="User"
+                    />
+                    <AvatarFallback>
+                      <User className="h-4 w-4" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="text-sm">
+                    <p className="text-foreground">
+                      {session?.user?.name?.[0]?.toUpperCase()! +
+                        session?.user?.name?.slice(1)}
+                    </p>
+
+                    <p className="text-muted-foreground text-xs">Free Plan</p>
+                  </div>
+                </div>
+              </div>
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
+            {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator /> */}
             <DropdownMenuGroup>
-              <DropdownMenuItem className="gap-x-2">
-                <User size={15} />
-                <span>Profile</span>
+              <DropdownMenuItem className="gap-x-2 rounded-md">
+                <UserRoundIcon size={16} />
+                <span>Account</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="gap-x-2">
-                <Settings size={15} />
+              <DropdownMenuItem className="gap-x-2 rounded-md">
+                <Settings size={16} />
                 <span>Settings</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              className="gap-x-2"
+              className="gap-x-2 rounded-md"
               onSelect={(e) => {
                 e.preventDefault(); // Prevent Dropdown from closing
                 setShowLogoutDialog(true);
               }}
             >
-              <LogOut size={15} />
+              <LogOut size={16} />
               <span>Log out</span>
             </DropdownMenuItem>
           </DropdownMenuContent>

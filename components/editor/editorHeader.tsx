@@ -44,7 +44,7 @@ export default function EditorHeader() {
   };
 
   return (
-    <div className="flex flex-row justify-between items-center px-5 py-2.5 border-b border-t-2 border-t-white">
+    <div className="flex flex-row justify-between items-center px-5 py-2.5 border-b border-t-2 border-t-background">
       <div className="text-base font-medium">
         {title ? title : "Untitled Doc"}
       </div>
