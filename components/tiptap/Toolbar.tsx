@@ -45,7 +45,7 @@ const ToolbarButton = ({
       onClick={onClick}
       className={cn(
         "text-sm h-8 min-w-8 w-8 flex items-center justify-center text-muted-foreground rounded-sm hover:text-foreground",
-        isActive && "bg-foreground text-background hover:text-background"
+        isActive && "bg-blue-500 text-background hover:text-background"
       )}
     >
       <Icon className="m-2 w-8 h-8" />
@@ -130,7 +130,7 @@ export const Toolbar = () => {
   ];
 
   return (
-    <div className="flex flex-wrap items-center gap-x-1 gap-y-2 bg-neutral-900 mb-2 px-2.5 py-0 rounded-xl max-w-full min-h-[40px]">
+    <div className="flex flex-wrap items-center gap-x-1 gap-y-2 bg-primary-foreground mb-2 px-2.5 py-0 rounded-xl max-w-full min-h-[40px]">
       {sections[0].map((item) => (
         <Tooltip>
           <TooltipTrigger>
