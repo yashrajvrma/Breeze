@@ -41,7 +41,7 @@ export const Editor = () => {
       attributes: {
         style: `padding-left: ${leftMargin}px; padding-right: ${rightMargin}px`,
         class:
-          "focus:outline-none print:border-0 border border-neutral-700 flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
+          "focus:outline-none print:border-0 border flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
       },
     },
     immediatelyRender: false,

@@ -63,15 +63,15 @@ export const AlginButton = () => {
             </Tooltip>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="font-sans bg-neutral-900 border border-neutral-700 text-muted-foreground">
+        <DropdownMenuContent className="font-sans">
           {alignments.map(({ label, value, icon: Icon }) => (
             <button
               key={value}
               onClick={() => editor?.chain().focus().setTextAlign(value).run()}
               className={cn(
-                "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-background hover:text-foreground w-full",
+                "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-muted-foreground/20 w-full",
                 editor?.isActive({ textAlign: value }) &&
-                  "bg-foreground text-background hover:bg-foreground hover:text-background"
+                  "bg-blue-100 text-blue-600 hover:bg-blue-100"
               )}
             >
               <Icon className="w-4 h-4" />

@@ -44,7 +44,7 @@ export default function EditorHeader() {
   };
 
   return (
-    <div className="flex flex-row justify-between items-center px-5 py-2.5 border-b">
+    <div className="flex flex-row justify-between items-center px-5 py-2.5 border-b border-t-2 border-t-white">
       <div className="text-base font-medium">
         {title ? title : "Untitled Doc"}
       </div>
@@ -55,7 +55,7 @@ export default function EditorHeader() {
         <DropdownMenu>
           {isEditorEmpty ? (
             <button
-              className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 py-2 text-primary cursor-not-allowed border"
+              className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 py-1.5 text-primary cursor-not-allowed border"
               disabled
             >
               <ShareIcon size={16} />
@@ -63,7 +63,7 @@ export default function EditorHeader() {
             </button>
           ) : (
             <DropdownMenuTrigger asChild>
-              <button className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 py-2 bg-blue-500 hover:bg-blue-600 text-neutral-50 cursor-default">
+              <button className="flex justify-center border items-center text-sm gap-x-1.5 rounded-lg px-2.5 py-1.5 bg-blue-500 hover:bg-blue-600 text-neutral-50 cursor-default">
                 <ShareIcon size={16} />
                 Export
               </button>

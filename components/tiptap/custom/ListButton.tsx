@@ -57,15 +57,14 @@ export const ListButton = () => {
             </Tooltip>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="font-sans bg-neutral-900 border border-neutral-700 text-muted-foreground">
+        <DropdownMenuContent className="font-sans">
           {alignments.map(({ label, isActive, onClick, icon: Icon }) => (
             <button
               key={label}
               onClick={onClick}
               className={cn(
-                "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-background hover:text-foreground w-full",
-                isActive() &&
-                  "bg-foreground text-background hover:bg-foreground hover:text-background"
+                "flex items-center gap-x-2 px-2 py-1 rounded-sm w-full hover:bg-muted-foreground/20",
+                isActive() && "bg-blue-100 text-blue-600 hover:bg-blue-100"
               )}
             >
               <Icon className="w-4 h-4" />

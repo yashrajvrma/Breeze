@@ -54,7 +54,7 @@ export const HeadingLevelButton = () => {
           </Tooltip>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="flex flex-col gap-y-1 bg-neutral-900 p-1 border border-neutral-700 text-muted-foreground">
+      <DropdownMenuContent className="flex flex-col gap-y-1 p-1 ">
         {headings.map(({ label, value, fontSize }) => (
           <button
             key={value}
@@ -62,10 +62,10 @@ export const HeadingLevelButton = () => {
               fontSize,
             }}
             className={cn(
-              "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-background hover:text-foreground",
+              "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-muted-foreground/20",
               (value === 0 && !editor?.isActive("heading")) ||
                 (editor?.isActive("heading", { level: value }) &&
-                  "bg-foreground text-background hover:bg-foreground hover:text-background")
+                  "bg-blue-100 text-blue-600 hover:bg-blue-100")
             )}
             onClick={() => {
               if (value === 0) {

@@ -49,16 +49,16 @@ export const LinkButton = () => {
           </Tooltip>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="flex items-center gap-x-2 p-2.5 bg-neutral-900 border border-neutral-700 text-muted-foreground">
+      <DropdownMenuContent className="flex items-center gap-x-2 p-2.5">
         <Input
           placeholder="https://example.com"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className="bg-neutral-900 focus:border-none outline-0 outline-none focus:outline-none font-sans text-foreground"
+          className="focus:outline-none font-sans"
         />
         <Button
-          variant="secondary"
-          className="hover:bg-foreground font-sans text-blue-600 cursor-pointer"
+          variant="outline"
+          className="font-sans cursor-pointer hover:bg-blue-500 hover:text-neutral-50"
           onClick={() => onChange(value)}
         >
           Apply

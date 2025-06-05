@@ -81,9 +81,9 @@ export default function SidebarHeader({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="icon"
-                  className="h-7 w-7 mx-auto group relative my-4 border-b"
+                  className="h-7 w-7 mx-auto group relative my-4 border-0"
                   onClick={toggleSidebar}
                 >
                   <PanelLeftIcon

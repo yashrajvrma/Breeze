@@ -47,9 +47,9 @@ export const HighlightColorButton = () => {
           </Tooltip>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-neutral-900 border border-neutral-700 text-muted-foreground">
+      <DropdownMenuContent>
         <CompactPicker
-          className="bg-neutral-900"
+          className="bg-background"
           color={value}
           onChange={onChange}
         />

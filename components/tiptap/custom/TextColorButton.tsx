@@ -40,7 +40,7 @@ export const TextColorButton = () => {
           </Tooltip>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-2.5 bg-neutral-900 border border-neutral-700 text-muted-foreground">
+      <DropdownMenuContent className="p-2.5">
         <CirclePicker color={value} onChange={onChange} />
       </DropdownMenuContent>
     </DropdownMenu>

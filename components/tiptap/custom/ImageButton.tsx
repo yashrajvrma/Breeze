@@ -74,16 +74,16 @@ export const ImageButton = () => {
             </Tooltip>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-neutral-900 border-neutral-700 font-sans text-muted-foreground">
+        <DropdownMenuContent className="flex flex-col font-sans">
           <Button
-            className="flex justify-start items-center bg-neutral-900 text-muted-foreground hover:bg-background w-full cursor-pointer"
+            className="flex justify-start items-center w-full cursor-pointer bg-background text-foreground hover:bg-muted-foreground/20 px-2.5 py-2"
             onClick={onUpload}
           >
             <UploadIcon className="mr-2 w-4 h-4" />
             Upload
           </Button>
           <Button
-            className="flex justify-start items-center cursor-pointer bg-neutral-900 text-muted-foreground hover:bg-background"
+            className="flex justify-start items-center cursor-pointer bg-background text-foreground hover:bg-muted-foreground/20 px-2.5 py-2"
             onClick={() => setIsDialogOpen(true)}
           >
             <SearchIcon className="mr-2 w-4 h-4" />
@@ -93,7 +93,7 @@ export const ImageButton = () => {
       </DropdownMenu>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="font-sans bg-neutral-900 border border-neutral-700 text-muted-foreground">
+        <DialogContent className="font-sans">
           <DialogHeader>
             <DialogTitle>Insert image URL</DialogTitle>
           </DialogHeader>
@@ -101,7 +101,7 @@ export const ImageButton = () => {
             placeholder="Insert Image URL"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
-            className="bg-neutral-900 focus:border-none outline-0 outline-none focus:outline-none font-sans text-foreground text-sm"
+            className="focus:outline-none font-sans"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleImageUrlSubmit();
@@ -110,8 +110,8 @@ export const ImageButton = () => {
           />
           <DialogFooter>
             <Button
-              variant="secondary"
-              className="hover:bg-foreground font-sans text-blue-600 cursor-pointer"
+              variant="outline"
+              className="hover:bg-blue-600 hover:text-neutral-50 font-sans bg-blue-500 text-neutral-50 cursor-pointer"
               onClick={handleImageUrlSubmit}
               disabled={!imageUrl}
             >
