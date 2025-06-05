@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`dark ${geistSans.variable} ${geistMono.variable} ${garamondBookCond.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${garamondBookCond.variable} antialiased`}
       >
         <Providers>{children}</Providers>
       </body>

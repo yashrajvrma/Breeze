@@ -1,9 +1,13 @@
 "use client";
 
 import {
+  CircleUserRoundIcon,
   EllipsisVerticalIcon,
   LogOut,
+  MonitorCogIcon,
+  MoonStarIcon,
   Settings,
+  SunIcon,
   User,
   UserRound,
   UserRoundIcon,
@@ -32,6 +36,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import LoginButton from "../button/loginButton";
 import { Skeleton } from "../ui/skeleton";
+import ThemeToggleButton from "../button/themeToggleButton";
 
 interface SidebarFooterProps {
   isCollapsed: boolean;
@@ -129,13 +134,37 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
             <DropdownMenuSeparator /> */}
             <DropdownMenuGroup>
               <DropdownMenuItem className="gap-x-2 rounded-md">
-                <UserRoundIcon size={16} />
+                <CircleUserRoundIcon size={16} />
                 <span>Account</span>
               </DropdownMenuItem>
               <DropdownMenuItem className="gap-x-2 rounded-md">
                 <Settings size={16} />
                 <span>Settings</span>
               </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuLabel>Preferences</DropdownMenuLabel>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel className="flex justify-between">
+                <div className="flex items-center align-middle font-normal">
+                  Theme
+                </div>
+                <ThemeToggleButton />
+                {/* <div className="flex justify-center gap-x-3 border rounded-lg px-2 py-1 cursor-pointer">
+                  <div>
+                    <MonitorCogIcon
+                      className="text-muted-foreground"
+                      size={16}
+                    />
+                  </div>
+                  <div>
+                    <SunIcon className="text-muted-foreground" size={16} />
+                  </div>
+                  <div>
+                    <MoonStarIcon className="text-muted-foreground" size={16} />
+                  </div>
+                </div> */}
+              </DropdownMenuLabel>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
