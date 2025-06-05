@@ -12,7 +12,7 @@ export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
   return (
     <div
       className={cn(
-        "h-full bg-card border-r border-border transition-all duration-300 flex flex-col overflow-hidden",
+        "h-full bg-background border-r border-border transition-all duration-300 flex flex-col overflow-hidden",
         isCollapsed ? "w-[60px]" : "w-[250px]"
       )}
     >

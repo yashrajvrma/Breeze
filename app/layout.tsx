@@ -13,6 +13,11 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
 });
 
+const garamondBookCond = localFont({
+  src: "../public/assets/fonts/ITCGaramondStd-BkCond.ttf",
+  variable: "--font-garamond-book",
+});
+
 export const metadata: Metadata = {
   title: "Breeze - AI Document Editor",
   description: "An intelligent document editor powered by AI",
@@ -30,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`dark ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`light ${geistSans.variable} ${geistMono.variable} ${garamondBookCond.variable} antialiased`}
       >
         <Providers>{children}</Providers>
       </body>

@@ -13,7 +13,8 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import logo1 from "../../public/assets/images/breeze.png";
+import logo from "../../public/assets/images/breeze-logo.png";
+import { cn } from "@/lib/utils";
 
 interface SidebarHeaderProps {
   isCollapsed: boolean;
@@ -25,15 +26,20 @@ export default function SidebarHeader({
   toggleSidebar,
 }: SidebarHeaderProps) {
   return (
-    <div className="flex flex-col border-b">
-      <div className="flex items-center justify-between my-3.5 px-4">
-        <div className="flex items-center">
+    <div className="flex flex-col ">
+      <div
+        className={cn(
+          "flex items-center justify-between py-2.5 px-4 border-b",
+          isCollapsed && "py-4"
+        )}
+      >
+        <div className="flex justify-center items-center align-middle">
           <Link href="/">
-            <Image src={logo1} alt="logo" width={24} height={24} />
+            <Image src={logo} alt="logo" width={23} height={23} />
           </Link>
           {!isCollapsed && (
-            <span className="ml-2 font-semibold text-lg text-foreground ">
-              breeze
+            <span className="ml-2 text-3xl font-garamond font-medium tracking-tight text-foreground ">
+              Breeze
             </span>
           )}
         </div>
@@ -77,7 +83,7 @@ export default function SidebarHeader({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-7 w-7 mx-auto group relative my-1"
+                  className="h-7 w-7 mx-auto group relative my-4 border-b"
                   onClick={toggleSidebar}
                 >
                   <PanelLeftIcon
