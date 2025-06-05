@@ -49,7 +49,7 @@ export function DeleteButton({ chatId }: ChatId) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button className="flex items-center py-2 text-red-400 hover:bg-red-900 hover:bg-opacity-30 hover:text-red-300 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full ">
+        <button className="flex items-center py-2 text-red-500 hover:bg-red-100 hover:text-red-500 cursor-pointer transition-all duration-150 ease-in-out rounded-xl px-1.5 w-full ">
           <Trash2Icon className="w-4 h-4 mr-2.5" />
           <span className="text-sm">Delete</span>
         </button>

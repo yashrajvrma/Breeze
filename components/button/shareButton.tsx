@@ -25,9 +25,6 @@ export default function ShareButton() {
   const handleShare = () => {
     const link = process.env.NEXT_PUBLIC_APP_BASE_URL + path;
     setLink(link);
-
-    // navigator.clipboard.writeText(link);
-    // toast.success("Copied to clipboard");
   };
 
   return (
@@ -35,7 +32,7 @@ export default function ShareButton() {
       <DialogTrigger asChild>
         <button
           onClick={() => handleShare()}
-          className="flex justify-start items-center py-2 text-white hover:bg-neutral-800 hover:text-gray-100 cursor-pointer transition-all duration-150 ease-in-out rounded-xl w-full px-1.5"
+          className="flex justify-start items-center py-2 text-foreground hover:bg-muted-foreground/20 cursor-pointer transition-all duration-150 ease-in-out rounded-xl w-full px-1.5"
         >
           <ShareIcon className="w-4 h-4 mr-2.5" />
           <span className="text-sm">Share</span>

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import loginImage from "@/public/assets/images/loginImage.jpg";
-import logo from "@/public/assets/images/breeze.png";
+import logo from "@/public/assets/images/breeze-logo.png";
 import { Button } from "../ui/button";
 
 export default function Login() {
@@ -17,22 +17,24 @@ export default function Login() {
     }
   }, [status]);
   return (
-    <div className="flex  justify-center items-center  h-screen font-sans align-middle">
+    <div className="flex  justify-center items-center h-screen font-sans align-middle">
       <div className="flex flex-row">
         {" "}
         <div className="flex">
           <Image src={loginImage} width={400} height={400} alt="login-img" />
         </div>
         <div className="flex flex-col justify-center items-center px-5 gap-y-2 align-middle w-[400px] bg-zinc-900">
-          <div className="flex flex-row gap-x-3 mb-5">
-            <Image src={logo} alt="logo" width={28} height={28} />
-            <p className="font-medium text-xl">Breeze</p>
+          <div className="flex flex-row gap-x-3 mb-0 px-3 py-5">
+            <Image src={logo} alt="logo" width={40} height={32} />
+            <p className="font-medium text-4xl font-garamond text-white">
+              Breeze
+            </p>
           </div>
           <div className="text-sm">Welcome to Breeze — Let's get started</div>
-          <div className="mt-2">
+          <div className="flex flex-col justify-center items-center mt-2">
             <Button
               variant="outline"
-              className="w-full rounded-xl"
+              className=" rounded-xl px-10"
               size="lg"
               onClick={async () => await signIn("google")}
             >

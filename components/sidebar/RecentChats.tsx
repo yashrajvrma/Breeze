@@ -178,7 +178,7 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                           side="right"
                           sideOffset={8}
                           align="start"
-                          className="w-44 border-neutral-800 rounded-2xl shadow-xl px-1.5 py-1.5 backdrop-blur-sm font-sans"
+                          className="w-44 rounded-2xl shadow-xl px-1.5 py-1.5 backdrop-blur-sm font-sans"
                         >
                           <div className="space-y-0.5">
                             <ShareButton />

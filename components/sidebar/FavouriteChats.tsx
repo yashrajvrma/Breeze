@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import ShareButton from "../button/shareButton";
 import { RenameChatButton } from "../button/renameButton";
-import FavouriteButton from "../button/favouriteButton";
 import { DeleteButton } from "../button/deleteButton";
 import { EllipsisIcon } from "lucide-react";
 import UnFavouriteButton from "../button/unFavourite";
@@ -130,7 +129,7 @@ export default function FavouriteChats({
                           side="right"
                           sideOffset={8}
                           align="start"
-                          className="w-44 border-neutral-800 rounded-2xl shadow-xl px-1.5 py-1.5 backdrop-blur-sm font-sans"
+                          className="w-44 rounded-2xl shadow-xl px-1.5 py-1.5 backdrop-blur-sm font-sans"
                         >
                           <div className="space-y-0.5">
                             <ShareButton />
