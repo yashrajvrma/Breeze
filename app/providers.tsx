@@ -39,7 +39,17 @@ export function Providers({ children }: { children: React.ReactNode }) {
             <ThemeSyncer />
             {children}
           </TooltipProvider>
-          <Toaster toastOptions={{ className: "font-sans" }} />
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              className: "font-sans",
+              style: {
+                background: "hsl(var(--background))",
+                color: "hsl(var(--foreground))",
+                border: "1px solid hsl(var(--border))",
+              },
+            }}
+          />
         </NextThemesProvider>
       </QueryClientProvider>
     </SessionProvider>
