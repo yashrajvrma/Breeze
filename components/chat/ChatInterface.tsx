@@ -10,7 +10,7 @@ import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useChat } from "@ai-sdk/react";
 import { useQuery } from "@tanstack/react-query";
-import SendMessageButton from "./button/SendMessageButton";
+import SendMessageButton from "./button/sendMsgButton";
 import { Skeleton } from "../ui/skeleton";
 
 interface Messages {
@@ -173,22 +173,22 @@ export default function ChatInterface() {
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
-      <div className="px-4 pt-4 mt-auto">
+      <div className="px-4 pb-2 mt-auto">
         <form onSubmit={handleFormSubmit} className="relative">
           <Textarea
             ref={textareaRef}
             value={input}
             onChange={handleTextareaChange}
             placeholder="Ask a follow up..."
-            className="pr-10 max-h-[250px] resize-none"
+            className="pr-10 p-3 max-h-[250px] min-h-[100px] resize-none rounded-xl"
             rows={1}
             disabled={isLoading}
           />
           <SendMessageButton inputMessage={input} isLoading={isLoading} />
         </form>
-        <div className="flex justify-center items-center font-sans text-center text-xs text-muted-foreground py-2">
+        {/* <div className="flex justify-center items-center font-sans text-center text-xs text-muted-foreground py-2">
           Breeze may make mistakes. Please use with discretion.
-        </div>
+        </div> */}
       </div>
     </div>
   );

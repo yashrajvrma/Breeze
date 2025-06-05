@@ -1,5 +1,5 @@
 import { Button } from "../../ui/button";
-import { ArrowUp } from "lucide-react";
+import { ArrowRightIcon, ArrowUp } from "lucide-react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 interface Message {
@@ -18,9 +18,10 @@ export default function SendMessageButton({
       size="icon"
       type="submit"
       disabled={pending || !inputMessage.trim() || isLoading}
-      className="absolute right-1.5 bottom-1.5 h-7 w-7"
+      // className="absolute  right-1.5 bottom-1.5 h-7 w-7"
+      className="absolute top-2 right-2 h-7 w-7 bg-sky-500 hover:bg-sky-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
     >
-      <ArrowUp className="h-4 w-4" />
+      <ArrowRightIcon className="h-4 w-4 text-primary" />
     </Button>
   );
 }

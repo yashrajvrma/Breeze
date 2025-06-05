@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { Textarea } from "../ui/textarea";
 import { createChatSession } from "@/app/actions/session";
-import CreateChatButton from "./button/CreateChatButton";
+import CreateChatButton from "./button/createChatButton";
 import {
   Icon,
   LucideIcon,
