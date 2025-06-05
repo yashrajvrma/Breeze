@@ -18,7 +18,7 @@ export default function SidebarNavigation({
 
       {/* Favourite and Recent Chats - Scrollable content */}
       {!isCollapsed && (
-        <div className="flex-1 overflow-hidden flex flex-col font-sans ">
+        <div className="flex-1 overflow-hidden flex flex-col font-sans">
           <FavouriteChats isCollapsed={isCollapsed} />
           <RecentChats isCollapsed={isCollapsed} />
         </div>

@@ -6,9 +6,8 @@ import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { Ellipsis } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import ShareButton from "../button/shareButton";
 import { DeleteButton } from "../button/deleteButton";
@@ -40,6 +39,7 @@ const fetchRecentChats = async (
   context: QueryFunctionContext
 ): Promise<ChatResponse> => {
   const pageParam = (context.pageParam as number) || 1;
+
   const res = await axios.get(`/api/v1/chat?page=${pageParam}&size=10`);
   return res.data;
 };
@@ -48,7 +48,11 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
   const params = useParams();
   const router = useRouter();
   const { data: session, status } = useSession();
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({
+    threshold: 0,
+    rootMargin: "100px",
+    triggerOnce: false,
+  });
 
   const chatId = params.chatId as string;
 
@@ -58,19 +62,34 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
       initialPageParam: 1,
       queryFn: fetchRecentChats,
       getNextPageParam: (lastPage, allPages) => {
-        const totalLoaded = allPages.flatMap((p) => p.chats).length;
-        return totalLoaded < lastPage.totalChats
-          ? allPages.length + 1
-          : undefined;
+        if (lastPage.chats.length < lastPage.size) {
+          return undefined;
+        }
+
+        const totalChatsLoaded = allPages.flatMap((p) => p.chats).length;
+
+        if (totalChatsLoaded >= lastPage.totalChats) {
+          console.log("🛑 No more pages - all chats loaded");
+          return undefined;
+        }
+        const nextPage = lastPage.page + 1;
+        return nextPage;
       },
       enabled: !!session,
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
     });
 
   useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
+    if (inView && hasNextPage && !isFetchingNextPage && !isLoading) {
+      const timer = setTimeout(() => {
+        fetchNextPage();
+      }, 100);
+
+      return () => clearTimeout(timer);
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]);
 
   const chats = data?.pages.flatMap((page) => page.chats);
 
@@ -80,34 +99,30 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
         <div className="flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
           Recents
         </div>
-
-        <div className="flex flex-col  py-4 font-sans text-center text-sm text-muted-foreground gap-y-2">
+        <div className="flex flex-col py-4 font-sans text-center text-sm text-muted-foreground gap-y-2">
           <Skeleton className="flex items-center h-7 w-full" />
           <Skeleton className="flex items-center h-7 w-full" />
           <Skeleton className="flex items-center h-7 w-full" />
-          {/* <Skeleton className="flex items-center h-8 w-full" /> */}
         </div>
       </div>
     );
   }
 
-  // If session is not available after loading
   if (!session) {
     return (
       <div className="flex flex-col px-5 py-1">
         <div className="flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
           Recents
         </div>
-        <div className="border border-dashed text-center mt-3 px-4 py-4  text-xs text-muted-foreground rounded-lg">
+        <div className="border border-dashed text-center mt-3 px-4 py-4 text-xs text-muted-foreground rounded-lg">
           Your recent chats will appear here once you're logged in.
         </div>
       </div>
     );
   }
 
-  // Render chat list
   return (
-    <div className="flex flex-col h-full ">
+    <div className="flex flex-col h-full overflow-hidden">
       <div className="px-5 pb-1 flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
         Recents
       </div>
@@ -150,7 +165,7 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
                           <button
                             className={cn(
                               "p-1 rounded-md transition-colors duration-200 text-foreground",
-                              "hover:bg-background/50 focus:outline-none ",
+                              "hover:bg-background/50 focus:outline-none",
                               isActive
                                 ? "hover:bg-accent-foreground/10"
                                 : "hover:bg-accent"
@@ -179,21 +194,21 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
               </div>
             );
           })}
-        </div>
 
-        {hasNextPage && (
-          <div ref={ref} className="text-center text-muted-foreground py-4">
-            {isFetchingNextPage ? (
-              <div className="flex items-center justify-center space-x-2 py-5 pb-10">
-                <Spinner />
-              </div>
-            ) : (
-              <span className="text-xs text-muted-foreground">
-                Scroll to load more
-              </span>
-            )}
-          </div>
-        )}
+          {hasNextPage && (
+            <div
+              ref={ref}
+              className="flex justify-center text-center text-muted-foreground py-4"
+              style={{ minHeight: "40px" }}
+            >
+              {isFetchingNextPage && (
+                <div className="flex items-center justify-center space-x-2 py-5">
+                  <Spinner />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </ScrollArea>
     </div>
   );

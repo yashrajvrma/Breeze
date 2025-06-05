@@ -28,7 +28,7 @@ const PromptSuggestor = ({
   return (
     <div
       onClick={onClick}
-      className="flex gap-x-2 items-center align-middle border px-5 py-4 rounded-xl hover:border-neutral-700 hover:cursor-pointer"
+      className="flex gap-x-2 items-center align-middle border px-4 py-3 rounded-xl hover:border-neutral-700 hover:cursor-pointer"
     >
       <Icon size={16} />
       {label}

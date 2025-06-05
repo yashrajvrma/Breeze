@@ -17,7 +17,7 @@ export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
       )}
     >
       <SidebarHeader isCollapsed={isCollapsed} toggleSidebar={toggleSidebar} />
-      <div className="flex-1 overflow-y-auto py-2 scrollbar-thin">
+      <div className="flex-1 overflow-y-auto pt-1  scrollbar-thin">
         <SidebarNavigation isCollapsed={isCollapsed} />
       </div>
 
