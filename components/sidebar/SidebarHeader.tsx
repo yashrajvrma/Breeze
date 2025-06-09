@@ -26,17 +26,20 @@ export default function SidebarHeader({
   toggleSidebar,
 }: SidebarHeaderProps) {
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col">
       <div
         className={cn(
-          "flex items-center justify-between py-2.5 px-4 border-b",
+          "flex items-center justify-between py-2.5 px-3.5 border-b",
           isCollapsed && "py-4"
         )}
       >
         <div className="flex justify-center items-center align-middle">
-          <Link className="bg-stone-50 rounded-lg p-1" href="/">
-            <Image src={logo} alt="logo" width={23} height={23} />
-          </Link>
+          <div className="flex justify-center bg-stone-50 rounded-lg w-7 h-7">
+            <Link className="flex items-center align-middle" href="/">
+              <Image src={logo} alt="logo" width={22} height={22} />
+            </Link>
+          </div>
+
           {!isCollapsed && (
             <span className="ml-1.5 text-3xl font-instrumentSerif font-semibold tracking-tight text-foreground">
               Breeze
