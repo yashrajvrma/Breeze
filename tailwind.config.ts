@@ -13,6 +13,7 @@ const config: Config = {
         sans: ["var(--font-geist-sans)", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
         garamond: ["var(--font-garamond-book)"],
+        instrumentSerif: ["var(--font-instrument-serif)"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

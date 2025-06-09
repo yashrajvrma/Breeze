@@ -34,11 +34,11 @@ export default function SidebarHeader({
         )}
       >
         <div className="flex justify-center items-center align-middle">
-          <Link href="/">
+          <Link className="bg-stone-50 rounded-lg p-1" href="/">
             <Image src={logo} alt="logo" width={23} height={23} />
           </Link>
           {!isCollapsed && (
-            <span className="ml-2 text-3xl font-garamond font-medium tracking-tight text-foreground ">
+            <span className="ml-1.5 text-3xl font-instrumentSerif font-semibold tracking-tight text-foreground">
               Breeze
             </span>
           )}
