@@ -3,12 +3,17 @@
 import ChatMessage from "@/components/chat/ChatMessage";
 import { Spinner } from "@/components/loader/spinner";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  ChatInput,
+  ChatInputSubmit,
+  ChatInputTextArea,
+} from "@/components/chat-input";
 import { useChat } from "@ai-sdk/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
 
 type Messages = {
@@ -53,6 +58,7 @@ export default function DummyChat() {
   const params = useParams();
   const { data: session } = useSession();
   const [firstMsg, setFirstMsg] = useState<Messages[]>();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const { chatId } = params;
 
@@ -67,7 +73,7 @@ export default function DummyChat() {
     enabled: !!session,
   });
 
-  // display erorr while fetching threads
+  // display error while fetching threads
   useEffect(() => {
     if (threadError) {
       console.log(
@@ -127,15 +133,44 @@ export default function DummyChat() {
         });
       }
     }
-  }, [threadData]);
+  }, [threadData, append]);
+
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    if (messages.length > 0) {
+      // Small delay ensures DOM is rendered before scrolling
+      const timeout = setTimeout(() => {
+        scrollToBottom();
+      }, 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Handle chat input submit
+  const handleChatSubmit = () => {
+    if (!input.trim()) return;
+
+    const syntheticEvent = {
+      preventDefault: () => {},
+    } as React.FormEvent<HTMLFormElement>;
+
+    handleSubmit(syntheticEvent);
+  };
+
+  const isGenerating = status === "submitted" || status === "streaming";
 
   return (
-    <div className="flex flex-col h-full border-r border-border font-sans">
-      <div className="py-4 px-7 text-base font-semibold border-b">
+    <div className="flex flex-col h-screen border-r border-border font-sans">
+      <div className="py-4 px-7 text-base font-semibold border-b bg-background">
         {threadData?.title || "Untitled Chat"}
       </div>
+
       <ScrollArea className="flex-1 p-0 pb-0 px-7">
-        <div className="space-y-4 pt-4">
+        <div className="space-y-4 pt-4 pb-4">
           {messages.map((msg, index) => (
             <ChatMessage
               key={msg.id || index}
@@ -147,22 +182,36 @@ export default function DummyChat() {
               }}
             />
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
 
-      {(status === "submitted" || status === "streaming") && (
-        <div className="fixed top-0 bg-red-400">
-          {status === "submitted" && <Spinner />}
-          <button type="button" onClick={() => stop()}>
-            Stop
-          </button>
+      {isGenerating && (
+        <div className="flex justify-center py-5">
+          {status === "submitted" && (
+            <div className="flex items-center align-middle">
+              <Spinner />
+            </div>
+          )}
         </div>
       )}
-      <div className="px-4 pb-2 mt-auto">
-        <form onSubmit={handleSubmit}>
-          <input name="prompt" value={input} onChange={handleInputChange} />
-          <button type="submit">Submit</button>
-        </form>
+
+      <div className="px-4 pb-4 mt-auto">
+        <ChatInput
+          variant="default"
+          value={input}
+          onChange={handleInputChange}
+          onSubmit={handleChatSubmit}
+          loading={isGenerating}
+          onStop={() => stop()}
+          className="w-full"
+        >
+          <ChatInputTextArea
+            placeholder="Type your message..."
+            className="min-h-[44px] max-h-32"
+          />
+          <ChatInputSubmit />
+        </ChatInput>
       </div>
     </div>
   );
