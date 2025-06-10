@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { SendHorizontal } from "lucide-react";
+import { SendHorizontal, SquircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -53,21 +53,29 @@ export default function ChatInterface() {
     refetchOnWindowFocus: false,
   });
 
-  const { messages, input, handleInputChange, append, setMessages, isLoading } =
-    useChat({
-      api: "/api/v1/chat/message",
-      body: {
-        chatId,
-      },
-      initialMessages: firstMsg
-        ? []
-        : threadData?.thread?.messages?.map((msg: Messages) => ({
-            id: msg.id,
-            role: msg.sender,
-            content: msg.content,
-          })),
-      experimental_throttle: 50,
-    });
+  const {
+    messages,
+    input,
+    handleInputChange,
+    append,
+    setMessages,
+    isLoading,
+    status,
+    stop,
+  } = useChat({
+    api: "/api/v1/chat/message",
+    body: {
+      chatId,
+    },
+    initialMessages: firstMsg
+      ? []
+      : threadData?.thread?.messages?.map((msg: Messages) => ({
+          id: msg.id,
+          role: msg.sender,
+          content: msg.content,
+        })),
+    experimental_throttle: 50,
+  });
 
   useEffect(() => {
     if (threadError) {
@@ -121,7 +129,6 @@ export default function ChatInterface() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
-
     try {
       await append({
         role: "user",
@@ -163,6 +170,7 @@ export default function ChatInterface() {
           {messages.map((msg, index) => (
             <ChatMessage
               key={msg.id || index}
+              isLoading={isLoading}
               message={{
                 id: msg.id || String(index),
                 sender: msg.role === "user" ? "user" : "assistant",
@@ -184,11 +192,19 @@ export default function ChatInterface() {
             rows={1}
             disabled={isLoading}
           />
-          <SendMessageButton inputMessage={input} isLoading={isLoading} />
+
+          {status === "submitted" || status === "streaming" ? (
+            <Button
+              size="icon"
+              onClick={stop}
+              className="absolute top-2 right-2 h-7 w-7 bg-blue-500 text-neutral-50 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
+            >
+              <SquircleIcon fill="#d4d4d4" className="h-4 w-4" />
+            </Button>
+          ) : (
+            <SendMessageButton inputMessage={input} isLoading={isLoading} />
+          )}
         </form>
-        {/* <div className="flex justify-center items-center font-sans text-center text-xs text-muted-foreground py-2">
-          Breeze may make mistakes. Please use with discretion.
-        </div> */}
       </div>
     </div>
   );

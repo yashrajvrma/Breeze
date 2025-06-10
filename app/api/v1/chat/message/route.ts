@@ -11,7 +11,7 @@ import { NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
   const { chatId, messages } = await req.json();
 
-  console.log("messages is ", messages);
+  // console.log("messages is ", messages);
   console.log("chat id is ", chatId);
 
   const session = await getServerSession(authConfig);
@@ -69,20 +69,21 @@ export async function POST(req: NextRequest) {
     userMessageId = dbMessages[0].id;
   }
 
-  const result = await streamText({
+  const result = streamText({
     model: openai("gpt-3.5-turbo"),
     system: docsSystemPrompt,
+    maxTokens: 2000,
     messages: messages.map((m: any) => ({
       role: m.role,
       content: m.content,
     })),
-    async onFinish({ response }) {
+
+    onFinish: async ({ response }) => {
+      console.log("hii");
       const assistantMessages = appendResponseMessages({
         messages,
         responseMessages: response.messages,
       });
-
-      console.log("assistant msg is ", assistantMessages);
 
       const assistantResponse = assistantMessages.find(
         (m) => m.role === "assistant"
@@ -106,6 +107,7 @@ export async function POST(req: NextRequest) {
               orderIndex: lastOrderIndex + (shouldStoreUserMessage ? 2 : 1),
             },
           });
+          console.log("message created in db");
           await prisma.message.update({
             where: {
               id: userMessageId,
@@ -114,6 +116,7 @@ export async function POST(req: NextRequest) {
               status: "COMPLETED",
             },
           });
+          console.log("message updated in db");
         } catch (err) {
           console.error("Failed to store assistant response:", err);
         }
@@ -121,5 +124,5 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return result.toDataStreamResponse();
+  return result.toDataStreamResponse({});
 }

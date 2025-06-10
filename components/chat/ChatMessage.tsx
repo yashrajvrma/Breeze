@@ -14,6 +14,7 @@ interface Message {
 
 interface ChatMessageProps {
   message: Message;
+  isLoading: boolean;
 }
 
 interface ParsedContent {
@@ -22,7 +23,7 @@ interface ParsedContent {
   afterDoc: string | null;
 }
 
-export default function ChatMessage({ message }: ChatMessageProps) {
+export default function ChatMessage({ message, isLoading }: ChatMessageProps) {
   const setContentId = useEditorContent((state) => state.setContentId);
   const setContentTitle = useEditorContent((state) => state.setContentTitle);
   const setEditorContent = useEditorContent((state) => state.setEditorContent);
@@ -33,7 +34,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     afterDoc: null,
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const content = message.content;
@@ -49,7 +50,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         docContent: null,
         afterDoc: null,
       });
-      setIsLoading(false);
+      // setIsLoading(false);
       return;
     }
 
@@ -63,7 +64,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         docContent: content.slice(startIdx + startTag.length).trim(),
         afterDoc: null,
       });
-      setIsLoading(true); // Document is still loading
+      // setIsLoading(true);
       return;
     }
 
@@ -75,7 +76,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     });
 
     // Check if message is still streaming or if document generation is complete
-    setIsLoading(message.isStreaming || false);
+    // setIsLoading(message.isStreaming || false);
   }, [message.content, message.isStreaming]);
 
   const handleDocumentClick = () => {
