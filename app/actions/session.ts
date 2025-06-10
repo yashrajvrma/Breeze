@@ -50,5 +50,5 @@ export async function createChatSession(formData: FormData) {
     throw new Error(error.message || "Failed to create chat");
   }
 
-  redirect(`/chat/${chat.id}`);
+  redirect(`/dummy/${chat.id}`);
 }
