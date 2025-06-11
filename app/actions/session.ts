@@ -13,8 +13,6 @@ import { error } from "console";
 export async function createChatSession(formData: FormData) {
   console.log("inside server components");
 
-  const maxRequest = process.env.MAX_REQUEST!;
-
   const session = await getServerSession(authConfig);
 
   if (!session || !session.user) {
@@ -27,11 +25,12 @@ export async function createChatSession(formData: FormData) {
   const request = await checkNoOfRequest({ userId });
   console.log("request got is", request);
 
-  if (request >= Number(maxRequest)) {
-    console.log("free credit expired");
+  if (!request?.allowed) {
+    console.log("Free credit expired");
+
     return {
       success: false,
-      error: "Your free credit got exceeded. Resets in 12hrs",
+      error: "Free limit reached. Try again later",
     };
   }
 

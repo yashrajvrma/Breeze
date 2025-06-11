@@ -7,8 +7,10 @@ type RequestProps = {
 };
 
 export async function checkNoOfRequest({ userId }: RequestProps) {
+  const maxRequest = process.env.MAX_REQUEST!;
+
   try {
-    const request = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         id: userId,
       },
@@ -18,16 +20,21 @@ export async function checkNoOfRequest({ userId }: RequestProps) {
       },
     });
 
-    console.log("request count is", request?.noOfRequest);
+    const requestCount = user?.noOfRequest ?? 0;
 
-    const requestCount = request?.noOfRequest;
-
-    if (!requestCount) {
-      return 0;
+    if (requestCount >= Number(maxRequest)) {
+      return {
+        allowed: false,
+        requestCount,
+      };
     }
 
-    return requestCount;
+    return {
+      allowed: true,
+      requestCount,
+    };
   } catch (error) {
+    console.error("checkNoOfRequest error:", error);
     throw new Error("Something went wrong");
   }
 }

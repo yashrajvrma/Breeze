@@ -134,8 +134,6 @@ export const maxDuration = 30;
 export async function POST(req: NextRequest, res: NextResponse) {
   const { chatId, messages } = await req.json();
 
-  const maxRequest = process.env.MAX_REQUEST!;
-
   const session = await getServerSession(authConfig);
 
   // get last message
@@ -154,13 +152,22 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   // check no of request
   const request = await checkNoOfRequest({ userId });
+
   console.log("request got is", request);
 
-  if (request >= Number(maxRequest)) {
+  if (!request?.allowed) {
     console.log("free credit expired");
-    return new Response("You Free credits expired. Resets in 12hrs", {
+    return new Response(`Free limit reached. Try again later`, {
       status: 429,
     });
+
+    // return new Response(
+    //   JSON.stringify({
+    //     status: 429,
+    //     error: "You've reached your daily limit. Please try after 11:59 PM.",
+    //   }),
+    //   { status: 429 }
+    // );
   }
 
   // check if its a first message
@@ -248,7 +255,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
               id: userId,
             },
             data: {
-              noOfRequest: request + 1,
+              noOfRequest: request.requestCount + 1,
             },
           });
 

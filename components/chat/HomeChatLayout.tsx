@@ -14,6 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { error } from "console";
+import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
 
 interface PromptSuggestorProps {
   label: string;
@@ -57,8 +58,11 @@ export default function HomeChatLayout() {
       const response = await createChatSession(formData);
 
       if (!response.success) {
-        console.log("abc is", response.error);
-        toast.error(response?.error!);
+        const localTime = getFormattedResetTime();
+        console.log("time is", localTime);
+        toast.error(
+          `You've hit your daily limit. Your credits will reset after ${localTime}`
+        );
       } else {
         console.log("response is", response?.data?.chatId);
         const chatId = response?.data?.chatId;
@@ -120,8 +124,13 @@ export default function HomeChatLayout() {
       const response = await createChatSession(formData);
 
       if (!response.success) {
-        console.log("abc is", response.error);
-        toast.error(response?.error!);
+        console.log("error is", response.error);
+
+        const localTime = getFormattedResetTime();
+        console.log("time is", localTime);
+        toast.error(
+          `You've hit your daily limit. Your credits will reset after ${localTime}`
+        );
       } else {
         console.log("response is", response?.data?.chatId);
         const chatId = response?.data?.chatId;

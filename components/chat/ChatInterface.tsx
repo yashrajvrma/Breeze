@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import SendMessageButton from "./button/sendMsgButton";
 import { Skeleton } from "../ui/skeleton";
 import { error } from "console";
+import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
 
 interface Messages {
   id: string;
@@ -79,6 +80,15 @@ export default function ChatInterface() {
     onError: (error) => {
       console.log("error is ", error);
       toast.error(error.message);
+    },
+    onResponse(response) {
+      if (response.status === 429) {
+        const localTime = getFormattedResetTime();
+        console.log("time is", localTime);
+        toast.error(
+          `You've hit your daily limit. Your credits will reset after ${localTime}`
+        );
+      }
     },
   });
 
