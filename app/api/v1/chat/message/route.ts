@@ -187,8 +187,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const result = streamText({
     model: openai("gpt-3.5-turbo"),
     system: DOC_SYSTEM_PROMPT,
-    maxTokens: 500,
-    messages: msgArray,
+    maxTokens: 1000,
+    messages: messages.map((m: any) => ({
+      role: m.role,
+      content: m.content,
+    })),
     async onFinish({ response }) {
       console.log("calling onFinish");
       const assistantMessages = appendResponseMessages({

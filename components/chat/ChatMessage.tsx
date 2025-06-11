@@ -34,13 +34,11 @@ export default function ChatMessage({ message, isLoading }: ChatMessageProps) {
     afterDoc: null,
   });
 
-  // const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     const content = message.content;
-    1;
-    const startTag = "<<start-doc>>";
-    const endTag = "<<end-doc>>";
+
+    const startTag = "<doc>";
+    const endTag = "</doc>";
 
     const startIdx = content.indexOf(startTag);
 
@@ -50,7 +48,6 @@ export default function ChatMessage({ message, isLoading }: ChatMessageProps) {
         docContent: null,
         afterDoc: null,
       });
-      // setIsLoading(false);
       return;
     }
 
@@ -64,7 +61,6 @@ export default function ChatMessage({ message, isLoading }: ChatMessageProps) {
         docContent: content.slice(startIdx + startTag.length).trim(),
         afterDoc: null,
       });
-      // setIsLoading(true);
       return;
     }
 
@@ -74,9 +70,6 @@ export default function ChatMessage({ message, isLoading }: ChatMessageProps) {
       docContent: content.slice(startIdx + startTag.length, endIdx).trim(),
       afterDoc: content.slice(endIdx + endTag.length).trim(),
     });
-
-    // Check if message is still streaming or if document generation is complete
-    // setIsLoading(message.isStreaming || false);
   }, [message.content, message.isStreaming]);
 
   const handleDocumentClick = () => {
@@ -87,11 +80,13 @@ export default function ChatMessage({ message, isLoading }: ChatMessageProps) {
     }
 
     try {
-      const contentJson = JSON.parse(parsedContent.docContent);
+      // Since content is now HTML, we can directly set it
+      const htmlContent = parsedContent.docContent;
       setContentId(message.id);
-      setEditorContent(contentJson);
+      setEditorContent(htmlContent);
 
-      const extractedTitle = extractTitleFromDoc(contentJson);
+      // Extract title from HTML content
+      const extractedTitle = extractTitleFromHTML(htmlContent);
       console.log("title is", extractedTitle);
       if (extractedTitle) {
         setContentTitle(extractedTitle);
@@ -99,9 +94,29 @@ export default function ChatMessage({ message, isLoading }: ChatMessageProps) {
       }
 
       console.log("content id is ", message.id);
-      console.log("Document content set to editor:", contentJson);
+      console.log("Document content set to editor:", htmlContent);
     } catch (error) {
-      console.error("Error parsing document content:", error);
+      console.error("Error processing document content:", error);
+    }
+  };
+
+  // Helper function to extract title from HTML content
+  const extractTitleFromHTML = (htmlContent: string): string | null => {
+    try {
+      // Create a temporary DOM element to parse HTML
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = htmlContent;
+
+      // Look for the first h1 tag only
+      const h1Element = tempDiv.querySelector("h1");
+      if (h1Element) {
+        return h1Element.textContent?.trim() || null;
+      }
+
+      return null;
+    } catch (error) {
+      console.error("Error extracting title from HTML:", error);
+      return null;
     }
   };
 

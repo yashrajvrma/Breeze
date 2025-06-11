@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { type Editor, JSONContent } from "@tiptap/react";
+import { type Editor, HTMLContent } from "@tiptap/react";
 
 type EditorState = {
   editor: Editor | null;
@@ -9,10 +9,10 @@ type EditorState = {
 type EditorContent = {
   id: string | null;
   title: string;
-  content: JSONContent | null;
+  content: HTMLContent | null;
   setContentId: (id: string | null) => void;
   setContentTitle: (title: string) => void;
-  setEditorContent: (content: JSONContent | null) => void;
+  setEditorContent: (content: HTMLContent | null) => void;
 };
 
 export const useEditorStore = create<EditorState>((set) => ({
