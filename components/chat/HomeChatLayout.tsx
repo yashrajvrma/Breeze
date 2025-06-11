@@ -11,6 +11,8 @@ import {
   SparklesIcon,
   WandSparklesIcon,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface PromptSuggestorProps {
   label: string;
@@ -40,16 +42,24 @@ export default function HomeChatLayout() {
   const [message, setMessage] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
+  const router = useRouter();
+
   const handleTemplateClick = async (prompt: string) => {
     const formData = new FormData();
     formData.append("message", prompt);
+    await createChatSession(formData);
 
     try {
-      const result = await createChatSession(formData);
-      console.log("res is", result.message);
+      const response = await createChatSession(formData);
+      console.log("response is", response?.chatId);
+      if (response) {
+        const chatId = response?.chatId;
+        router.push(`/chat/${chatId}`);
+      }
     } catch (error: any) {
-      console.log("ew e", error);
-      console.log("error is", error.message);
+      if (error) {
+        toast.error("Something went wrong");
+      }
     }
   };
 
@@ -95,8 +105,20 @@ export default function HomeChatLayout() {
     const messageText = formData.get("message") as string;
     if (!messageText?.trim()) return;
 
-    await createChatSession(formData);
-    setMessage("");
+    try {
+      const response = await createChatSession(formData);
+      console.log("response is", response?.chatId);
+      if (response) {
+        const chatId = response?.chatId;
+        router.push(`/chat/${chatId}`);
+      }
+    } catch (error: any) {
+      if (error) {
+        toast.error("Something went wrong");
+      }
+    }
+
+    // setMessage("");
   };
 
   return (

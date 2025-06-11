@@ -13,13 +13,6 @@ export async function createChatSession(formData: FormData) {
 
   const session = await getServerSession(authConfig);
 
-  if (session) {
-    console.log("helllo");
-    return {
-      message: "hii",
-    };
-  }
-
   if (!session || !session.user) {
     redirect("/signin");
   }
@@ -53,9 +46,8 @@ export async function createChatSession(formData: FormData) {
         status: "PENDING",
       },
     });
+    return { success: true, chatId: chat?.id };
   } catch (error: any) {
-    throw new Error(error.message || "Failed to create chat");
+    throw new Error("Something went wrong");
   }
-
-  redirect(`/dummy/${chat.id}`);
 }
