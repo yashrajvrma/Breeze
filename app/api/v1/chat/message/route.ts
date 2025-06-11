@@ -160,14 +160,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return new Response(`Free limit reached. Try again later`, {
       status: 429,
     });
-
-    // return new Response(
-    //   JSON.stringify({
-    //     status: 429,
-    //     error: "You've reached your daily limit. Please try after 11:59 PM.",
-    //   }),
-    //   { status: 429 }
-    // );
   }
 
   // check if its a first message

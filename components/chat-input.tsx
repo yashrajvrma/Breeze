@@ -53,7 +53,7 @@ function ChatInput({
       <div
         className={cn(
           variant === "default" &&
-            "flex flex-col items-end w-full p-2 rounded-2xl border border-input bg-transparent focus-within:ring-1 focus-within:ring-ring focus-within:outline-none",
+            "flex flex-col items-end w-full p-2 rounded-2xl border border-input bg-transparent focus-within:outline-none",
           variant === "unstyled" && "flex items-start gap-2 w-full",
           className
         )}

@@ -1,69 +1,105 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { SendHorizontal, SquircleIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import ChatMessage from "@/components/chat/ChatMessage";
+import { Spinner } from "@/components/loader/spinner";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import ChatMessage from "./ChatMessage";
-import { useParams } from "next/navigation";
-import toast from "react-hot-toast";
+import {
+  ChatInput,
+  ChatInputSubmit,
+  ChatInputTextArea,
+} from "@/components/chat-input";
 import { useChat } from "@ai-sdk/react";
 import { useQuery } from "@tanstack/react-query";
-import SendMessageButton from "./button/sendMsgButton";
-import { Skeleton } from "../ui/skeleton";
-import { error } from "console";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
+import { useEffect, useState, useRef } from "react";
+import toast from "react-hot-toast";
 import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
+import { Skeleton } from "../ui/skeleton";
+import { JSONParseError } from "ai";
 
-interface Messages {
+type Messages = {
   id: string;
   sender: "user" | "assistant";
   content: string;
   status: "PENDING" | "COMPLETED";
   orderIndex: number;
-  createdAt: string;
-}
+};
 
-interface Thread {
+type Thread = {
   chatId: string;
+  title: string;
   messages: Messages[];
-}
+};
 
-async function fetchThread(chatId: string) {
-  const response = await fetch(`/api/v1/chat/thread?chatId=${chatId}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch conversation");
+type ThreadResponse = {
+  success: boolean;
+  message: string;
+  thread: Thread;
+};
+
+// fetch existing threads message from db
+const fetchThreadFn = async (chatId: string): Promise<Thread> => {
+  try {
+    const response = await axios.get<ThreadResponse>(
+      `/api/v1/chat/thread?chatId=${chatId}`
+    );
+    console.log("res is", response.data.thread);
+    return response.data.thread;
+  } catch (error: any) {
+    if (error.response) {
+      const errorMessage = error.response.data?.message;
+      console.error("error response is", error.response.data);
+      throw new Error(errorMessage || "Failed to fetch chats");
+    }
+    throw new Error("Something went wrong");
   }
-  return response.json();
-}
+};
 
-export default function ChatInterface() {
+export default function DummyChat() {
   const params = useParams();
-  const { chatId } = params;
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { data: session } = useSession();
+  const [firstMsg, setFirstMsg] = useState<Messages[]>();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const [firstMsg, setFirstMsg] = useState<Messages[]>();
+  const { chatId } = params;
 
+  // fetch existing thread message
   const {
     data: threadData,
     isLoading: isThreadLoading,
     error: threadError,
   } = useQuery({
     queryKey: ["thread", chatId],
-    queryFn: () => fetchThread(chatId as string),
-    refetchOnWindowFocus: false,
+    queryFn: () => fetchThreadFn(chatId as string),
+    enabled: !!session,
   });
 
+  // display error while fetching threads
+  useEffect(() => {
+    if (threadError) {
+      console.log(
+        "theres an error while fetching thread",
+        threadError?.message
+      );
+      toast.error(threadError?.message);
+    }
+  }, [threadError]);
+
+  // send message to llm
   const {
     messages,
-    input,
-    handleInputChange,
-    append,
     setMessages,
+    input,
+    setInput,
+    handleInputChange,
+    stop,
     isLoading,
     status,
-    stop,
+    handleSubmit,
+    append,
+    error: chatError,
   } = useChat({
     api: "/api/v1/chat/message",
     body: {
@@ -71,16 +107,12 @@ export default function ChatInterface() {
     },
     initialMessages: firstMsg
       ? []
-      : threadData?.thread?.messages?.map((msg: Messages) => ({
-          id: msg.id,
-          role: msg.sender,
-          content: msg.content,
+      : threadData?.messages.map((item: Messages) => ({
+          id: item.id,
+          role: item.sender,
+          content: item.content,
         })),
     experimental_throttle: 50,
-    onError: (error) => {
-      console.log("error is ", error);
-      toast.error(error.message);
-    },
     onResponse(response) {
       if (response.status === 429) {
         const localTime = getFormattedResetTime();
@@ -90,41 +122,41 @@ export default function ChatInterface() {
         );
       }
     },
+    onError: (error) => {
+      console.log("ai sdk error", error?.message);
+      toast.error("Something went wrong. Please try again later");
+    },
   });
 
+  // set first message
   useEffect(() => {
-    if (threadError) {
-      toast.error(threadError.message);
-    }
-  }, [threadError]);
-
-  useEffect(() => {
-    if (threadData?.thread?.messages) {
-      const msgs = threadData.thread.messages as Messages[];
-      // setFirstMsg(threadData.thread.message);
+    if (threadData?.messages) {
+      const messageArray = threadData.messages as Messages[];
 
       if (
-        msgs.length === 1 &&
-        msgs[0].sender === "user" &&
-        msgs[0].status === "PENDING"
+        messageArray.length === 1 &&
+        messageArray[0].sender === "user" &&
+        messageArray[0].status === "PENDING"
       ) {
-        setFirstMsg(msgs);
+        setFirstMsg(messageArray);
         append({
           role: "user",
-          content: msgs[0].content,
+          content: messageArray[0].content,
         }).catch((error) => {
+          console.log(error);
           toast.error(error.message);
         });
       }
     }
   }, [threadData, append]);
 
+  // Auto-scroll to bottom when messages change
   useEffect(() => {
     if (messages.length > 0) {
       // Small delay ensures DOM is rendered before scrolling
       const timeout = setTimeout(() => {
         scrollToBottom();
-      }, 100); // 100ms delay is usually safe
+      }, 100);
       return () => clearTimeout(timeout);
     }
   }, [messages]);
@@ -133,26 +165,20 @@ export default function ChatInterface() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    handleInputChange(e);
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
+  // Handle chat input submit
+  const handleChatSubmit = () => {
+    if (!input.trim()) return;
+
+    const syntheticEvent = {
+      preventDefault: () => {},
+    } as React.FormEvent<HTMLFormElement>;
+
+    handleSubmit(syntheticEvent);
   };
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-    try {
-      await append({
-        role: "user",
-        content: input.trim(),
-      });
-    } catch (error) {
-      toast.error("Failed to send message");
-    }
-  };
+  // Determine if we should show loading/generating state
+  const isGenerating =
+    (status === "submitted" || status === "streaming") && !chatError;
 
   if (isThreadLoading) {
     return (
@@ -174,14 +200,14 @@ export default function ChatInterface() {
       </div>
     );
   }
-
   return (
-    <div className="flex flex-col h-full border-r border-border font-sans">
-      <div className="py-4 px-7 text-base font-semibold border-b">
-        {threadData?.thread?.title || "Untitled Chat"}
+    <div className="flex flex-col h-screen border-r border-border font-sans">
+      <div className="py-4 px-7 text-base font-semibold border-b bg-background">
+        {threadData?.title || "Untitled Chat"}
       </div>
+
       <ScrollArea className="flex-1 p-0 pb-0 px-7">
-        <div className="space-y-4 pt-4">
+        <div className="space-y-4 pt-4 pb-4">
           {messages.map((msg, index) => (
             <ChatMessage
               key={msg.id || index}
@@ -196,36 +222,33 @@ export default function ChatInterface() {
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
-      <div className="px-4 pb-2 mt-auto">
-        <form onSubmit={handleFormSubmit} className="relative">
-          <Textarea
-            ref={textareaRef}
-            value={input}
-            onChange={handleTextareaChange}
-            placeholder="Ask a follow up..."
-            className="pr-10 p-3 max-h-[250px] min-h-[100px] resize-none rounded-xl hover:border-[hsl(var(--border-foreground))]"
-            rows={1}
-            disabled={isLoading}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                handleFormSubmit(e);
-              }
-            }}
-          />
 
-          {status === "submitted" || status === "streaming" ? (
-            <Button
-              size="icon"
-              onClick={stop}
-              className="absolute top-2 right-2 h-7 w-7 bg-blue-500 text-neutral-50 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
-            >
-              <SquircleIcon fill="#d4d4d4" className="h-4 w-4" />
-            </Button>
-          ) : (
-            <SendMessageButton inputMessage={input} isLoading={isLoading} />
+      {isGenerating && (
+        <div className="flex justify-center py-5">
+          {status === "submitted" && (
+            <div className="flex items-center align-middle">
+              <Spinner />
+            </div>
           )}
-        </form>
+        </div>
+      )}
+
+      <div className="px-4 pb-4 mt-auto">
+        <ChatInput
+          variant="default"
+          value={input}
+          onChange={handleInputChange}
+          onSubmit={handleChatSubmit}
+          loading={isGenerating}
+          onStop={() => stop()}
+          className="w-full focus:outline-none ring-0 border"
+        >
+          <ChatInputTextArea
+            placeholder="Type your message..."
+            className="min-h-[44px] max-h-32"
+          />
+          <ChatInputSubmit />
+        </ChatInput>
       </div>
     </div>
   );
