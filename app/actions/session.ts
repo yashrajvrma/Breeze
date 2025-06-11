@@ -5,7 +5,7 @@ import { authConfig } from "@/lib/auth";
 import prisma from "@/db";
 import { redirect } from "next/navigation";
 import { openai } from "@ai-sdk/openai";
-import { titleSystemPrompt } from "@/lib/prompt";
+import { TITLE_SYSTEM_PROMPT } from "@/lib/prompt";
 import { generateText } from "ai";
 
 export async function createChatSession(formData: FormData) {
@@ -25,7 +25,7 @@ export async function createChatSession(formData: FormData) {
   try {
     const { text } = await generateText({
       model: openai("gpt-3.5-turbo"),
-      system: titleSystemPrompt,
+      system: TITLE_SYSTEM_PROMPT,
       prompt: message as string,
     });
 

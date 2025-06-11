@@ -1,7 +1,7 @@
 import { streamText, appendResponseMessages } from "ai";
 import { openai } from "@ai-sdk/openai";
 import prisma from "@/db";
-import { docsSystemPrompt } from "@/lib/prompt";
+import { DOC_SYSTEM_PROMPT } from "@/lib/prompt";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
@@ -186,8 +186,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   const result = streamText({
     model: openai("gpt-3.5-turbo"),
-    system:
-      "You are a helpful assistant who only gives answer of question in 50 to 60 lines only. Reply to the questions in the detail and after replying to the ans always add this word 'bye bye' ",
+    system: DOC_SYSTEM_PROMPT,
     maxTokens: 500,
     messages: msgArray,
     async onFinish({ response }) {
