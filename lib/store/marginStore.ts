@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type MarginState = {
   leftMargin: number;
@@ -7,9 +8,17 @@ type MarginState = {
   setRightMargin: (rightMargin: number) => void;
 };
 
-export const useMargin = create<MarginState>((set) => ({
-  leftMargin: 56,
-  setLeftMargin: (leftMargin: number) => set({ leftMargin }),
-  rightMargin: 56,
-  setRightMargin: (rightMargin: number) => set({ rightMargin }),
-}));
+export const useMargin = create<MarginState>()(
+  persist(
+    (set) => ({
+      leftMargin: 56,
+      setLeftMargin: (leftMargin: number) => set({ leftMargin }),
+      rightMargin: 56,
+      setRightMargin: (rightMargin: number) => set({ rightMargin }),
+    }),
+    {
+      name: "margin-store",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);

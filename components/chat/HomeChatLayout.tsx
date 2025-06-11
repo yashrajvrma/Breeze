@@ -125,8 +125,6 @@ export default function HomeChatLayout() {
     } finally {
       setIsSubmitting(false);
     }
-
-    // setMessage("");
   };
 
   return (

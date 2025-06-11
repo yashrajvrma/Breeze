@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type Theme = "light" | "dark" | "system";
 
@@ -7,7 +8,15 @@ type ThemeStore = {
   setTheme: (theme: Theme) => void;
 };
 
-export const useThemeStore = create<ThemeStore>((set) => ({
-  theme: "system",
-  setTheme: (theme: Theme) => set({ theme }),
-}));
+export const useThemeStore = create<ThemeStore>()(
+  persist(
+    (set) => ({
+      theme: "system",
+      setTheme: (theme: Theme) => set({ theme }),
+    }),
+    {
+      name: "theme-store",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);

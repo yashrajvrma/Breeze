@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { type Editor, HTMLContent } from "@tiptap/react";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 type EditorState = {
   editor: Editor | null;
@@ -15,16 +16,24 @@ type EditorContent = {
   setEditorContent: (content: HTMLContent | null) => void;
 };
 
-export const useEditorStore = create<EditorState>((set) => ({
+export const useEditorStore = create<EditorState>()((set) => ({
   editor: null,
   setEditor: (editor) => set({ editor }),
 }));
 
-export const useEditorContent = create<EditorContent>((set) => ({
-  id: null,
-  title: "Untitled Doc",
-  content: null,
-  setContentId: (id) => set({ id }),
-  setContentTitle: (title) => set({ title }),
-  setEditorContent: (content) => set({ content }),
-}));
+export const useEditorContent = create<EditorContent>()(
+  persist(
+    (set) => ({
+      id: null,
+      title: "Untitled Doc",
+      content: null,
+      setContentId: (id) => set({ id }),
+      setContentTitle: (title) => set({ title }),
+      setEditorContent: (content) => set({ content }),
+    }),
+    {
+      name: "editor-Content",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
