@@ -13,6 +13,13 @@ export async function createChatSession(formData: FormData) {
 
   const session = await getServerSession(authConfig);
 
+  if (session) {
+    console.log("helllo");
+    return {
+      message: "hii",
+    };
+  }
+
   if (!session || !session.user) {
     redirect("/signin");
   }

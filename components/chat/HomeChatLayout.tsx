@@ -43,7 +43,14 @@ export default function HomeChatLayout() {
   const handleTemplateClick = async (prompt: string) => {
     const formData = new FormData();
     formData.append("message", prompt);
-    await createChatSession(formData);
+
+    try {
+      const result = await createChatSession(formData);
+      console.log("res is", result.message);
+    } catch (error: any) {
+      console.log("ew e", error);
+      console.log("error is", error.message);
+    }
   };
 
   const templates: {
