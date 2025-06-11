@@ -227,6 +227,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
               status: "COMPLETED",
             },
           });
+
+          await prisma.chat.update({
+            where: { id: chatId },
+            data: {
+              updatedAt: new Date(),
+            },
+          });
+
           console.log("message updated in db");
         } catch (error) {
           console.error("Failed to store assistant response");
