@@ -20,11 +20,13 @@ export async function checkNoOfRequest({ userId }: RequestProps) {
 
     console.log("request count is", request?.noOfRequest);
 
-    if (!request?.noOfRequest) {
+    const requestCount = request?.noOfRequest;
+
+    if (!requestCount) {
       return 0;
     }
 
-    return request?.noOfRequest;
+    return requestCount;
   } catch (error) {
     throw new Error("Something went wrong");
   }
