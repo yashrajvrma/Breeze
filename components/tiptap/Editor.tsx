@@ -93,7 +93,21 @@ export const Editor = () => {
     //   setEditor(null);
     // },
     autofocus: true,
-    content: content,
+    // content: content,
+    content: `<h1> Business Correspondence Letter</h1>
+    <p>Dear [Recipient's Name],</p>
+    
+    <p>I am writing to address [specific purpose of the letter]. Our company values the partnership we have with your organization and aims to ensure that our collaboration continues to be mutually beneficial.</p>
+    
+    <p>As discussed in our recent meeting, we are pleased to inform you that [details of any agreements, decisions, or actions taken]. This initiative aligns with our shared goals and will contribute to the success of both our companies.</p>
+    
+    <p>We appreciate your prompt attention to this matter and look forward to further discussions on how we can enhance our partnership. Should you have any questions or require additional information, please do not hesitate to contact me directly.</p>
+    
+    <p>Thank you for your continued support and cooperation. We value the relationship we have built and are committed to fostering a strong and enduring partnership.</p>
+    
+    <p>Sincerely,</p>
+    
+    <p>[Your Name]<br> [Your Position]<br> [Company Name]<br> [Contact Information]</p>`,
   });
 
   // Sync editor content when store `content` changes

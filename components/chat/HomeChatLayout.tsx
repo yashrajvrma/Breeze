@@ -40,16 +40,19 @@ const PromptSuggestor = ({
 
 export default function HomeChatLayout() {
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const router = useRouter();
 
   const handleTemplateClick = async (prompt: string) => {
+    setMessage(prompt);
     const formData = new FormData();
     formData.append("message", prompt);
-    await createChatSession(formData);
 
     try {
+      setIsSubmitting(true);
+
       const response = await createChatSession(formData);
       console.log("response is", response?.chatId);
       if (response) {
@@ -60,6 +63,8 @@ export default function HomeChatLayout() {
       if (error) {
         toast.error("Something went wrong");
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -73,30 +78,30 @@ export default function HomeChatLayout() {
       label: "Create a report",
       icon: WandSparklesIcon,
       prompt:
-        "Help me create a comprehensive report with deep research and data analysis on machine learning algorithm",
+        "Create a comprehensive business analysis report with market research, financial projections, competitive landscape, and strategic recommendations for technology sector growth",
       onClick: () =>
         handleTemplateClick(
-          "Help me create a comprehensive report with deep research and data analysis on machine learning algorithm"
+          "Create a comprehensive business analysis report with market research, financial projections, competitive landscape, and strategic recommendations for technology sector growth"
         ),
     },
     {
       label: "Draft a letter",
       icon: PencilIcon,
       prompt:
-        "Help me draft a professional letter with proper formatting and tone",
+        "Draft a professional business correspondence letter with proper formatting, formal tone, clear objectives, and appropriate closing statements for corporate communication",
       onClick: () =>
         handleTemplateClick(
-          "Help me draft a professional letter with proper formatting and tone"
+          "Draft a professional business correspondence letter with proper formatting, formal tone, clear objectives, and appropriate closing statements for corporate communication"
         ),
     },
     {
       label: "Build a resume",
       icon: SparklesIcon,
       prompt:
-        "Help me build a professional resume that highlights my skills and experience",
+        "Build a comprehensive professional resume with detailed work experience, skills assessment, educational background, achievements, and industry-specific keywords for career advancement",
       onClick: () =>
         handleTemplateClick(
-          "Help me build a professional resume that highlights my skills and experience"
+          "Build a comprehensive professional resume with detailed work experience, skills assessment, educational background, achievements, and industry-specific keywords for career advancement"
         ),
     },
   ];
@@ -106,6 +111,7 @@ export default function HomeChatLayout() {
     if (!messageText?.trim()) return;
 
     try {
+      setIsSubmitting(true);
       const response = await createChatSession(formData);
       console.log("response is", response?.chatId);
       if (response) {
@@ -116,6 +122,8 @@ export default function HomeChatLayout() {
       if (error) {
         toast.error("Something went wrong");
       }
+    } finally {
+      setIsSubmitting(false);
     }
 
     // setMessage("");
@@ -137,7 +145,7 @@ export default function HomeChatLayout() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="How can I help you today?"
-              className="resize-none p-5 border rounded-2xl focus:border-[hsl(var(--border-foreground))]"
+              className="resize-none p-5 pr-16 border rounded-2xl focus:border-[hsl(var(--border-foreground))]"
               maxHeight={250}
               rows={1}
               onKeyDown={(e) => {
@@ -150,7 +158,10 @@ export default function HomeChatLayout() {
               }}
             />
 
-            <CreateChatButton message={message.trim().length > 0} />
+            <CreateChatButton
+              isSubmitting={isSubmitting}
+              message={message.trim().length > 0}
+            />
           </form>
         </div>
         <div className="flex justify-center items-center gap-x-4 my-4 font-sans text-sm">
