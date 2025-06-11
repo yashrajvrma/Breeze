@@ -191,6 +191,12 @@ export default function ChatInterface() {
             className="pr-10 p-3 max-h-[250px] min-h-[100px] resize-none rounded-xl hover:border-[hsl(var(--border-foreground))]"
             rows={1}
             disabled={isLoading}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleFormSubmit(e);
+              }
+            }}
           />
 
           {status === "submitted" || status === "streaming" ? (
