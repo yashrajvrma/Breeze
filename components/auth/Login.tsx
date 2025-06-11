@@ -30,7 +30,9 @@ export default function Login() {
               Breeze
             </p>
           </div>
-          <div className="text-sm">Welcome to Breeze — Let's get started</div>
+          <div className="text-sm text-stone-100">
+            Welcome to Breeze — Let's get started
+          </div>
           <div className="flex flex-col justify-center items-center mt-2">
             <Button
               variant="outline"

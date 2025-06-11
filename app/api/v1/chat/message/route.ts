@@ -5,6 +5,7 @@ import { DOC_SYSTEM_PROMPT } from "@/lib/prompt";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
+import { checkNoOfRequest } from "@/utils/no-of-request";
 
 // export const runtime = "edge";
 
@@ -133,6 +134,8 @@ export const maxDuration = 30;
 export async function POST(req: NextRequest, res: NextResponse) {
   const { chatId, messages } = await req.json();
 
+  const maxRequest = process.env.MAX_REQUEST!;
+
   const session = await getServerSession(authConfig);
 
   // get last message
@@ -146,7 +149,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
       status: 401,
     });
   }
+
   const userId = session.user.id!;
+
+  // check no of request
+  const request = await checkNoOfRequest({ userId });
+  console.log("request got is", request);
+
+  if (request >= Number(maxRequest)) {
+    console.log("free credit expired");
+    return new Response("You Free credits expired. Resets in 12hrs", {
+      status: 429,
+    });
+  }
 
   // check if its a first message
   const userMessage = messages[messages.length - 1];
@@ -227,6 +242,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
               status: "COMPLETED",
             },
           });
+
+          const credit = await prisma.user.update({
+            where: {
+              id: userId,
+            },
+            data: {
+              noOfRequest: request + 1,
+            },
+          });
+
+          console.log("credits is", credit.noOfRequest);
 
           await prisma.chat.update({
             where: { id: chatId },

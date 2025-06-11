@@ -7,9 +7,13 @@ import { redirect } from "next/navigation";
 import { openai } from "@ai-sdk/openai";
 import { TITLE_SYSTEM_PROMPT } from "@/lib/prompt";
 import { generateText } from "ai";
+import { checkNoOfRequest } from "@/utils/no-of-request";
+import { error } from "console";
 
 export async function createChatSession(formData: FormData) {
   console.log("inside server components");
+
+  const maxRequest = process.env.MAX_REQUEST!;
 
   const session = await getServerSession(authConfig);
 
@@ -18,6 +22,19 @@ export async function createChatSession(formData: FormData) {
   }
 
   const userId = session.user.id!;
+
+  // check no of request
+  const request = await checkNoOfRequest({ userId });
+  console.log("request got is", request);
+
+  if (request >= Number(maxRequest)) {
+    console.log("free credit expired");
+    return {
+      success: false,
+      error: "Your free credit got exceeded. Resets in 12hrs",
+    };
+  }
+
   const message = formData.get("message");
 
   let chat;
@@ -46,7 +63,12 @@ export async function createChatSession(formData: FormData) {
         status: "PENDING",
       },
     });
-    return { success: true, chatId: chat?.id };
+    return {
+      success: true,
+      data: {
+        chatId: chat?.id,
+      },
+    };
   } catch (error: any) {
     throw new Error("Something went wrong");
   }

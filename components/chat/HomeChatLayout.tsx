@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { error } from "console";
 
 interface PromptSuggestorProps {
   label: string;
@@ -54,9 +55,13 @@ export default function HomeChatLayout() {
       setIsSubmitting(true);
 
       const response = await createChatSession(formData);
-      console.log("response is", response?.chatId);
-      if (response) {
-        const chatId = response?.chatId;
+
+      if (!response.success) {
+        console.log("abc is", response.error);
+        toast.error(response?.error!);
+      } else {
+        console.log("response is", response?.data?.chatId);
+        const chatId = response?.data?.chatId;
         router.push(`/chat/${chatId}`);
       }
     } catch (error: any) {
@@ -113,9 +118,13 @@ export default function HomeChatLayout() {
     try {
       setIsSubmitting(true);
       const response = await createChatSession(formData);
-      console.log("response is", response?.chatId);
-      if (response) {
-        const chatId = response?.chatId;
+
+      if (!response.success) {
+        console.log("abc is", response.error);
+        toast.error(response?.error!);
+      } else {
+        console.log("response is", response?.data?.chatId);
+        const chatId = response?.data?.chatId;
         router.push(`/chat/${chatId}`);
       }
     } catch (error: any) {

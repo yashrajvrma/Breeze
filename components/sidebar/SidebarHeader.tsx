@@ -30,7 +30,7 @@ export default function SidebarHeader({
       <div
         className={cn(
           "flex items-center justify-between py-2.5 px-3.5 border-b",
-          isCollapsed && "py-4"
+          isCollapsed && "py-3.5"
         )}
       >
         <div className="flex justify-center items-center align-middle">

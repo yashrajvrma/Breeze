@@ -12,6 +12,7 @@ import { useChat } from "@ai-sdk/react";
 import { useQuery } from "@tanstack/react-query";
 import SendMessageButton from "./button/sendMsgButton";
 import { Skeleton } from "../ui/skeleton";
+import { error } from "console";
 
 interface Messages {
   id: string;
@@ -75,6 +76,10 @@ export default function ChatInterface() {
           content: msg.content,
         })),
     experimental_throttle: 50,
+    onError: (error) => {
+      console.log("error is ", error);
+      toast.error(error.message);
+    },
   });
 
   useEffect(() => {
