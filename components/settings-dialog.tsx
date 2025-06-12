@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+  ChevronRight,
   EllipsisVerticalIcon,
   MessageCircle,
   Paintbrush,
@@ -125,9 +126,6 @@ export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
           </DialogTrigger>
           <DialogContent className="overflow-hidden p-0 font-sans md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]">
             <DialogTitle className="sr-only">Settings</DialogTitle>
-            <DialogDescription className="sr-only">
-              Customize your settings here.
-            </DialogDescription>
             <SidebarProvider className="items-start">
               <Sidebar collapsible="none" className="hidden md:flex">
                 <SidebarContent>
@@ -158,7 +156,8 @@ export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
                         <BreadcrumbItem className="hidden md:block">
                           <BreadcrumbLink>Settings</BreadcrumbLink>
                         </BreadcrumbItem>
-                        <BreadcrumbSeparator className="hidden md:block" />
+                        {/* <BreadcrumbSeparator className="hidden md:block" /> */}
+                        <ChevronRight size={16} />
                         <BreadcrumbItem>
                           <BreadcrumbPage>{selectedItem}</BreadcrumbPage>
                         </BreadcrumbItem>
@@ -166,7 +165,7 @@ export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
                     </Breadcrumb>
                   </div>
                 </header>
-                <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4 pt-0">
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                   {CurrentComponent && <CurrentComponent />}
                 </div>
               </main>

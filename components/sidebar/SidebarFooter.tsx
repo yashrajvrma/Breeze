@@ -36,7 +36,6 @@ import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import LoginButton from "../button/loginButton";
 import { Skeleton } from "../ui/skeleton";
-import ThemeToggleButton from "../theme-settings";
 import { SettingsDialog } from "../settings-dialog";
 import { DialogContent, DialogDescription, DialogTitle } from "../ui/dialog";
 import {

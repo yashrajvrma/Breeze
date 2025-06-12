@@ -1,11 +1,52 @@
+import { signOut } from "next-auth/react";
+import { Button } from "./ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
+import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
+
 export function AccountSettings() {
+  const handleDelete = async () => {
+    // task
+  };
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Account Settings</h2>
-      <p>Manage your account details and security here.</p>
-      {/* Add your account settings form/components here */}
-      <div className="aspect-video max-w-3xl rounded-xl bg-muted/50 mt-4" />
-      <div className="aspect-video max-w-3xl rounded-xl bg-muted/50 mt-4" />
+    <div className="flex flex-col justify-center gap-y-5 p-4">
+      <div className="flex justify-between items-center align-middle text-md">
+        Log out on this device
+        <Button variant="outline" className="text-sm" onClick={() => signOut()}>
+          Log out
+        </Button>
+      </div>
+      <div className="flex justify-between items-center align-middle">
+        <span className="text-md">Delete your account</span>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button className="text-sm">Delete account</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent className="font-sans text-sm">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete account</AlertDialogTitle>
+              <AlertDialogDescription>
+                Deleting your account is permanent. You will have no way of
+                recovering your account or document data.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => handleDelete()}>
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
     </div>
   );
 }
