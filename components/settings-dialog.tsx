@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import {
-  ChevronRight,
   CircleUser,
   EllipsisVerticalIcon,
   MessageCircle,
@@ -17,12 +16,10 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -40,8 +37,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Skeleton } from "./ui/skeleton";
 import LoginButton from "./button/loginButton";
 import { useSession } from "next-auth/react";
-import { ThemeSettings } from "./theme-settings"; // Import the new ThemeToggle
-import { ProfileSettings } from "./profile-settings"; // Import placeholder components
+import { ThemeSettings } from "./theme-settings";
+import { ProfileSettings } from "./profile-settings";
 import { AccountSettings } from "./account-settings";
 import { ContactUsSettings } from "./contact-us-settings";
 import { cn } from "@/lib/utils";
@@ -60,8 +57,8 @@ interface SidebarFooterProps {
 }
 
 export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
-  const [open, setOpen] = React.useState(true);
-  const [selectedItem, setSelectedItem] = React.useState("Profile"); // State to manage the selected item for breadcrumb
+  const [open, setOpen] = React.useState(false);
+  const [selectedItem, setSelectedItem] = React.useState("Profile");
   const { data: session, status } = useSession();
 
   const CurrentComponent = React.useMemo(() => {
@@ -79,6 +76,8 @@ export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
   if (!session) {
     return <div className="px-3 py-3">{!isCollapsed && <LoginButton />}</div>;
   }
+
+  console.log("opened dialog");
 
   return (
     <div className="px-3 py-2 border-t font-sans">
@@ -166,11 +165,6 @@ export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
                   <div className="flex items-center gap-2 px-4">
                     <Breadcrumb>
                       <BreadcrumbList>
-                        {/* <BreadcrumbItem className="hidden md:block">
-                          <BreadcrumbLink>Settings</BreadcrumbLink>
-                        </BreadcrumbItem>
-
-                        <ChevronRight size={16} /> */}
                         <BreadcrumbItem className="px-2">
                           <BreadcrumbPage className="font-semibold text-lg">
                             {selectedItem}
