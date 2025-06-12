@@ -18,6 +18,7 @@ import toast from "react-hot-toast";
 import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
 import { Skeleton } from "../ui/skeleton";
 import { JSONParseError } from "ai";
+import { TextShimmer } from "../text-shimmer";
 
 type Messages = {
   id: string;
@@ -224,10 +225,13 @@ export default function DummyChat() {
       </ScrollArea>
 
       {isGenerating && (
-        <div className="flex justify-center py-5">
+        <div className="flex justify-start py-5 px-4">
           {status === "submitted" && (
-            <div className="flex items-center align-middle">
-              <Spinner />
+            <div className="flex align-middle">
+              {/* <Spinner /> */}
+              <TextShimmer className="font-sans text-base" duration={1}>
+                Thinking...
+              </TextShimmer>
             </div>
           )}
         </div>
