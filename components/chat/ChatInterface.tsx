@@ -241,11 +241,13 @@ export default function DummyChat() {
           onSubmit={handleChatSubmit}
           loading={isGenerating}
           onStop={() => stop()}
-          className="w-full focus:outline-none ring-0 border"
+          className="relative w-full focus:outline-none ring-0 border"
+          rows={2}
         >
           <ChatInputTextArea
             placeholder="Type your message..."
-            className="min-h-[44px] max-h-32"
+            className="min-h-[80px]"
+            // className="min-h-[44px] max-h-32"
           />
           <ChatInputSubmit />
         </ChatInput>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useTextareaResize } from "@/hooks/use-textarea-resize";
-import { ArrowUpIcon } from "lucide-react";
+import { ArrowRightIcon, ArrowUpIcon, SquareIcon } from "lucide-react";
 import type React from "react";
 import { createContext, useContext } from "react";
 
@@ -113,7 +113,7 @@ function ChatInputTextArea({
       onChange={onChange}
       onKeyDown={handleKeyDown}
       className={cn(
-        "max-h-[400px] min-h-0 resize-none overflow-x-hidden",
+        "max-h-[200px] min-h-0 resize-none overflow-x-hidden",
         variant === "unstyled" &&
           "border-none focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none",
         className
@@ -148,12 +148,12 @@ function ChatInputSubmit({
       <Button
         onClick={onStop}
         className={cn(
-          "shrink-0 rounded-full p-1.5 h-fit border dark:border-zinc-600",
+          "shrink-0 absolute top-2 right-2 rounded-lg p-1.5 h-fit bg-blue-500 hover:bg-blue-600 text-neutral-50",
           className
         )}
         {...props}
       >
-        <svg
+        {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -167,7 +167,10 @@ function ChatInputSubmit({
         >
           <title>Stop</title>
           <rect x="6" y="6" width="12" height="12" />
-        </svg>
+        </svg> */}
+        <div>
+          <SquareIcon fill="#ffffff" size={14} />
+        </div>
       </Button>
     );
   }
@@ -178,7 +181,7 @@ function ChatInputSubmit({
   return (
     <Button
       className={cn(
-        "shrink-0 rounded-full p-1.5 h-fit border dark:border-zinc-600",
+        "shrink-0 absolute top-2 right-2 rounded-lg p-1.5 h-fit bg-blue-500 hover:bg-blue-600 text-neutral-50",
         className
       )}
       disabled={isDisabled}
@@ -190,7 +193,7 @@ function ChatInputSubmit({
       }}
       {...props}
     >
-      <ArrowUpIcon />
+      <ArrowRightIcon size={16} />
     </Button>
   );
 }
