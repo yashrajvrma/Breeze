@@ -1,6 +1,7 @@
 import NewChat from "../button/newChatButton";
 import RecentChats from "./RecentChats";
 import FavouriteChats from "./FavouriteChats";
+import RateLimitCard from "./RateLimit";
 
 interface SidebarNavigationProps {
   isCollapsed: boolean;
@@ -19,6 +20,7 @@ export default function SidebarNavigation({
       {/* Favourite and Recent Chats - Scrollable content */}
       {!isCollapsed && (
         <div className="flex-1 overflow-hidden flex flex-col font-sans">
+          <RateLimitCard />
           <FavouriteChats isCollapsed={isCollapsed} />
           <RecentChats isCollapsed={isCollapsed} />
         </div>
