@@ -60,7 +60,7 @@ export default function RateLimit() {
   }
 
   return (
-    <div className="flex flex-col justify-center font-sans text-sm rounded-lg mx-3 my-1 border">
+    <div className="flex flex-col justify-center font-sans text-sm rounded-xl mx-3 my-1">
       <RateLimitCard
         usedMessages={requestCount}
         totalMessages={maxRequest}

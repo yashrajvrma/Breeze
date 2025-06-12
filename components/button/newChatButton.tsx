@@ -26,7 +26,7 @@ export default function NewChat({ isCollapsed }: SidebarNavigationProps) {
           <Plus className="w-5 h-5" strokeWidth={2} />
         </Button>
       ) : (
-        <Button className="w-full text-foreground" variant="outline">
+        <Button className="w-full text-foreground rounded-lg" variant="outline">
           New Chat
         </Button>
       )}

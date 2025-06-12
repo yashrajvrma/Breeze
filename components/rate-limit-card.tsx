@@ -13,7 +13,7 @@ export default function RateLimitCard({
   const messagesRemaining = totalMessages - usedMessages;
 
   return (
-    <div className="bg-dark-card-bg rounded-xl py-2 px-2">
+    <div className="bg-dark-card-bg rounded-xl py-2 px-2 border">
       <div className="flex flex-col justify-center mb-5">
         <div className="text-sm font-medium">Credit Usage</div>
         <div className="text-sm text-muted-foreground">{resetTime}</div>

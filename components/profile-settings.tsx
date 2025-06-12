@@ -11,22 +11,65 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea"; // Assuming Textarea is available or using a simple textarea tag
+import { Textarea } from "@/components/ui/textarea";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import { Router } from "lucide-react";
 import { useRouter } from "next/navigation";
+import RateLimitCard from "./rate-limit-card";
+import RateLimit from "./sidebar/RateLimit";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
+import { Skeleton } from "./ui/skeleton";
+
+type RateLimitProps = {
+  success: boolean;
+  requestCount: number;
+  maxRequest: number;
+};
+const rateLimitFn = async (userId: string): Promise<RateLimitProps> => {
+  try {
+    const response = await axios.get(
+      `/api/v1/chat/rate-limit?userId=${userId}`
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Something went wrong");
+  }
+};
 
 export function ProfileSettings() {
+  const [requestCount, setRequestCount] = React.useState<number>(0);
+  const [maxRequest, setMaxRequest] = React.useState<number>(5);
   const [workFunction, setWorkFunction] = React.useState<string>("");
   const [hasChanges, setHasChanges] = React.useState(false);
 
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  if (!session) {
-    router.push("/signin");
-  }
+  const userId = session?.user.id!;
+
+  const {
+    data: RateLimitData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["rateLimit", userId],
+    queryFn: () => rateLimitFn(userId),
+    enabled: !!session,
+  });
+
+  React.useEffect(() => {
+    if (RateLimitData) {
+      setRequestCount(RateLimitData?.requestCount);
+      setMaxRequest(RateLimitData?.maxRequest);
+    }
+  }, [RateLimitData]);
+
+  const localTime = getFormattedResetTime();
 
   // Dummy data for readonly fields
   const fullName = session?.user.name || "";
@@ -57,6 +100,14 @@ export function ProfileSettings() {
     setHasChanges(false); // Reset changes state after saving
   };
 
+  if (status === "loading" || isLoading) {
+    return (
+      <div className="flex py-1 px-5">
+        <Skeleton className="flex items-center h-20 w-full" />
+      </div>
+    );
+  }
+
   return (
     <div className="px-2 py-2">
       {/* <h2 className="text-2xl font-bold mb-4">Profile Settings</h2> */}
@@ -67,7 +118,7 @@ export function ProfileSettings() {
             id="fullName"
             value={fullName}
             readOnly
-            className="mt-1 outline-0 bg-transparent"
+            className="mt-1 outline-0 bg-primary-foreground"
           />
         </div>
         <div>
@@ -76,12 +127,12 @@ export function ProfileSettings() {
             id="email"
             value={email}
             readOnly
-            className="mt-1 outline-0 bg-transparent"
+            className="mt-1 outline-0 bg-primary-foreground"
           />
         </div>
       </div>
 
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <Label htmlFor="workFunction">What best describes your work?</Label>
         <Select onValueChange={handleWorkFunctionChange} value={workFunction}>
           <SelectTrigger
@@ -108,6 +159,14 @@ export function ProfileSettings() {
         <Button onClick={() => handleSave()} disabled={!hasChanges}>
           Save
         </Button>
+      </div> */}
+      <div className="flex flex-col justify-center gap-y-2 text-sm">
+        <span className="font-medium">Token</span>
+        <RateLimitCard
+          usedMessages={requestCount}
+          totalMessages={maxRequest}
+          resetTime={`Resets after ${localTime}`}
+        />
       </div>
     </div>
   );

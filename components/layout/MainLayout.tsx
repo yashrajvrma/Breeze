@@ -50,8 +50,6 @@
 //   );
 // }
 
-"use client";
-
 import ChatInterface from "@/components/chat/ChatInterface";
 // import DocumentEditor from "@/components/editor/DocumentEditor";
 import {
