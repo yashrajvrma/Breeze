@@ -36,6 +36,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  isActive Boolean @default(true)
+
   Chat      Chat[]
   Favourite Favourite[]
   Message   Message[]

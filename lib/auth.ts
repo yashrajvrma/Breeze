@@ -76,7 +76,7 @@ export const authConfig: NextAuthOptions = {
       try {
         if (session.user?.email) {
           const user = await prisma.user.findUnique({
-            where: { email: session.user.email },
+            where: { email: session.user.email, isActive: true },
             select: {
               id: true,
               name: true,
@@ -107,7 +107,7 @@ export const authConfig: NextAuthOptions = {
 
       if (user?.email) {
         const dbUser = await prisma.user.findUnique({
-          where: { email: user.email },
+          where: { email: user.email, isActive: true },
           select: { id: true },
         });
 

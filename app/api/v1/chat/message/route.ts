@@ -245,6 +245,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
           const credit = await prisma.user.update({
             where: {
               id: userId,
+              isActive: true,
             },
             data: {
               noOfRequest: request.requestCount + 1,

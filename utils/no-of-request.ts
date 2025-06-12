@@ -13,6 +13,7 @@ export async function checkNoOfRequest({ userId }: RequestProps) {
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
+        isActive: true,
       },
       select: {
         id: true,

@@ -23,6 +23,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
+        isActive: true,
       },
     });
 

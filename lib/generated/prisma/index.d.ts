@@ -1287,6 +1287,7 @@ export namespace Prisma {
     noOfRequest: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    isActive: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1297,6 +1298,7 @@ export namespace Prisma {
     noOfRequest: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    isActive: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1307,6 +1309,7 @@ export namespace Prisma {
     noOfRequest: number
     createdAt: number
     updatedAt: number
+    isActive: number
     _all: number
   }
 
@@ -1327,6 +1330,7 @@ export namespace Prisma {
     noOfRequest?: true
     createdAt?: true
     updatedAt?: true
+    isActive?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1337,6 +1341,7 @@ export namespace Prisma {
     noOfRequest?: true
     createdAt?: true
     updatedAt?: true
+    isActive?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1347,6 +1352,7 @@ export namespace Prisma {
     noOfRequest?: true
     createdAt?: true
     updatedAt?: true
+    isActive?: true
     _all?: true
   }
 
@@ -1444,6 +1450,7 @@ export namespace Prisma {
     noOfRequest: number
     createdAt: Date
     updatedAt: Date
+    isActive: boolean
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1473,6 +1480,7 @@ export namespace Prisma {
     noOfRequest?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isActive?: boolean
     Chat?: boolean | User$ChatArgs<ExtArgs>
     Favourite?: boolean | User$FavouriteArgs<ExtArgs>
     Message?: boolean | User$MessageArgs<ExtArgs>
@@ -1487,6 +1495,7 @@ export namespace Prisma {
     noOfRequest?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isActive?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1497,6 +1506,7 @@ export namespace Prisma {
     noOfRequest?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isActive?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1507,9 +1517,10 @@ export namespace Prisma {
     noOfRequest?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isActive?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "avatar" | "noOfRequest" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "avatar" | "noOfRequest" | "createdAt" | "updatedAt" | "isActive", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Chat?: boolean | User$ChatArgs<ExtArgs>
     Favourite?: boolean | User$FavouriteArgs<ExtArgs>
@@ -1534,6 +1545,7 @@ export namespace Prisma {
       noOfRequest: number
       createdAt: Date
       updatedAt: Date
+      isActive: boolean
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1967,6 +1979,7 @@ export namespace Prisma {
     readonly noOfRequest: FieldRef<"User", 'Int'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly isActive: FieldRef<"User", 'Boolean'>
   }
     
 
@@ -5839,7 +5852,8 @@ export namespace Prisma {
     avatar: 'avatar',
     noOfRequest: 'noOfRequest',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    isActive: 'isActive'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -6019,6 +6033,7 @@ export namespace Prisma {
     noOfRequest?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    isActive?: BoolFilter<"User"> | boolean
     Chat?: ChatListRelationFilter
     Favourite?: FavouriteListRelationFilter
     Message?: MessageListRelationFilter
@@ -6032,6 +6047,7 @@ export namespace Prisma {
     noOfRequest?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isActive?: SortOrder
     Chat?: ChatOrderByRelationAggregateInput
     Favourite?: FavouriteOrderByRelationAggregateInput
     Message?: MessageOrderByRelationAggregateInput
@@ -6048,6 +6064,7 @@ export namespace Prisma {
     noOfRequest?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    isActive?: BoolFilter<"User"> | boolean
     Chat?: ChatListRelationFilter
     Favourite?: FavouriteListRelationFilter
     Message?: MessageListRelationFilter
@@ -6061,6 +6078,7 @@ export namespace Prisma {
     noOfRequest?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isActive?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -6079,6 +6097,7 @@ export namespace Prisma {
     noOfRequest?: IntWithAggregatesFilter<"User"> | number
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    isActive?: BoolWithAggregatesFilter<"User"> | boolean
   }
 
   export type ChatWhereInput = {
@@ -6303,6 +6322,7 @@ export namespace Prisma {
     noOfRequest?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     Chat?: ChatCreateNestedManyWithoutUserInput
     Favourite?: FavouriteCreateNestedManyWithoutUserInput
     Message?: MessageCreateNestedManyWithoutUserInput
@@ -6316,6 +6336,7 @@ export namespace Prisma {
     noOfRequest?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     Favourite?: FavouriteUncheckedCreateNestedManyWithoutUserInput
     Message?: MessageUncheckedCreateNestedManyWithoutUserInput
@@ -6329,6 +6350,7 @@ export namespace Prisma {
     noOfRequest?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     Chat?: ChatUpdateManyWithoutUserNestedInput
     Favourite?: FavouriteUpdateManyWithoutUserNestedInput
     Message?: MessageUpdateManyWithoutUserNestedInput
@@ -6342,6 +6364,7 @@ export namespace Prisma {
     noOfRequest?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     Favourite?: FavouriteUncheckedUpdateManyWithoutUserNestedInput
     Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
@@ -6355,6 +6378,7 @@ export namespace Prisma {
     noOfRequest?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
   }
 
   export type UserUpdateManyMutationInput = {
@@ -6365,6 +6389,7 @@ export namespace Prisma {
     noOfRequest?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -6375,6 +6400,7 @@ export namespace Prisma {
     noOfRequest?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ChatCreateInput = {
@@ -6649,6 +6675,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type ChatListRelationFilter = {
     every?: ChatWhereInput
     some?: ChatWhereInput
@@ -6692,6 +6723,7 @@ export namespace Prisma {
     noOfRequest?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isActive?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -6706,6 +6738,7 @@ export namespace Prisma {
     noOfRequest?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isActive?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -6716,6 +6749,7 @@ export namespace Prisma {
     noOfRequest?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isActive?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -6788,9 +6822,12 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -6826,14 +6863,6 @@ export namespace Prisma {
     favourite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumSenderFilter<$PrismaModel = never> = {
@@ -7008,6 +7037,10 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type ChatUpdateManyWithoutUserNestedInput = {
     create?: XOR<ChatCreateWithoutUserInput, ChatUncheckedCreateWithoutUserInput> | ChatCreateWithoutUserInput[] | ChatUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ChatCreateOrConnectWithoutUserInput | ChatCreateOrConnectWithoutUserInput[]
@@ -7124,10 +7157,6 @@ export namespace Prisma {
     connectOrCreate?: FavouriteCreateOrConnectWithoutChatInput | FavouriteCreateOrConnectWithoutChatInput[]
     createMany?: FavouriteCreateManyChatInputEnvelope
     connect?: FavouriteWhereUniqueInput | FavouriteWhereUniqueInput[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutChatNestedInput = {
@@ -7308,6 +7337,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -7392,11 +7426,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -7627,6 +7656,7 @@ export namespace Prisma {
     noOfRequest?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     Favourite?: FavouriteCreateNestedManyWithoutUserInput
     Message?: MessageCreateNestedManyWithoutUserInput
   }
@@ -7639,6 +7669,7 @@ export namespace Prisma {
     noOfRequest?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     Favourite?: FavouriteUncheckedCreateNestedManyWithoutUserInput
     Message?: MessageUncheckedCreateNestedManyWithoutUserInput
   }
@@ -7725,6 +7756,7 @@ export namespace Prisma {
     noOfRequest?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     Favourite?: FavouriteUpdateManyWithoutUserNestedInput
     Message?: MessageUpdateManyWithoutUserNestedInput
   }
@@ -7737,6 +7769,7 @@ export namespace Prisma {
     noOfRequest?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     Favourite?: FavouriteUncheckedUpdateManyWithoutUserNestedInput
     Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -7808,6 +7841,7 @@ export namespace Prisma {
     noOfRequest?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     Chat?: ChatCreateNestedManyWithoutUserInput
     Favourite?: FavouriteCreateNestedManyWithoutUserInput
   }
@@ -7820,6 +7854,7 @@ export namespace Prisma {
     noOfRequest?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     Favourite?: FavouriteUncheckedCreateNestedManyWithoutUserInput
   }
@@ -7881,6 +7916,7 @@ export namespace Prisma {
     noOfRequest?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     Chat?: ChatUpdateManyWithoutUserNestedInput
     Favourite?: FavouriteUpdateManyWithoutUserNestedInput
   }
@@ -7893,6 +7929,7 @@ export namespace Prisma {
     noOfRequest?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     Favourite?: FavouriteUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -7932,6 +7969,7 @@ export namespace Prisma {
     noOfRequest?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     Chat?: ChatCreateNestedManyWithoutUserInput
     Message?: MessageCreateNestedManyWithoutUserInput
   }
@@ -7944,6 +7982,7 @@ export namespace Prisma {
     noOfRequest?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     Chat?: ChatUncheckedCreateNestedManyWithoutUserInput
     Message?: MessageUncheckedCreateNestedManyWithoutUserInput
   }
@@ -8005,6 +8044,7 @@ export namespace Prisma {
     noOfRequest?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     Chat?: ChatUpdateManyWithoutUserNestedInput
     Message?: MessageUpdateManyWithoutUserNestedInput
   }
@@ -8017,6 +8057,7 @@ export namespace Prisma {
     noOfRequest?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
   }
