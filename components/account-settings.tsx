@@ -1,4 +1,6 @@
-import { signOut } from "next-auth/react";
+"use client";
+
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import {
   AlertDialog,
@@ -9,12 +11,47 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  AlertDialogDescription,
 } from "./ui/alert-dialog";
-import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
 
+const deleteUserFn = async (userId: string) => {
+  try {
+    const response = await axios.post(`/api/v1/user/delete-account`, {
+      userId,
+    });
+
+    if (response) {
+      toast.success(response.data.message);
+      setTimeout(() => {
+        signOut();
+      }, 1000);
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error("Something went wrong");
+  }
+};
 export function AccountSettings() {
-  const handleDelete = async () => {
-    // task
+  const { data: session, status } = useSession();
+
+  const router = useRouter();
+
+  if (!session) {
+    router.push("/signin");
+  }
+  const userId = session?.user?.id!;
+
+  const { mutate: deleteUser } = useMutation({
+    mutationFn: deleteUserFn,
+  });
+
+  const handleDelete = async (userId: string) => {
+    deleteUser(userId);
+    console.log("deleted");
   };
   return (
     <div className="flex flex-col justify-center gap-y-5 px-2">
@@ -40,7 +77,7 @@ export function AccountSettings() {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => handleDelete()}>
+              <AlertDialogAction onClick={() => handleDelete(userId)}>
                 Delete
               </AlertDialogAction>
             </AlertDialogFooter>

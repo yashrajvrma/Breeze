@@ -4777,24 +4777,24 @@ export namespace Prisma {
 
   export type FavouriteMinAggregateOutputType = {
     id: string | null
-    chatId: string | null
     userId: string | null
+    chatId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type FavouriteMaxAggregateOutputType = {
     id: string | null
-    chatId: string | null
     userId: string | null
+    chatId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type FavouriteCountAggregateOutputType = {
     id: number
-    chatId: number
     userId: number
+    chatId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4803,24 +4803,24 @@ export namespace Prisma {
 
   export type FavouriteMinAggregateInputType = {
     id?: true
-    chatId?: true
     userId?: true
+    chatId?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type FavouriteMaxAggregateInputType = {
     id?: true
-    chatId?: true
     userId?: true
+    chatId?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type FavouriteCountAggregateInputType = {
     id?: true
-    chatId?: true
     userId?: true
+    chatId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4900,8 +4900,8 @@ export namespace Prisma {
 
   export type FavouriteGroupByOutputType = {
     id: string
-    chatId: string
     userId: string
+    chatId: string
     createdAt: Date
     updatedAt: Date
     _count: FavouriteCountAggregateOutputType | null
@@ -4925,66 +4925,66 @@ export namespace Prisma {
 
   export type FavouriteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    chatId?: boolean
     userId?: boolean
+    chatId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    chat?: boolean | ChatDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["favourite"]>
 
   export type FavouriteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    chatId?: boolean
     userId?: boolean
+    chatId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    chat?: boolean | ChatDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["favourite"]>
 
   export type FavouriteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    chatId?: boolean
     userId?: boolean
+    chatId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    chat?: boolean | ChatDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["favourite"]>
 
   export type FavouriteSelectScalar = {
     id?: boolean
-    chatId?: boolean
     userId?: boolean
+    chatId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type FavouriteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "chatId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["favourite"]>
+  export type FavouriteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "chatId" | "createdAt" | "updatedAt", ExtArgs["result"]["favourite"]>
   export type FavouriteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    chat?: boolean | ChatDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
   }
   export type FavouriteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    chat?: boolean | ChatDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
   }
   export type FavouriteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    chat?: boolean | ChatDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
   }
 
   export type $FavouritePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Favourite"
     objects: {
-      chat: Prisma.$ChatPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
+      chat: Prisma.$ChatPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      chatId: string
       userId: string
+      chatId: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["favourite"]>
@@ -5381,8 +5381,8 @@ export namespace Prisma {
    */
   export interface Prisma__FavouriteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    chat<T extends ChatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChatDefaultArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    chat<T extends ChatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChatDefaultArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5413,8 +5413,8 @@ export namespace Prisma {
    */
   interface FavouriteFieldRefs {
     readonly id: FieldRef<"Favourite", 'String'>
-    readonly chatId: FieldRef<"Favourite", 'String'>
     readonly userId: FieldRef<"Favourite", 'String'>
+    readonly chatId: FieldRef<"Favourite", 'String'>
     readonly createdAt: FieldRef<"Favourite", 'DateTime'>
     readonly updatedAt: FieldRef<"Favourite", 'DateTime'>
   }
@@ -5890,8 +5890,8 @@ export namespace Prisma {
 
   export const FavouriteScalarFieldEnum: {
     id: 'id',
-    chatId: 'chatId',
     userId: 'userId',
+    chatId: 'chatId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -6261,22 +6261,22 @@ export namespace Prisma {
     OR?: FavouriteWhereInput[]
     NOT?: FavouriteWhereInput | FavouriteWhereInput[]
     id?: StringFilter<"Favourite"> | string
-    chatId?: StringFilter<"Favourite"> | string
     userId?: StringFilter<"Favourite"> | string
+    chatId?: StringFilter<"Favourite"> | string
     createdAt?: DateTimeFilter<"Favourite"> | Date | string
     updatedAt?: DateTimeFilter<"Favourite"> | Date | string
-    chat?: XOR<ChatScalarRelationFilter, ChatWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    chat?: XOR<ChatScalarRelationFilter, ChatWhereInput>
   }
 
   export type FavouriteOrderByWithRelationInput = {
     id?: SortOrder
-    chatId?: SortOrder
     userId?: SortOrder
+    chatId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    chat?: ChatOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
+    chat?: ChatOrderByWithRelationInput
   }
 
   export type FavouriteWhereUniqueInput = Prisma.AtLeast<{
@@ -6284,18 +6284,18 @@ export namespace Prisma {
     AND?: FavouriteWhereInput | FavouriteWhereInput[]
     OR?: FavouriteWhereInput[]
     NOT?: FavouriteWhereInput | FavouriteWhereInput[]
-    chatId?: StringFilter<"Favourite"> | string
     userId?: StringFilter<"Favourite"> | string
+    chatId?: StringFilter<"Favourite"> | string
     createdAt?: DateTimeFilter<"Favourite"> | Date | string
     updatedAt?: DateTimeFilter<"Favourite"> | Date | string
-    chat?: XOR<ChatScalarRelationFilter, ChatWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    chat?: XOR<ChatScalarRelationFilter, ChatWhereInput>
   }, "id">
 
   export type FavouriteOrderByWithAggregationInput = {
     id?: SortOrder
-    chatId?: SortOrder
     userId?: SortOrder
+    chatId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: FavouriteCountOrderByAggregateInput
@@ -6308,8 +6308,8 @@ export namespace Prisma {
     OR?: FavouriteScalarWhereWithAggregatesInput[]
     NOT?: FavouriteScalarWhereWithAggregatesInput | FavouriteScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Favourite"> | string
-    chatId?: StringWithAggregatesFilter<"Favourite"> | string
     userId?: StringWithAggregatesFilter<"Favourite"> | string
+    chatId?: StringWithAggregatesFilter<"Favourite"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Favourite"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Favourite"> | Date | string
   }
@@ -6573,14 +6573,14 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    chat: ChatCreateNestedOneWithoutFavouriteInput
     user: UserCreateNestedOneWithoutFavouriteInput
+    chat: ChatCreateNestedOneWithoutFavouriteInput
   }
 
   export type FavouriteUncheckedCreateInput = {
     id?: string
-    chatId: string
     userId: string
+    chatId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6589,22 +6589,22 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chat?: ChatUpdateOneRequiredWithoutFavouriteNestedInput
     user?: UserUpdateOneRequiredWithoutFavouriteNestedInput
+    chat?: ChatUpdateOneRequiredWithoutFavouriteNestedInput
   }
 
   export type FavouriteUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    chatId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FavouriteCreateManyInput = {
     id?: string
-    chatId: string
     userId: string
+    chatId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6617,8 +6617,8 @@ export namespace Prisma {
 
   export type FavouriteUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    chatId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6953,24 +6953,24 @@ export namespace Prisma {
 
   export type FavouriteCountOrderByAggregateInput = {
     id?: SortOrder
-    chatId?: SortOrder
     userId?: SortOrder
+    chatId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type FavouriteMaxOrderByAggregateInput = {
     id?: SortOrder
-    chatId?: SortOrder
     userId?: SortOrder
+    chatId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type FavouriteMinOrderByAggregateInput = {
     id?: SortOrder
-    chatId?: SortOrder
     userId?: SortOrder
+    chatId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7259,24 +7259,16 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMessageInput, UserUpdateWithoutMessageInput>, UserUncheckedUpdateWithoutMessageInput>
   }
 
-  export type ChatCreateNestedOneWithoutFavouriteInput = {
-    create?: XOR<ChatCreateWithoutFavouriteInput, ChatUncheckedCreateWithoutFavouriteInput>
-    connectOrCreate?: ChatCreateOrConnectWithoutFavouriteInput
-    connect?: ChatWhereUniqueInput
-  }
-
   export type UserCreateNestedOneWithoutFavouriteInput = {
     create?: XOR<UserCreateWithoutFavouriteInput, UserUncheckedCreateWithoutFavouriteInput>
     connectOrCreate?: UserCreateOrConnectWithoutFavouriteInput
     connect?: UserWhereUniqueInput
   }
 
-  export type ChatUpdateOneRequiredWithoutFavouriteNestedInput = {
+  export type ChatCreateNestedOneWithoutFavouriteInput = {
     create?: XOR<ChatCreateWithoutFavouriteInput, ChatUncheckedCreateWithoutFavouriteInput>
     connectOrCreate?: ChatCreateOrConnectWithoutFavouriteInput
-    upsert?: ChatUpsertWithoutFavouriteInput
     connect?: ChatWhereUniqueInput
-    update?: XOR<XOR<ChatUpdateToOneWithWhereWithoutFavouriteInput, ChatUpdateWithoutFavouriteInput>, ChatUncheckedUpdateWithoutFavouriteInput>
   }
 
   export type UserUpdateOneRequiredWithoutFavouriteNestedInput = {
@@ -7285,6 +7277,14 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutFavouriteInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFavouriteInput, UserUpdateWithoutFavouriteInput>, UserUncheckedUpdateWithoutFavouriteInput>
+  }
+
+  export type ChatUpdateOneRequiredWithoutFavouriteNestedInput = {
+    create?: XOR<ChatCreateWithoutFavouriteInput, ChatUncheckedCreateWithoutFavouriteInput>
+    connectOrCreate?: ChatCreateOrConnectWithoutFavouriteInput
+    upsert?: ChatUpsertWithoutFavouriteInput
+    connect?: ChatWhereUniqueInput
+    update?: XOR<XOR<ChatUpdateToOneWithWhereWithoutFavouriteInput, ChatUpdateWithoutFavouriteInput>, ChatUncheckedUpdateWithoutFavouriteInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7610,8 +7610,8 @@ export namespace Prisma {
     OR?: FavouriteScalarWhereInput[]
     NOT?: FavouriteScalarWhereInput | FavouriteScalarWhereInput[]
     id?: StringFilter<"Favourite"> | string
-    chatId?: StringFilter<"Favourite"> | string
     userId?: StringFilter<"Favourite"> | string
+    chatId?: StringFilter<"Favourite"> | string
     createdAt?: DateTimeFilter<"Favourite"> | Date | string
     updatedAt?: DateTimeFilter<"Favourite"> | Date | string
   }
@@ -7934,33 +7934,6 @@ export namespace Prisma {
     Favourite?: FavouriteUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type ChatCreateWithoutFavouriteInput = {
-    id?: string
-    title?: string | null
-    isActive?: boolean
-    favourite?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutChatInput
-    Message?: MessageCreateNestedManyWithoutChatInput
-  }
-
-  export type ChatUncheckedCreateWithoutFavouriteInput = {
-    id?: string
-    userId: string
-    title?: string | null
-    isActive?: boolean
-    favourite?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Message?: MessageUncheckedCreateNestedManyWithoutChatInput
-  }
-
-  export type ChatCreateOrConnectWithoutFavouriteInput = {
-    where: ChatWhereUniqueInput
-    create: XOR<ChatCreateWithoutFavouriteInput, ChatUncheckedCreateWithoutFavouriteInput>
-  }
-
   export type UserCreateWithoutFavouriteInput = {
     id?: string
     email: string
@@ -7992,37 +7965,31 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutFavouriteInput, UserUncheckedCreateWithoutFavouriteInput>
   }
 
-  export type ChatUpsertWithoutFavouriteInput = {
-    update: XOR<ChatUpdateWithoutFavouriteInput, ChatUncheckedUpdateWithoutFavouriteInput>
+  export type ChatCreateWithoutFavouriteInput = {
+    id?: string
+    title?: string | null
+    isActive?: boolean
+    favourite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutChatInput
+    Message?: MessageCreateNestedManyWithoutChatInput
+  }
+
+  export type ChatUncheckedCreateWithoutFavouriteInput = {
+    id?: string
+    userId: string
+    title?: string | null
+    isActive?: boolean
+    favourite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Message?: MessageUncheckedCreateNestedManyWithoutChatInput
+  }
+
+  export type ChatCreateOrConnectWithoutFavouriteInput = {
+    where: ChatWhereUniqueInput
     create: XOR<ChatCreateWithoutFavouriteInput, ChatUncheckedCreateWithoutFavouriteInput>
-    where?: ChatWhereInput
-  }
-
-  export type ChatUpdateToOneWithWhereWithoutFavouriteInput = {
-    where?: ChatWhereInput
-    data: XOR<ChatUpdateWithoutFavouriteInput, ChatUncheckedUpdateWithoutFavouriteInput>
-  }
-
-  export type ChatUpdateWithoutFavouriteInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    favourite?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutChatNestedInput
-    Message?: MessageUpdateManyWithoutChatNestedInput
-  }
-
-  export type ChatUncheckedUpdateWithoutFavouriteInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    favourite?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Message?: MessageUncheckedUpdateManyWithoutChatNestedInput
   }
 
   export type UserUpsertWithoutFavouriteInput = {
@@ -8060,6 +8027,39 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     Chat?: ChatUncheckedUpdateManyWithoutUserNestedInput
     Message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ChatUpsertWithoutFavouriteInput = {
+    update: XOR<ChatUpdateWithoutFavouriteInput, ChatUncheckedUpdateWithoutFavouriteInput>
+    create: XOR<ChatCreateWithoutFavouriteInput, ChatUncheckedCreateWithoutFavouriteInput>
+    where?: ChatWhereInput
+  }
+
+  export type ChatUpdateToOneWithWhereWithoutFavouriteInput = {
+    where?: ChatWhereInput
+    data: XOR<ChatUpdateWithoutFavouriteInput, ChatUncheckedUpdateWithoutFavouriteInput>
+  }
+
+  export type ChatUpdateWithoutFavouriteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutChatNestedInput
+    Message?: MessageUpdateManyWithoutChatNestedInput
+  }
+
+  export type ChatUncheckedUpdateWithoutFavouriteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    favourite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Message?: MessageUncheckedUpdateManyWithoutChatNestedInput
   }
 
   export type ChatCreateManyUserInput = {

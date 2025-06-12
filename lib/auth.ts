@@ -1,6 +1,8 @@
 import { type DefaultSession, NextAuthOptions, Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/db";
+import { redirect } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 declare module "next-auth" {
   interface Session {
@@ -18,7 +20,7 @@ export const authConfig: NextAuthOptions = {
       authorization: {
         params: {
           scope: "openid email profile",
-          prompt: "consent",
+          // prompt: "consent",
           access_type: "offline",
         },
       },
@@ -92,6 +94,7 @@ export const authConfig: NextAuthOptions = {
             session.user.email = user.email;
           }
         }
+        console.log("session");
 
         return session;
       } catch (error) {

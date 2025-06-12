@@ -49,18 +49,16 @@ model Chat {
   id String @id @default(uuid())
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  title    String?
-  isActive Boolean @default(true)
-
+  title     String?
+  isActive  Boolean @default(true)
   favourite Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Message Message[]
-
+  Message   Message[]
   Favourite Favourite[]
 
   @@map("chat")
@@ -70,15 +68,14 @@ model Message {
   id String @id @default(uuid())
 
   chatId String
-  chat   Chat   @relation(fields: [chatId], references: [id])
+  chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  sender  Sender
-  content String
-  status  MessageStatus @default(PENDING)
-
+  sender     Sender
+  content    String
+  status     MessageStatus @default(PENDING)
   orderIndex Int
 
   isActive Boolean @default(true)
@@ -92,11 +89,11 @@ model Message {
 model Favourite {
   id String @id @default(uuid())
 
-  chatId String
-  chat   Chat   @relation(fields: [chatId], references: [id])
-
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  chatId String
+  chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

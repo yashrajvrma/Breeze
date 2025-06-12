@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { Textarea } from "../ui/textarea";
-import { createChatSession } from "@/app/actions/session";
+import { createChatSession } from "@/app/actions/chatSession";
 import CreateChatButton from "./button/CreateChatButton";
 import {
   Icon,
