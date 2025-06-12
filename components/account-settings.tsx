@@ -17,15 +17,15 @@ export function AccountSettings() {
     // task
   };
   return (
-    <div className="flex flex-col justify-center gap-y-5 p-4">
-      <div className="flex justify-between items-center align-middle text-md">
+    <div className="flex flex-col justify-center gap-y-5 px-2">
+      <div className="flex justify-between items-center align-middle text-base font-normal">
         Log out on this device
         <Button variant="outline" className="text-sm" onClick={() => signOut()}>
           Log out
         </Button>
       </div>
       <div className="flex justify-between items-center align-middle">
-        <span className="text-md">Delete your account</span>
+        <span className="text-base font-normal">Delete your account</span>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button className="text-sm">Delete account</Button>

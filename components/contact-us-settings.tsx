@@ -1,11 +1,16 @@
 export function ContactUsSettings() {
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-      <p>Have questions or need support? Reach out to us!</p>
-      {/* Add your contact form/information here */}
-      <div className="aspect-video max-w-3xl rounded-xl bg-muted/50 mt-4" />
-      <div className="aspect-video max-w-3xl rounded-xl bg-muted/50 mt-4" />
+    <div className="px-2 py-2">
+      {/* <h2 className="text-2xl font-bold mb-4">Contact Us</h2> */}
+      <div className="font-sans">
+        Have questions or need support? Reach out to us!
+      </div>
+      <div className="mt-4">
+        Email : {""}
+        <a href="mailto:yashrajv.work@gmail.com" className="text-blue-500">
+          yashrajv.work@gmail.com
+        </a>
+      </div>
     </div>
-  )
+  );
 }

@@ -3,6 +3,7 @@
 import * as React from "react";
 import {
   ChevronRight,
+  CircleUser,
   EllipsisVerticalIcon,
   MessageCircle,
   Paintbrush,
@@ -43,10 +44,11 @@ import { ThemeSettings } from "./theme-settings"; // Import the new ThemeToggle
 import { ProfileSettings } from "./profile-settings"; // Import placeholder components
 import { AccountSettings } from "./account-settings";
 import { ContactUsSettings } from "./contact-us-settings";
+import { cn } from "@/lib/utils";
 
 const data = {
   nav: [
-    { name: "Profile", icon: User, component: ProfileSettings },
+    { name: "Profile", icon: CircleUser, component: ProfileSettings },
     { name: "Appearance", icon: Paintbrush, component: ThemeSettings },
     { name: "Account", icon: Settings, component: AccountSettings },
     { name: "Contact Us", icon: MessageCircle, component: ContactUsSettings },
@@ -126,17 +128,28 @@ export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
           </DialogTrigger>
           <DialogContent className="overflow-hidden p-0 font-sans md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]">
             <DialogTitle className="sr-only">Settings</DialogTitle>
-            <SidebarProvider className="items-start">
-              <Sidebar collapsible="none" className="hidden md:flex">
+            <SidebarProvider className="items-start border">
+              <Sidebar
+                collapsible="none"
+                className="hidden md:flex bg-background border-r"
+              >
                 <SidebarContent>
                   <SidebarGroup>
                     <SidebarGroupContent>
-                      <SidebarMenu>
+                      <SidebarMenu className="px-3 py-3 gap-y-2">
                         {data.nav.map((item) => (
                           <SidebarMenuItem key={item.name}>
                             <SidebarMenuButton
                               isActive={item.name === selectedItem}
-                              onClick={() => setSelectedItem(item.name)} // Update selected item on click
+                              className={cn(
+                                "hover:bg-muted-foreground/10",
+                                item.name === selectedItem &&
+                                  "bg-muted-foreground/10 hover:bg-muted-foreground/10"
+                              )}
+                              onClick={() => {
+                                console.log("selected", item.name);
+                                setSelectedItem(item.name);
+                              }}
                             >
                               <item.icon size={16} />
                               <span>{item.name}</span>
@@ -148,23 +161,26 @@ export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
                   </SidebarGroup>
                 </SidebarContent>
               </Sidebar>
-              <main className="flex h-[480px] flex-1 flex-col overflow-hidden">
+              <main className="flex h-[480px] flex-1 flex-col overflow-hidden bg-muted-foreground/10">
                 <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
                   <div className="flex items-center gap-2 px-4">
                     <Breadcrumb>
                       <BreadcrumbList>
-                        <BreadcrumbItem className="hidden md:block">
+                        {/* <BreadcrumbItem className="hidden md:block">
                           <BreadcrumbLink>Settings</BreadcrumbLink>
                         </BreadcrumbItem>
-                        {/* <BreadcrumbSeparator className="hidden md:block" /> */}
-                        <ChevronRight size={16} />
-                        <BreadcrumbItem>
-                          <BreadcrumbPage>{selectedItem}</BreadcrumbPage>
+
+                        <ChevronRight size={16} /> */}
+                        <BreadcrumbItem className="px-2">
+                          <BreadcrumbPage className="font-semibold text-lg">
+                            {selectedItem}
+                          </BreadcrumbPage>
                         </BreadcrumbItem>
                       </BreadcrumbList>
                     </Breadcrumb>
                   </div>
                 </header>
+
                 <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                   {CurrentComponent && <CurrentComponent />}
                 </div>
