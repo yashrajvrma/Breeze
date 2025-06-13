@@ -231,7 +231,6 @@ export default function ChatInterface() {
           ))}
           <div ref={messagesEndRef} />
         </div>
-        {/* <div>hii ehlooks</div> */}
         {isGenerating && (
           <div className="flex justify-start pb-4">
             {status === "submitted" && (

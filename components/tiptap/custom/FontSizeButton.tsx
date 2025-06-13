@@ -80,7 +80,7 @@ export const FontSizeButton = () => {
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onKeyDown={handleKeyDown}
-            className="bg-transparent border border-neutral-800 text-muted-foreground rounded-sm focus:outline-none focus:ring-0 w-10 h-7 text-sm text-center"
+            className="bg-transparent border border-neutral-700 text-muted-foreground rounded-lg focus:outline-none focus:ring-0 w-10 h-7 text-sm text-center"
           />
         ) : (
           <button
@@ -88,7 +88,7 @@ export const FontSizeButton = () => {
               setIsEditing(true);
               //   updateFontSize(currentFontSize);
             }}
-            className="bg-transparent border border-neutral-800 text-muted-foreground rounded-sm w-10 h-8 text-sm text-center cursor-text"
+            className="bg-transparent border border-neutral-700 text-muted-foreground rounded-lg w-10 h-8 text-sm text-center cursor-text"
           >
             {currentFontSize}
           </button>
