@@ -5,7 +5,6 @@ import { Textarea } from "../ui/textarea";
 import { createChatSession } from "@/app/actions/chatSession";
 import CreateChatButton from "./button/CreateChatButton";
 import {
-  Icon,
   LucideIcon,
   PencilIcon,
   SparklesIcon,
@@ -13,7 +12,6 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { error } from "console";
 import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
 
 interface PromptSuggestorProps {
