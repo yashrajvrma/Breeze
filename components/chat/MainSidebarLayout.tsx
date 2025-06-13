@@ -1,16 +1,20 @@
 "use client";
 
-import { useState } from "react";
 import Sidebar from "../sidebar/Sidebar";
+import { useSidebarStore } from "@/lib/store/sidebarStore";
 
 export default function MainSidebarLayout() {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const isSidebarCollapsed = useSidebarStore(
+    (state) => state.isSidebarCollapsed
+  );
+  // const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
-  };
+  // const toggleSidebar = () => {
+  //   setIsSidebarCollapsed(!isSidebarCollapsed);
+  // };
 
   return (
-    <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
+    // <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
+    <Sidebar />
   );
 }

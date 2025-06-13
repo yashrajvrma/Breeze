@@ -15,22 +15,21 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/assets/images/breeze-logo.png";
 import { cn } from "@/lib/utils";
+import { useSidebarStore } from "@/lib/store/sidebarStore";
 
-interface SidebarHeaderProps {
-  isCollapsed: boolean;
-  toggleSidebar: () => void;
-}
+export default function SidebarHeader() {
+  const { isSidebarCollapsed, setIsSidebarCollapsed } = useSidebarStore();
 
-export default function SidebarHeader({
-  isCollapsed,
-  toggleSidebar,
-}: SidebarHeaderProps) {
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+  };
+
   return (
     <div className="flex flex-col">
       <div
         className={cn(
           "flex items-center justify-between py-2.5 px-3.5 border-b",
-          isCollapsed && "py-3.5"
+          isSidebarCollapsed && "py-3.5"
         )}
       >
         <div className="flex justify-center items-center align-middle">
@@ -40,13 +39,13 @@ export default function SidebarHeader({
             </Link>
           </div>
 
-          {!isCollapsed && (
+          {!isSidebarCollapsed && (
             <span className="ml-1.5 text-3xl font-instrumentSerif font-semibold tracking-tight text-foreground">
               Breeze
             </span>
           )}
         </div>
-        {!isCollapsed && (
+        {!isSidebarCollapsed && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -54,7 +53,7 @@ export default function SidebarHeader({
                   variant="ghost"
                   size="icon"
                   className="h-7 w-7 group relative"
-                  onClick={toggleSidebar}
+                  onClick={() => toggleSidebar()}
                 >
                   {/* Default icon */}
                   <PanelRightIcon
@@ -79,7 +78,7 @@ export default function SidebarHeader({
         )}
       </div>
       <div className="flex items-center">
-        {isCollapsed && (
+        {isSidebarCollapsed && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -87,7 +86,7 @@ export default function SidebarHeader({
                   variant="outline"
                   size="icon"
                   className="h-7 w-7 mx-auto group relative my-4 border-0"
-                  onClick={toggleSidebar}
+                  onClick={() => toggleSidebar()}
                 >
                   <PanelLeftIcon
                     size={18}

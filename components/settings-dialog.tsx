@@ -42,6 +42,7 @@ import { ProfileSettings } from "./profile-settings";
 import { AccountSettings } from "./account-settings";
 import { ContactUsSettings } from "./contact-us-settings";
 import { cn } from "@/lib/utils";
+import { useSidebarStore } from "@/lib/store/sidebarStore";
 
 const data = {
   nav: [
@@ -52,11 +53,10 @@ const data = {
   ],
 };
 
-interface SidebarFooterProps {
-  isCollapsed: boolean;
-}
-
-export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
+export function SettingsDialog() {
+  const isSidebarCollapsed = useSidebarStore(
+    (state) => state.isSidebarCollapsed
+  );
   const [open, setOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState("Profile");
   const { data: session, status } = useSession();
@@ -74,7 +74,9 @@ export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
     );
   }
   if (!session) {
-    return <div className="px-3 py-3">{!isCollapsed && <LoginButton />}</div>;
+    return (
+      <div className="px-3 py-3">{!isSidebarCollapsed && <LoginButton />}</div>
+    );
   }
 
   console.log("opened dialog");
@@ -84,7 +86,7 @@ export function SettingsDialog({ isCollapsed }: SidebarFooterProps) {
       <div className="flex flex-row items-center align-middle">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            {!isCollapsed ? (
+            {!isSidebarCollapsed ? (
               <div className="flex justify-between w-full p-2 hover:bg-primary-foreground rounded-lg hover:cursor-default">
                 <div className="flex gap-x-2 items-center">
                   <Avatar className="h-8 w-8 rounded-lg">

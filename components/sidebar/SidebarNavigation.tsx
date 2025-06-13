@@ -2,27 +2,25 @@ import NewChat from "../button/newChatButton";
 import RecentChats from "./RecentChats";
 import FavouriteChats from "./FavouriteChats";
 import RateLimitCard from "./RateLimit";
+import { useSidebarStore } from "@/lib/store/sidebarStore";
 
-interface SidebarNavigationProps {
-  isCollapsed: boolean;
-}
-
-export default function SidebarNavigation({
-  isCollapsed,
-}: SidebarNavigationProps) {
+export default function SidebarNavigation() {
+  const isSidebarCollapsed = useSidebarStore(
+    (state) => state.isSidebarCollapsed
+  );
   return (
     <div className="flex flex-col h-full">
       {/* Fixed top section */}
       <div className="flex-shrink-0 px-3 py-2">
-        <NewChat isCollapsed={isCollapsed} />
+        <NewChat />
       </div>
 
       {/* Favourite and Recent Chats - Scrollable content */}
-      {!isCollapsed && (
+      {!isSidebarCollapsed && (
         <div className="flex-1 overflow-hidden flex flex-col font-sans">
           <RateLimitCard />
-          <FavouriteChats isCollapsed={isCollapsed} />
-          <RecentChats isCollapsed={isCollapsed} />
+          <FavouriteChats />
+          <RecentChats />
         </div>
       )}
     </div>

@@ -15,10 +15,6 @@ import UnFavouriteButton from "../button/unFavourite";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "../ui/skeleton";
 
-interface SidebarNavigationProps {
-  isCollapsed: boolean;
-}
-
 type FavChats = {
   id: string;
   userId: string;
@@ -31,9 +27,7 @@ const favChatsFn = async () => {
   return axios.get("/api/v1/chat/favourite");
 };
 
-export default function FavouriteChats({
-  isCollapsed,
-}: SidebarNavigationProps) {
+export default function FavouriteChats() {
   const params = useParams();
   const router = useRouter();
   const { data: session, status } = useSession();

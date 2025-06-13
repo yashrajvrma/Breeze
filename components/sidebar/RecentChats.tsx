@@ -17,10 +17,6 @@ import { useSession } from "next-auth/react";
 import { Spinner } from "../loader/spinner";
 import { Skeleton } from "../ui/skeleton";
 
-interface RecentChatsProps {
-  isCollapsed: boolean;
-}
-
 interface Chat {
   id: string;
   title: string;
@@ -44,7 +40,7 @@ const fetchRecentChats = async (
   return res.data;
 };
 
-export default function RecentChats({ isCollapsed }: RecentChatsProps) {
+export default function RecentChats() {
   const params = useParams();
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -69,7 +65,7 @@ export default function RecentChats({ isCollapsed }: RecentChatsProps) {
         const totalChatsLoaded = allPages.flatMap((p) => p.chats).length;
 
         if (totalChatsLoaded >= lastPage.totalChats) {
-          console.log("🛑 No more pages - all chats loaded");
+          console.log("No more pages - all chats loaded");
           return undefined;
         }
         const nextPage = lastPage.page + 1;

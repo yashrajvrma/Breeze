@@ -4,12 +4,12 @@ import { useSession } from "next-auth/react";
 import LoginButton from "../button/loginButton";
 import { Skeleton } from "../ui/skeleton";
 import { SettingsDialog } from "../settings-dialog";
+import { useSidebarStore } from "@/lib/store/sidebarStore";
 
-interface SidebarFooterProps {
-  isCollapsed: boolean;
-}
-
-export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
+export default function SidebarFooter() {
+  const isSidebarCollapsed = useSidebarStore(
+    (state) => state.isSidebarCollapsed
+  );
   const { data: session, status } = useSession();
 
   if (status === "loading") {
@@ -20,8 +20,10 @@ export default function SidebarFooter({ isCollapsed }: SidebarFooterProps) {
     );
   }
   if (!session) {
-    return <div className="px-3 py-3">{!isCollapsed && <LoginButton />}</div>;
+    return (
+      <div className="px-3 py-3">{!isSidebarCollapsed && <LoginButton />}</div>
+    );
   }
 
-  return <SettingsDialog isCollapsed={isCollapsed} />;
+  return <SettingsDialog />;
 }
