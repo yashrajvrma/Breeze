@@ -8,14 +8,13 @@ import { openai } from "@ai-sdk/openai";
 import { TITLE_SYSTEM_PROMPT } from "@/lib/prompt";
 import { generateText } from "ai";
 import { checkNoOfRequest } from "@/utils/no-of-request";
-import { error } from "console";
 
 export async function createChatSession(formData: FormData) {
   console.log("inside server components");
 
   const session = await getServerSession(authConfig);
 
-  if (!session || !session.user) {
+  if (!session || !session?.user) {
     redirect("/signin");
   }
 
@@ -65,7 +64,7 @@ export async function createChatSession(formData: FormData) {
     return {
       success: true,
       data: {
-        chatId: chat?.id,
+        chatId: chat.id,
       },
     };
   } catch (error: any) {

@@ -1,7 +1,6 @@
 "use client";
 
 import ChatMessage from "@/components/chat/ChatMessage";
-import { Spinner } from "@/components/loader/spinner";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   ChatInput,
@@ -9,7 +8,7 @@ import {
   ChatInputTextArea,
 } from "@/components/chat-input";
 import { useChat } from "@ai-sdk/react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
@@ -17,7 +16,6 @@ import { useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
 import { Skeleton } from "../ui/skeleton";
-import { JSONParseError } from "ai";
 import { TextShimmer } from "../text-shimmer";
 
 type Messages = {
@@ -58,11 +56,14 @@ const fetchThreadFn = async (chatId: string): Promise<Thread> => {
   }
 };
 
-export default function DummyChat() {
+export default function ChatInterface() {
   const params = useParams();
   const { data: session } = useSession();
   const [firstMsg, setFirstMsg] = useState<Messages[]>();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const hasAppendedFirstMsg = useRef(false);
+
+  const queryClient = useQueryClient();
 
   const { chatId } = params;
 
@@ -79,6 +80,7 @@ export default function DummyChat() {
 
   // display error while fetching threads
   useEffect(() => {
+    console.log("thread error render is");
     if (threadError) {
       console.log(
         "theres an error while fetching thread",
@@ -91,9 +93,7 @@ export default function DummyChat() {
   // send message to llm
   const {
     messages,
-    setMessages,
     input,
-    setInput,
     handleInputChange,
     stop,
     isLoading,
@@ -114,6 +114,11 @@ export default function DummyChat() {
           content: item.content,
         })),
     experimental_throttle: 50,
+    onFinish: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["rateLimit"],
+      });
+    },
     onResponse(response) {
       if (response.status === 429) {
         const localTime = getFormattedResetTime();
@@ -131,28 +136,32 @@ export default function DummyChat() {
 
   // set first message
   useEffect(() => {
-    if (threadData?.messages) {
+    console.log("append");
+    if (
+      !hasAppendedFirstMsg.current &&
+      threadData?.messages &&
+      threadData.messages.length === 1 &&
+      threadData.messages[0].sender === "user" &&
+      threadData.messages[0].status === "PENDING"
+    ) {
       const messageArray = threadData.messages as Messages[];
+      setFirstMsg(messageArray);
 
-      if (
-        messageArray.length === 1 &&
-        messageArray[0].sender === "user" &&
-        messageArray[0].status === "PENDING"
-      ) {
-        setFirstMsg(messageArray);
-        append({
-          role: "user",
-          content: messageArray[0].content,
-        }).catch((error) => {
-          console.log(error);
-          toast.error(error.message);
-        });
-      }
+      append({
+        role: "user",
+        content: messageArray[0].content,
+      }).catch((error) => {
+        console.log(error);
+        toast.error(error.message);
+      });
+
+      hasAppendedFirstMsg.current = true;
     }
   }, [threadData, append]);
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
+    console.log("message render is");
     if (messages.length > 0) {
       // Small delay ensures DOM is rendered before scrolling
       const timeout = setTimeout(() => {
@@ -208,7 +217,7 @@ export default function DummyChat() {
       </div>
 
       <ScrollArea className="flex-1 p-0 pb-0 px-7">
-        <div className="space-y-4 pt-4 pb-4">
+        <div className="space-y-4 pt-4 pb-1">
           {messages.map((msg, index) => (
             <ChatMessage
               key={msg.id || index}
@@ -222,20 +231,20 @@ export default function DummyChat() {
           ))}
           <div ref={messagesEndRef} />
         </div>
+        {/* <div>hii ehlooks</div> */}
+        {isGenerating && (
+          <div className="flex justify-start pb-4">
+            {status === "submitted" && (
+              <div className="flex align-middle">
+                {/* <Spinner /> */}
+                <TextShimmer className="font-sans text-base" duration={1}>
+                  Thinking...
+                </TextShimmer>
+              </div>
+            )}
+          </div>
+        )}
       </ScrollArea>
-
-      {isGenerating && (
-        <div className="flex justify-start py-5 px-4">
-          {status === "submitted" && (
-            <div className="flex align-middle">
-              {/* <Spinner /> */}
-              <TextShimmer className="font-sans text-base" duration={1}>
-                Thinking...
-              </TextShimmer>
-            </div>
-          )}
-        </div>
-      )}
 
       <div className="px-4 pb-4 mt-auto">
         <ChatInput
@@ -251,7 +260,6 @@ export default function DummyChat() {
           <ChatInputTextArea
             placeholder="Type your message..."
             className="min-h-[80px]"
-            // className="min-h-[44px] max-h-32"
           />
           <ChatInputSubmit />
         </ChatInput>

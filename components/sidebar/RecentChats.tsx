@@ -72,9 +72,8 @@ export default function RecentChats() {
         return nextPage;
       },
       enabled: !!session,
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
+      // refetchOnWindowFocus: false,
+      // refetchOnMount: false,
     });
 
   useEffect(() => {

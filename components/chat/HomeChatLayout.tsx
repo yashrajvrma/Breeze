@@ -54,17 +54,17 @@ export default function HomeChatLayout() {
       setIsSubmitting(true);
 
       const response = await createChatSession(formData);
-
+      if (response.success) {
+        console.log("response is", response?.data?.chatId);
+        const chatId = response?.data?.chatId;
+        router.push(`/chat/${chatId}`);
+      }
       if (!response.success) {
         const localTime = getFormattedResetTime();
         console.log("time is", localTime);
         toast.error(
           `You've hit your daily limit. Your credits will reset after ${localTime}`
         );
-      } else {
-        console.log("response is", response?.data?.chatId);
-        const chatId = response?.data?.chatId;
-        router.push(`/chat/${chatId}`);
       }
     } catch (error: any) {
       if (error) {
@@ -121,6 +121,12 @@ export default function HomeChatLayout() {
       setIsSubmitting(true);
       const response = await createChatSession(formData);
 
+      if (response.success) {
+        console.log("response is", response?.data?.chatId);
+        const chatId = response?.data?.chatId;
+        router.push(`/chat/${chatId}`);
+      }
+
       if (!response.success) {
         console.log("error is", response.error);
 
@@ -129,10 +135,6 @@ export default function HomeChatLayout() {
         toast.error(
           `You've hit your daily limit. Your credits will reset after ${localTime}`
         );
-      } else {
-        console.log("response is", response?.data?.chatId);
-        const chatId = response?.data?.chatId;
-        router.push(`/chat/${chatId}`);
       }
     } catch (error: any) {
       if (error) {
