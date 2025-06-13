@@ -7,15 +7,13 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { Editor } from "@/components/tiptap/Editor"; // Assuming tiptap Editor is here
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { Editor } from "@/components/tiptap/Editor";
 import { useEditorContent, useEditorStore } from "@/lib/store/editorStore";
 import { useEffect } from "react";
 
 interface EditorDrawerProps {
   isOpen: boolean;
-  onOpenChange?: (open: boolean) => void; // Make optional
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function EditorDrawer({ isOpen, onOpenChange }: EditorDrawerProps) {
@@ -37,17 +35,6 @@ export function EditorDrawer({ isOpen, onOpenChange }: EditorDrawerProps) {
   return (
     <Drawer open={isOpen} onOpenChange={handleClose}>
       <DrawerContent className="h-[95vh] flex flex-col font-sans rounded-xl">
-        {/* <DrawerHeader className="flex justify-between items-center">
-          <DrawerTitle>Document Editor</DrawerTitle>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleClose} // Use handleClose instead of onOppenChange
-          >
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close editor</span>
-          </Button>
-        </DrawerHeader> */}
         <div className="flex-1 overflow-hidden">{content && <Editor />}</div>
       </DrawerContent>
     </Drawer>
