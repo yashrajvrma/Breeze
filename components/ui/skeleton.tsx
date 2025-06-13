@@ -14,7 +14,7 @@ function Skeleton({
       )}
       {...props}
     >
-      <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-black/50 to-transparent" />
+      <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-black/20 to-transparent" />
     </div>
   );
 }

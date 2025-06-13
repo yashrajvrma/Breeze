@@ -36,13 +36,13 @@ export function EditorDrawer({ isOpen, onOpenChange }: EditorDrawerProps) {
 
   return (
     <Drawer open={isOpen} onOpenChange={handleClose}>
-      <DrawerContent className="h-[95vh] flex flex-col font-sans">
+      <DrawerContent className="h-[95vh] flex flex-col font-sans rounded-xl">
         {/* <DrawerHeader className="flex justify-between items-center">
           <DrawerTitle>Document Editor</DrawerTitle>
           <Button
             variant="ghost"
             size="icon"
-            onClick={handleClose} // Use handleClose instead of onOpenChange
+            onClick={handleClose} // Use handleClose instead of onOppenChange
           >
             <X className="h-4 w-4" />
             <span className="sr-only">Close editor</span>
