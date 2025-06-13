@@ -17,6 +17,9 @@ import toast from "react-hot-toast";
 import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
 import { Skeleton } from "../ui/skeleton";
 import { TextShimmer } from "../text-shimmer";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { EditorDrawer } from "../editor/EditorDrawer";
+import { useEditorStore } from "@/lib/store/editorStore";
 
 type Messages = {
   id: string;
@@ -57,11 +60,15 @@ const fetchThreadFn = async (chatId: string): Promise<Thread> => {
 };
 
 export default function ChatInterface() {
+  const isMobile = useIsMobile();
   const params = useParams();
   const { data: session } = useSession();
   const [firstMsg, setFirstMsg] = useState<Messages[]>();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const hasAppendedFirstMsg = useRef(false);
+
+  const isEditorDrawerOpen = useEditorStore((state) => state.isDrawerOpen); // Add this line
+  const closeDrawer = useEditorStore((state) => state.closeDrawer); // Add this line
 
   const queryClient = useQueryClient();
 
@@ -263,6 +270,14 @@ export default function ChatInterface() {
           <ChatInputSubmit />
         </ChatInput>
       </div>
+
+      {/* Update EditorDrawer props */}
+      {isMobile && (
+        <EditorDrawer
+          isOpen={isEditorDrawerOpen}
+          onOpenChange={closeDrawer} // This will handle close button click
+        />
+      )}
     </div>
   );
 }

@@ -1,78 +1,39 @@
-// import ChatInterface from "@/components/chat/ChatInterface";
-// import DocumentEditor from "@/components/editor/DocumentEditor";
-// import {
-//   ResizableHandle,
-//   ResizablePanel,
-//   ResizablePanelGroup,
-// } from "@/components/ui/resizable";
-// import SidebarLayout from "../chat/MainSidebarLayout";
+// components/chat/MainLayout.tsx
+"use client"; // This component needs to be a client component to use hooks like useIsMobile
 
-// export default function MainLayout() {
-//   // const [isClient, setIsClient] = useState(false);
-
-//   // useEffect(() => {
-//   //   const timer = setTimeout(() => {
-//   //     setIsClient(true);
-//   //   }, 10);
-
-//   //   return () => clearTimeout(timer);
-//   // }, []);
-
-//   // if (!isClient) {
-//   //   return (
-//   //     <div className="flex h-screen bg-background overflow-hidden font-sans">
-//   //       <div className="w-[240px] border-r border-border"></div>
-//   //       <div className="flex-1">
-//   //         <div className="flex h-full">
-//   //           <div className="w-[40%] border-r border-border"></div>
-//   //           <div className="flex-1"></div>
-//   //         </div>
-//   //       </div>
-//   //     </div>
-//   //   );
-//   // }
-
-//   return (
-//     <div className="flex h-screen bg-background overflow-hidden font-sans">
-//       <SidebarLayout />
-//       <div className="flex-1 overflow-hidden">
-//         <ResizablePanelGroup direction="horizontal">
-//           <ResizablePanel defaultSize={50} minSize={30} maxSize={75}>
-//             <ChatInterface />
-//           </ResizablePanel>
-//           <ResizableHandle withHandle />
-//           <ResizablePanel>
-//             <DocumentEditor />
-//           </ResizablePanel>
-//         </ResizablePanelGroup>
-//       </div>
-//     </div>
-//   );
-// }
-
-import ChatInterface from "@/components/chat/ChatInterface";
-// import DocumentEditor from "@/components/editor/DocumentEditor";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import MainSidebarLayout from "../chat/MainSidebarLayout";
-import { Editor } from "@/components/tiptap/Editor";
+import { Editor } from "@/components/tiptap/Editor"; // Original Editor component
+import ChatInterface from "../chat/ChatInterface"; // Assuming this is the correct path
+import { useIsMobile } from "@/hooks/use-mobile"; // Assuming this hook is available from shadcn/ui sidebar [^5]
 
 export default function MainLayout() {
-  // const { isVisible } = useAppSelector((state) => state.document);
-
-  const isVisible = true;
+  const isMobile = useIsMobile(); // Determine if on mobile
 
   return (
     <div className="flex h-screen bg-background overflow-hidden font-sans">
       <MainSidebarLayout />
-      <div className="flex-1 overflow-hidden">
-        {isVisible ? (
-          <ResizablePanelGroup direction="horizontal">
+      <div className="flex-1 overflow-hidden flex flex-col">
+        {" "}
+        {/* Added flex-col for mobile layout */}
+        {isMobile ? (
+          <>
+            {/* On mobile, ChatInterface takes full width, Editor is in a drawer controlled by ChatInterface */}
+            <div className="flex-1">
+              {" "}
+              {/* ChatInterface takes remaining height */}
+              <ChatInterface />
+            </div>
+          </>
+        ) : (
+          <ResizablePanelGroup direction="horizontal" className="flex-1">
+            {" "}
+            {/* Resizable takes full height */}
             <ResizablePanel defaultSize={70} minSize={50}>
-              {/* <DocumentEditor /> */}
               <Editor />
             </ResizablePanel>
             <ResizableHandle withHandle />
@@ -80,8 +41,6 @@ export default function MainLayout() {
               <ChatInterface />
             </ResizablePanel>
           </ResizablePanelGroup>
-        ) : (
-          <ChatInterface />
         )}
       </div>
     </div>

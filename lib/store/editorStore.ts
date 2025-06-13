@@ -5,6 +5,10 @@ import { persist, createJSONStorage } from "zustand/middleware";
 type EditorState = {
   editor: Editor | null;
   setEditor: (editor: Editor | null) => void;
+  isDrawerOpen: boolean;
+  openDrawer: () => void;
+  closeDrawer: () => void;
+  toggleDrawer: () => void;
 };
 
 type EditorContent = {
@@ -19,6 +23,10 @@ type EditorContent = {
 export const useEditorStore = create<EditorState>()((set) => ({
   editor: null,
   setEditor: (editor) => set({ editor }),
+  isDrawerOpen: false,
+  openDrawer: () => set({ isDrawerOpen: true }),
+  closeDrawer: () => set({ isDrawerOpen: false }),
+  toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
 }));
 
 export const useEditorContent = create<EditorContent>()(

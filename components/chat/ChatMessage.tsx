@@ -1,9 +1,11 @@
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
-import { useEditorContent } from "@/lib/store/editorStore";
+import { useEditorContent, useEditorStore } from "@/lib/store/editorStore";
 import DocsContent from "./button/docsContentButton";
 import { extractTitleFromDoc } from "@/lib/utils/docx-title";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useEditorState } from "@tiptap/react";
 
 interface Message {
   id: string;
@@ -27,7 +29,8 @@ export default function ChatMessage({ message, isLoading }: ChatMessageProps) {
   const setContentId = useEditorContent((state) => state.setContentId);
   const setContentTitle = useEditorContent((state) => state.setContentTitle);
   const setEditorContent = useEditorContent((state) => state.setEditorContent);
-
+  const openDrawer = useEditorStore((state) => state.openDrawer); // Add this line
+  const isMobile = useIsMobile();
   const [parsedContent, setParsedContent] = useState<ParsedContent>({
     beforeDoc: "",
     docContent: null,
@@ -72,29 +75,56 @@ export default function ChatMessage({ message, isLoading }: ChatMessageProps) {
     });
   }, [message.content, message.isStreaming]);
 
+  // Update the auto-open effect
+  useEffect(() => {
+    if (isMobile && parsedContent.docContent && !isLoading) {
+      try {
+        const htmlContent = parsedContent.docContent;
+        setContentId(message.id);
+        setEditorContent(htmlContent);
+
+        const extractedTitle = extractTitleFromHTML(htmlContent);
+        if (extractedTitle) {
+          setContentTitle(extractedTitle);
+        }
+
+        openDrawer(); // Use Zustand action instead of prop
+      } catch (error) {
+        console.error("Error processing document content for mobile:", error);
+      }
+    }
+  }, [
+    isMobile,
+    parsedContent.docContent,
+    isLoading,
+    message.id,
+    setContentId,
+    setEditorContent,
+    setContentTitle,
+    openDrawer,
+  ]);
+
+  // Update the click handler
   const handleDocumentClick = () => {
-    // Only allow click when not loading and docContent exists
     if (isLoading || !parsedContent.docContent) {
       console.log("Document still loading or no content available");
       return;
     }
 
     try {
-      // Since content is now HTML, we can directly set it
       const htmlContent = parsedContent.docContent;
       setContentId(message.id);
       setEditorContent(htmlContent);
 
-      // Extract title from HTML content
       const extractedTitle = extractTitleFromHTML(htmlContent);
-      console.log("title is", extractedTitle);
       if (extractedTitle) {
         setContentTitle(extractedTitle);
-        console.log("Document title set:", extractedTitle);
       }
 
-      console.log("content id is ", message.id);
-      console.log("Document content set to editor:", htmlContent);
+      // Use Zustand action on mobile
+      if (isMobile) {
+        openDrawer();
+      }
     } catch (error) {
       console.error("Error processing document content:", error);
     }
