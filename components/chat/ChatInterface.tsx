@@ -20,6 +20,7 @@ import { TextShimmer } from "../text-shimmer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { EditorDrawer } from "../editor/EditorDrawer";
 import { useEditorStore } from "@/lib/store/editorStore";
+import ChatTitle from "../chat-title";
 
 type Messages = {
   id: string;
@@ -219,9 +220,13 @@ export default function ChatInterface() {
   }
   return (
     <div className="flex flex-col h-screen border-r border-border font-sans">
-      <div className="py-4 px-7 text-base font-semibold border-b bg-background">
+      {/* <div className="py-4 px-7 text-base font-semibold border-b bg-background">
         {threadData?.title || "Untitled Chat"}
-      </div>
+      </div> */}
+      <ChatTitle
+        title={threadData?.title || "Untitled Chat"}
+        isMobile={isMobile}
+      />
 
       <ScrollArea className="flex-1 p-0 pb-0 px-7">
         <div className="space-y-4 pt-4 pb-1">
