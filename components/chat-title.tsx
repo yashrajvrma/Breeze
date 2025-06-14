@@ -19,7 +19,7 @@ export default function ChatTitle({ title, isMobile }: ChatTitleProps) {
     setIsSidebarCollapsed(!isSidebarCollapsed);
   };
   return (
-    <div className="flex justify-start gap-x-2.5 sm:py-4 py-2 px-2 text-base font-semibold border-b bg-background font-sans">
+    <div className="flex justify-start gap-x-2.5 sm:py-4 py-3 px-2 text-base font-semibold border-b bg-background font-sans">
       <div className="flex items-center align-middle">
         {isMobile && (
           <TooltipProvider>

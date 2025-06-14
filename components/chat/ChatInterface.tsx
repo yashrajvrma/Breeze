@@ -220,9 +220,6 @@ export default function ChatInterface() {
   }
   return (
     <div className="flex flex-col h-screen border-r border-border font-sans">
-      {/* <div className="py-4 px-7 text-base font-semibold border-b bg-background">
-        {threadData?.title || "Untitled Chat"}
-      </div> */}
       <ChatTitle
         title={threadData?.title || "Untitled Chat"}
         isMobile={isMobile}

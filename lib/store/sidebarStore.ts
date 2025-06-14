@@ -9,7 +9,7 @@ type SidebarState = {
 export const useSidebarStore = create<SidebarState>()(
   persist(
     (set) => ({
-      isSidebarCollapsed: false,
+      isSidebarCollapsed: true,
       setIsSidebarCollapsed: (isSidebarCollapsed: boolean) =>
         set({ isSidebarCollapsed }),
     }),

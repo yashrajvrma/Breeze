@@ -3,6 +3,9 @@ import {
   ArrowRightToLineIcon,
   PanelLeftIcon,
   PanelRightIcon,
+  X,
+  XIcon,
+  XSquareIcon,
 } from "lucide-react";
 import {
   Tooltip,
@@ -16,8 +19,11 @@ import Image from "next/image";
 import logo from "../../public/assets/images/breeze-logo.png";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/lib/store/sidebarStore";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function SidebarHeader() {
+  const isMobile = useIsMobile();
+
   const { isSidebarCollapsed, setIsSidebarCollapsed } = useSidebarStore();
 
   const toggleSidebar = () => {
@@ -45,36 +51,48 @@ export default function SidebarHeader() {
             </span>
           )}
         </div>
-        {!isSidebarCollapsed && (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-7 w-7 group relative"
-                  onClick={() => toggleSidebar()}
-                >
-                  {/* Default icon */}
-                  <PanelRightIcon
-                    size={18}
-                    className="text-foreground/70 group-hover:hidden"
-                  />
+        {isMobile ? (
+          <div className="flex justify-end p-3">
+            <button
+              onClick={() => toggleSidebar()}
+              className="p-1 hover:bg-accent rounded-md transition-colors"
+              aria-label="Close sidebar"
+            >
+              <XIcon size={20} />
+            </button>
+          </div>
+        ) : (
+          !isSidebarCollapsed && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7 group relative"
+                    onClick={() => toggleSidebar()}
+                  >
+                    {/* Default icon */}
+                    <PanelRightIcon
+                      size={18}
+                      className="text-foreground/70 group-hover:hidden"
+                    />
 
-                  {/* Icon shown on hover */}
-                  <ArrowLeftToLineIcon
-                    size={18}
-                    className="text-foreground/70 hidden group-hover:block absolute inset-0 m-auto"
-                  />
+                    {/* Icon shown on hover */}
+                    <ArrowLeftToLineIcon
+                      size={18}
+                      className="text-foreground/70 hidden group-hover:block absolute inset-0 m-auto"
+                    />
 
-                  <span className="sr-only">Collapse sidebar</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="right">
-                <p>Collapse sidebar</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+                    <span className="sr-only">Collapse sidebar</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="right">
+                  <p>Collapse sidebar</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )
         )}
       </div>
       <div className="flex items-center">
