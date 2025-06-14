@@ -127,60 +127,70 @@ export function SettingsDialog() {
               </div>
             )}
           </DialogTrigger>
-          <DialogContent className="overflow-hidden p-0 font-sans md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]">
+          <DialogContent className="overflow-hidden p-0 font-sans max-h-[90vh] w-[95vw] max-w-[95vw] md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px] rounded-xl">
             <DialogTitle className="sr-only">Settings</DialogTitle>
             <SidebarProvider className="items-start border">
-              <Sidebar
-                collapsible="none"
-                className="hidden md:flex bg-background border-r"
-              >
-                <SidebarContent>
-                  <SidebarGroup>
-                    <SidebarGroupContent>
-                      <SidebarMenu className="px-3 py-3 gap-y-2">
-                        {data.nav.map((item) => (
-                          <SidebarMenuItem key={item.name}>
-                            <SidebarMenuButton
-                              isActive={item.name === selectedItem}
-                              className={cn(
-                                "hover:bg-muted-foreground/10",
-                                item.name === selectedItem &&
-                                  "bg-muted-foreground/10 hover:bg-muted-foreground/10"
-                              )}
-                              onClick={() => {
-                                console.log("selected", item.name);
-                                setSelectedItem(item.name);
-                              }}
+              <div className="flex flex-col md:flex-row w-full">
+                <Sidebar
+                  collapsible="none"
+                  className="flex bg-background border-r md:border-b-0 border-b w-full h-16 md:w-auto md:h-auto overflow-y-hidden"
+                >
+                  <SidebarContent className="flex items-center justify-center md:items-center md:justify-start overflow-y-hidden w-full">
+                    <SidebarGroup className="overflow-y-hidden w-full ">
+                      <SidebarGroupContent className="overflow-y-hidden w-full ">
+                        <SidebarMenu className="flex flex-row md:flex-col px-2 md:px-3 py-2 md:py-3 gap-x-2 md:gap-x-0 gap-y-0 md:gap-y-2 items-center justify-center md:items-center md:justify-center overflow-x-auto md:overflow-x-visible overflow-y-hidden w-full">
+                          {data.nav.map((item) => (
+                            <SidebarMenuItem
+                              key={item.name}
+                              className="flex md:w-full "
                             >
-                              <item.icon size={16} />
-                              <span>{item.name}</span>
-                            </SidebarMenuButton>
-                          </SidebarMenuItem>
-                        ))}
-                      </SidebarMenu>
-                    </SidebarGroupContent>
-                  </SidebarGroup>
-                </SidebarContent>
-              </Sidebar>
-              <main className="flex h-[480px] flex-1 flex-col overflow-hidden bg-muted-foreground/10">
-                <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-                  <div className="flex items-center gap-2 px-4">
-                    <Breadcrumb>
-                      <BreadcrumbList>
-                        <BreadcrumbItem className="px-2">
-                          <BreadcrumbPage className="font-semibold text-lg">
-                            {selectedItem}
-                          </BreadcrumbPage>
-                        </BreadcrumbItem>
-                      </BreadcrumbList>
-                    </Breadcrumb>
-                  </div>
-                </header>
+                              <SidebarMenuButton
+                                isActive={item.name === selectedItem}
+                                className={cn(
+                                  "flex hover:bg-muted-foreground/10  justify-center items-center align-middle",
+                                  item.name === selectedItem &&
+                                    "bg-muted-foreground/10 hover:bg-muted-foreground/10"
+                                )}
+                                onClick={() => {
+                                  console.log("selected", item.name);
+                                  setSelectedItem(item.name);
+                                }}
+                              >
+                                <item.icon
+                                  size={16}
+                                  className="flex shrink-0 items-center align-middle"
+                                />
+                                <span className="hidden md:inline w-full">
+                                  {item.name}
+                                </span>
+                              </SidebarMenuButton>
+                            </SidebarMenuItem>
+                          ))}
+                        </SidebarMenu>
+                      </SidebarGroupContent>
+                    </SidebarGroup>
+                  </SidebarContent>
+                </Sidebar>
+                <main className="flex h-[350px] md:h-[480px] flex-1 flex-col overflow-hidden bg-muted-foreground/10 min-w-0">
+                  <header className="flex h-12 md:h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+                    <div className="flex items-center gap-2 px-2 md:px-4">
+                      <Breadcrumb>
+                        <BreadcrumbList>
+                          <BreadcrumbItem className="px-1 md:px-2">
+                            <BreadcrumbPage className="font-semibold text-base md:text-lg">
+                              {selectedItem}
+                            </BreadcrumbPage>
+                          </BreadcrumbItem>
+                        </BreadcrumbList>
+                      </Breadcrumb>
+                    </div>
+                  </header>
 
-                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                  {CurrentComponent && <CurrentComponent />}
-                </div>
-              </main>
+                  <div className="flex flex-1 flex-col gap-4 px-2 py-0 md:px-4 md:py-0 pt-0 min-h-[380px] overflow-auto ">
+                    {CurrentComponent && <CurrentComponent />}
+                  </div>
+                </main>
+              </div>
             </SidebarProvider>
           </DialogContent>
         </Dialog>

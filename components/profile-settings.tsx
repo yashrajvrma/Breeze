@@ -55,8 +55,10 @@ export function ProfileSettings() {
 
   if (status === "loading" || isLoading) {
     return (
-      <div className="flex py-1 px-5">
-        <Skeleton className="flex items-center h-20 w-full" />
+      <div className="flex flex-col gap-y-2 py-1 px-1">
+        <Skeleton className="flex items-center h-10 w-full" />
+        <Skeleton className="flex items-center h-10 w-full" />
+        <Skeleton className="flex items-center h-16 w-full" />
       </div>
     );
   }
