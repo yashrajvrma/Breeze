@@ -10,31 +10,23 @@ export default function Sidebar() {
   const isSidebarCollapsed = useSidebarStore(
     (state) => state.isSidebarCollapsed
   );
-  const setIsSidebarCollapsed = useSidebarStore(
-    (state) => state.setIsSidebarCollapsed
-  );
 
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
-  };
+  if (!isMobile) {
+    return null;
+  }
 
   return (
     <div
       className={cn(
         "h-full bg-background border-r border-border transition-all duration-300 flex flex-col overflow-hidden",
-        // For mobile: always full width when visible, for desktop: responsive width
-        isSidebarCollapsed
-          ? isMobile
+
+        isMobile
+          ? isSidebarCollapsed
             ? "w-[0px]"
-            : "w-[60px]"
-          : isMobile
-          ? "w-[100vw]"
+            : "w-[100vw]"
+          : isSidebarCollapsed
+          ? "w-[60px]"
           : "w-[250px]"
-        // isMobile
-        //   ? "w-[100vw] shadow-xl"
-        //   : isSidebarCollapsed
-        //   ? "w-[60px]"
-        //   : "w-[250px]"
       )}
     >
       <SidebarHeader />

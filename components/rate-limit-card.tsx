@@ -14,12 +14,12 @@ export default function RateLimitCard({
 
   return (
     <div className="bg-dark-card-bg rounded-xl py-2 px-2.5 border">
-      <div className="flex flex-col justify-center mb-5">
+      <div className="flex md:flex-col md:justify-center justify-between md:mb-5 mb-3">
         <div className="text-sm font-medium">Credit Usage</div>
         <div className="text-sm text-muted-foreground">{resetTime}</div>
       </div>
 
-      <div className="mb-2">
+      <div>
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm font-medium">Free</span>
           <span className="text-sm text-muted-foreground">
@@ -40,7 +40,7 @@ export default function RateLimitCard({
         </div>
       </div>
 
-      <div className="text-sm text-muted-foreground">
+      <div className="text-sm text-muted-foreground mt-1">
         {messagesRemaining} credits remaining
       </div>
     </div>

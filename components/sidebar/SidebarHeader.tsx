@@ -46,7 +46,7 @@ export default function SidebarHeader() {
           </div>
 
           {!isSidebarCollapsed && (
-            <span className="ml-1.5 text-3xl font-instrumentSerif font-semibold tracking-tight text-foreground">
+            <span className="ml-1.5 md:text-3xl text-2xl font-instrumentSerif font-semibold tracking-tight text-foreground">
               Breeze
             </span>
           )}

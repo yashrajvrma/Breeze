@@ -13,7 +13,6 @@ import {
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
-import ChatTitle from "../chat-title";
 import { useIsMobile } from "@/hooks/use-mobile";
 import HomechatHeader from "../home-chat-header";
 
@@ -33,7 +32,7 @@ const PromptSuggestor = ({
   return (
     <div
       onClick={onClick}
-      className="flex gap-x-2 items-center align-middle border px-4 py-3 rounded-xl hover:border-[hsl(var(--border-foreground))] hover:cursor-pointer"
+      className="flex gap-x-2 items-center align-middle border px-3 py-2 rounded-xl hover:border-[hsl(var(--border-foreground))] hover:cursor-pointer"
     >
       <Icon size={16} />
       {label}
@@ -151,22 +150,22 @@ export default function HomeChatLayout() {
 
   return (
     <div className="flex flex-col font-sans h-screen">
-      <HomechatHeader isMobile={isMobile} title={"Breeze"} />
-      <div className="flex flex-col items-center align-middle text-center">
-        <div className="md:text-5xl tracking-tighter font-semibold text-primary">
+      {isMobile && <HomechatHeader title={"Breeze"} />}
+      <div className="flex flex-col justify-center items-center align-middle text-center h-screen">
+        <div className="md:text-5xl text-3xl tracking-tighter font-semibold text-primary text-center px-1">
           What do you want to create?
         </div>
-        <div className="mt-2.5 text-lg font-sans tracking-tight text-muted-foreground">
+        <div className="md:mt-2.5 mt-1.5 md:text-lg text-base  font-sans tracking-tight text-muted-foreground">
           Prompt, research and edit documents with AI.
         </div>
-        <div className="md:w-[650px] mt-7">
+        <div className="md:w-[650px] w-full md:mt-7 mt-5 px-5">
           <form ref={formRef} action={handleSubmit} className="relative">
             <Textarea
               name="message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="How can I help you today?"
-              className="resize-none p-5 pr-16 border rounded-2xl focus:border-[hsl(var(--border-foreground))] placeholder:text-base placeholder:font-medium"
+              className="resize-none p-4 pr-16 border rounded-2xl focus:border-[hsl(var(--border-foreground))] placeholder:text-base placeholder:font-medium"
               maxHeight={250}
               rows={1}
               onKeyDown={(e) => {
@@ -185,7 +184,7 @@ export default function HomeChatLayout() {
             />
           </form>
         </div>
-        <div className="flex justify-center items-center gap-x-4 my-4 font-sans text-sm">
+        <div className="flex flex-wrap justify-center items-center gap-x-2 gap-y-2 my-4 font-sans text-sm">
           {templates.map((item) => (
             <PromptSuggestor key={item.label} {...item} />
           ))}
