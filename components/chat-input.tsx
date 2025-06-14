@@ -53,7 +53,7 @@ function ChatInput({
       <div
         className={cn(
           variant === "default" &&
-            "flex flex-col items-end w-full p-2 rounded-2xl border border-input bg-transparent focus-within:outline-none",
+            "flex flex-col items-end w-full sm:p-2 p-1 sm:rounded-2xl rounded-xl border border-input bg-transparent focus-within:outline-none",
           variant === "unstyled" && "flex items-start gap-2 w-full",
           className
         )}
@@ -148,7 +148,7 @@ function ChatInputSubmit({
       <Button
         onClick={onStop}
         className={cn(
-          "shrink-0 absolute top-2 right-2 rounded-lg p-1.5 h-fit bg-blue-500 hover:bg-blue-600 text-neutral-50",
+          "shrink-0 absolute top-2 right-2 rounded-lg p-1.5 sm:m-2 m-1 h-fit bg-blue-500 hover:bg-blue-600 text-neutral-50",
           className
         )}
         {...props}
@@ -181,7 +181,7 @@ function ChatInputSubmit({
   return (
     <Button
       className={cn(
-        "shrink-0 absolute top-2 right-2 rounded-lg p-1.5 h-fit bg-blue-500 hover:bg-blue-600 text-neutral-50",
+        "shrink-0 absolute top-2 right-2 rounded-lg p-1.5 sm:m-2 m-1 h-fit bg-blue-500 hover:bg-blue-600 text-neutral-50",
         className
       )}
       disabled={isDisabled}

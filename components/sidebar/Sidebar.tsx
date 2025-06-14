@@ -33,7 +33,7 @@ import SidebarNavigation from "./SidebarNavigation";
 import SidebarFooter from "./SidebarFooter";
 import { useSidebarStore } from "@/lib/store/sidebarStore";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { X } from "lucide-react";
+
 
 export default function Sidebar() {
   const isMobile = useIsMobile();

@@ -225,7 +225,7 @@ export default function ChatInterface() {
         isMobile={isMobile}
       />
 
-      <ScrollArea className="flex-1 p-0 pb-0 px-7">
+      <ScrollArea className="flex-1 p-0 pb-0 sm:px-7 px-4">
         <div className="space-y-4 pt-4 pb-1">
           {messages.map((msg, index) => (
             <ChatMessage
@@ -254,7 +254,7 @@ export default function ChatInterface() {
         )}
       </ScrollArea>
 
-      <div className="px-4 pb-4 mt-auto">
+      <div className="sm:px-4 px-3 pb-4 mt-auto">
         <ChatInput
           variant="default"
           value={input}
@@ -266,8 +266,8 @@ export default function ChatInterface() {
           rows={2}
         >
           <ChatInputTextArea
-            placeholder="Type your message..."
-            className="min-h-[80px]"
+            placeholder="How can Breeze help you today?"
+            className="min-h-[90px] placeholder:text-base"
           />
           <ChatInputSubmit />
         </ChatInput>
