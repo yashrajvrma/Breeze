@@ -11,10 +11,7 @@ export default function Sidebar() {
     (state) => state.isSidebarCollapsed
   );
 
-  if (!isMobile) {
-    return null;
-  }
-
+  
   return (
     <div
       className={cn(
