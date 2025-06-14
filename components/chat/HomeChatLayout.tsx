@@ -13,6 +13,9 @@ import {
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
+import ChatTitle from "../chat-title";
+import { useIsMobile } from "@/hooks/use-mobile";
+import HomechatHeader from "../home-chat-header";
 
 interface PromptSuggestorProps {
   label: string;
@@ -39,6 +42,7 @@ const PromptSuggestor = ({
 };
 
 export default function HomeChatLayout() {
+  const isMobile = useIsMobile();
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -146,15 +150,16 @@ export default function HomeChatLayout() {
   };
 
   return (
-    <div className="flex justify-center items-center align-middle font-sans h-screen">
+    <div className="flex flex-col font-sans h-screen">
+      <HomechatHeader isMobile={isMobile} title={"Breeze"} />
       <div className="flex flex-col items-center align-middle text-center">
-        <div className="text-5xl tracking-tighter font-semibold text-primary">
+        <div className="md:text-5xl tracking-tighter font-semibold text-primary">
           What do you want to create?
         </div>
         <div className="mt-2.5 text-lg font-sans tracking-tight text-muted-foreground">
           Prompt, research and edit documents with AI.
         </div>
-        <div className="w-[650px] mt-7">
+        <div className="md:w-[650px] mt-7">
           <form ref={formRef} action={handleSubmit} className="relative">
             <Textarea
               name="message"
