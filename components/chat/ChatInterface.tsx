@@ -267,7 +267,7 @@ export default function ChatInterface() {
         >
           <ChatInputTextArea
             placeholder="How can Breeze help you today?"
-            className="min-h-[90px] placeholder:text-base"
+            className="min-h-[90px] placeholder:text-base  placeholder:font-normal"
           />
           <ChatInputSubmit />
         </ChatInput>

@@ -140,12 +140,12 @@ export default function RecentChats() {
               >
                 <div className="flex-1 min-w-0 px-2 py-1">
                   <div className="flex items-center justify-between">
-                    <span
-                      className="text-sm font-medium truncate"
+                    <div
+                      className="text-sm font-medium truncate w-[100%] "
                       onClick={() => router.push(`/chat/${chat.id}`)}
                     >
                       {chat.title || "New chat"}
-                    </span>
+                    </div>
 
                     <div
                       className={cn(
