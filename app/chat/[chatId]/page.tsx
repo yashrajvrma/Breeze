@@ -18,7 +18,7 @@ export const generateMetadata = async ({
   });
 
   return {
-    title: `${chat?.title} - Breeze` || "Untitled Chat - Breeze",
+    title: `${chat?.title}`,
   };
 };
 

@@ -27,8 +27,13 @@ const garamondBookCond = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Breeze - AI Document Editor",
-  description: "An intelligent document editor powered by AI",
+  // title: "Breeze - AI Document Editor",
+  title: {
+    default: "Breeze - AI Document Editor",
+    template: "%s | Breeze",
+  },
+  description:
+    "Breeze - an AI powered document editor that let's you create word docs in seconds.",
   icons: {
     icon: "/assets/images/breeze.ico",
   },
