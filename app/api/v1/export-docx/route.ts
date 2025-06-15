@@ -132,7 +132,7 @@ export async function POST(req: NextRequest) {
     margins: {
       gutter: 0,
       header: 720,
-      footer: 720,
+      fotter: 720,
       top: 720,
       bottom: 720,
       left: (leftMargin / 96) * 1440,
