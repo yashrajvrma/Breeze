@@ -165,7 +165,7 @@ export default function HomeChatLayout() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="How can I help you today?"
-              className="resize-none p-4 pr-16 border rounded-2xl focus:border-[hsl(var(--border-foreground))] placeholder:text-base placeholder:font-medium"
+              className="resize-none p-4 pr-16 border rounded-2xl focus:border-[hsl(var(--border-foreground))] placeholder:text-base placeholder:font-medium md:min-h-[150px] min-h-[130px]"
               maxHeight={250}
               rows={1}
               onKeyDown={(e) => {

@@ -262,12 +262,12 @@ export default function ChatInterface() {
           onSubmit={handleChatSubmit}
           loading={isGenerating}
           onStop={() => stop()}
-          className="relative w-full focus:outline-none ring-0 border"
+          className="relative w-full h-full focus:outline-none ring-0 border md:min-h-[120px] min-h-[130px] max-h-[300px] py-0"
           rows={2}
         >
           <ChatInputTextArea
             placeholder="How can Breeze help you today?"
-            className="min-h-[90px] placeholder:text-base  placeholder:font-normal"
+            className="my-0 placeholder:text-base  placeholder:font-normal"
           />
           <ChatInputSubmit />
         </ChatInput>
