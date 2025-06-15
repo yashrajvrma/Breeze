@@ -3,7 +3,7 @@ import { authConfig } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   const { chatId } = await req.json();
 
   try {

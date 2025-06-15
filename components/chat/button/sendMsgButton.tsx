@@ -1,6 +1,6 @@
 import { Button } from "../../ui/button";
-import { ArrowRightIcon, ArrowUp } from "lucide-react";
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import { ArrowRightIcon } from "lucide-react";
+import { useFormStatus } from "react-dom";
 
 interface Message {
   inputMessage: string;

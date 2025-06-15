@@ -2,7 +2,7 @@
 
 import { ArrowRightIcon } from "lucide-react";
 import { Button } from "../../ui/button";
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 
 interface CreateChatButtonProps {
   message: boolean;

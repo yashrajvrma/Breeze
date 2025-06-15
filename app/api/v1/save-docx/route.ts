@@ -4,7 +4,7 @@ import { updateMessageResponse } from "@/lib/utils/save-docx";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   const { id, updatedDocHtml } = await req.json();
 
   try {

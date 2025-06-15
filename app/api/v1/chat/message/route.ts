@@ -10,7 +10,7 @@ import { checkNoOfRequest } from "@/utils/no-of-request";
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   const { chatId, messages } = await req.json();
 
   const session = await getServerSession(authConfig);
