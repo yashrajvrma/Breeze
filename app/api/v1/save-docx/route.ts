@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const { id, updatedDocJson } = await req.json();
+  const { id, updatedDocHtml } = await req.json();
 
   try {
     const session = await getServerSession(authConfig);
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const updatedContent = updateMessageResponse({
       originalContent,
-      updatedDocJson,
+      updatedDocHtml,
     });
 
     await prisma.message.update({

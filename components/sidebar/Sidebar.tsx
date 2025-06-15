@@ -11,7 +11,6 @@ export default function Sidebar() {
     (state) => state.isSidebarCollapsed
   );
 
-  
   return (
     <div
       className={cn(

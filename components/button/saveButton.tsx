@@ -7,11 +7,11 @@ import toast from "react-hot-toast";
 
 type UpdatedDocsResponse = {
   id: string | null;
-  updatedDocJson: object;
+  updatedDocHtml: string;
 };
 
-const saveDocsFn = ({ id, updatedDocJson }: UpdatedDocsResponse) => {
-  return axios.post(`/api/v1/save-docx`, { id, updatedDocJson });
+const saveDocsFn = ({ id, updatedDocHtml }: UpdatedDocsResponse) => {
+  return axios.post(`/api/v1/save-docx`, { id, updatedDocHtml });
 };
 
 export default function SaveButton() {
@@ -35,8 +35,8 @@ export default function SaveButton() {
       console.log("Editor doesn't exist");
       return;
     }
-    const updatedDocJson = editor?.getJSON();
-    saveDocs({ id, updatedDocJson });
+    const updatedDocHtml = editor?.getHTML();
+    saveDocs({ id, updatedDocHtml });
   };
 
   return (
