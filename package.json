@@ -89,7 +89,7 @@
     "input-otp": "^1.2.4",
     "localtunnel": "^2.0.2",
     "lucide-react": "^0.446.0",
-    "next": "13.5.1",
+    "next": "^15.3.3",
     "next-auth": "^4.24.11",
     "next-themes": "^0.3.0",
     "openai": "^4.97.0",
@@ -122,6 +122,7 @@
   "devDependencies": {
     "@types/html-to-docx": "^1.8.0",
     "@types/react-color": "^3.0.13",
+    "encoding": "^0.1.13",
     "postcss-nesting": "^13.0.1",
     "prisma": "^6.8.2",
     "tsx": "^4.19.4"

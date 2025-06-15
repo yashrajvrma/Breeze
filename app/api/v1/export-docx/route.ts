@@ -1,5 +1,3 @@
-// app/api/export-docx/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 import htmlToDocx from "html-to-docx";
 
