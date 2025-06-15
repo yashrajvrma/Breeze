@@ -51,7 +51,7 @@ export default function EditorHeader() {
           <DropdownMenuTrigger asChild>
             {isEditorEmpty ? (
               <button
-                className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 sm:py-1.5 py-1 cursor-not-allowed border text-foreground"
+                className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 sm:py-1.5 py-1 cursor-not-allowed border text-neutral-50"
                 disabled
               >
                 {isMobile ? (
