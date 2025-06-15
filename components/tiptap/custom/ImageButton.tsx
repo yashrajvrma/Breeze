@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,7 +17,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useEditorStore } from "@/lib/store/editorStore";
 import { ImageIcon, SearchIcon, UploadIcon } from "lucide-react";
-import { useState } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -27,9 +27,11 @@ export const ImageButton = () => {
   const editor = useEditorStore((state) => state.editor);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const onChange = (src: string) => {
-    editor?.chain().focus().setImage({ src }).run();
+    if (!editor) return;
+    editor.chain().focus().setImage({ src }).run();
   };
 
   const onUpload = () => {
@@ -58,7 +60,7 @@ export const ImageButton = () => {
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
         <DropdownMenuTrigger
           asChild
           className="flex items-center h-8 font-sans align-middle text-muted-foreground"
@@ -74,6 +76,7 @@ export const ImageButton = () => {
             </Tooltip>
           </button>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent className="flex flex-col font-sans">
           <Button
             className="flex justify-start items-center w-full cursor-pointer bg-background text-foreground hover:bg-muted-foreground/20 px-2.5 py-2"
@@ -82,9 +85,13 @@ export const ImageButton = () => {
             <UploadIcon className="mr-2 w-4 h-4" />
             Upload
           </Button>
+
           <Button
             className="flex justify-start items-center cursor-pointer bg-background text-foreground hover:bg-muted-foreground/20 px-2.5 py-2"
-            onClick={() => setIsDialogOpen(true)}
+            onClick={() => {
+              setDropdownOpen(false); // Close dropdown
+              setTimeout(() => setIsDialogOpen(true), 50); // Open dialog after delay
+            }}
           >
             <SearchIcon className="mr-2 w-4 h-4" />
             Paste Image URL
