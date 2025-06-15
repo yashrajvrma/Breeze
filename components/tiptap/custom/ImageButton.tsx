@@ -22,6 +22,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { type PutBlobResult } from "@vercel/blob";
+import { upload } from "@vercel/blob/client";
+import { useSession } from "next-auth/react";
 
 export const ImageButton = () => {
   const editor = useEditorStore((state) => state.editor);
@@ -29,24 +32,59 @@ export const ImageButton = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const { data: session } = useSession();
+
+  if (!session) {
+    return null;
+  }
+
   const onChange = (src: string) => {
     if (!editor) return;
     editor.chain().focus().setImage({ src }).run();
   };
 
-  const onUpload = () => {
+  const onUpload = async () => {
+    // native object url
+    // const input = document.createElement("input");
+    // input.type = "file";
+    // input.accept = "image/*";
+    // input.onchange = (e) => {
+    //   const file = (e.target as HTMLInputElement).files?.[0];
+    //   if (file) {
+    //     const imageUrl = URL.createObjectURL(file);
+    //     onChange(imageUrl);
+    //   }
+    // };
+    // input.click();
+
+    // upload to vercel
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
 
-    input.onchange = (e) => {
+    input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) {
+        return;
+      }
       if (file) {
-        const imageUrl = URL.createObjectURL(file);
-        onChange(imageUrl);
+        const blob = await upload(
+          `public/doc-images/${session.user.id}/${file.name}`,
+          file,
+          {
+            access: "public",
+            handleUploadUrl: "/api/v1/doc-images/upload",
+          }
+        );
+
+        const url = blob.url;
+        console.log("url is", url);
+        onChange(url);
+
+        // const imageUrl = URL.createObjectURL(file);
+        // onChange(imageUrl);
       }
     };
-
     input.click();
   };
 
@@ -80,7 +118,7 @@ export const ImageButton = () => {
         <DropdownMenuContent className="flex flex-col font-sans">
           <Button
             className="flex justify-start items-center w-full cursor-pointer bg-background text-foreground hover:bg-muted-foreground/20 px-2.5 py-2"
-            onClick={onUpload}
+            onClick={() => onUpload()}
           >
             <UploadIcon className="mr-2 w-4 h-4" />
             Upload
