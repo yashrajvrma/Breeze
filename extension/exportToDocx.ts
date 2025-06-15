@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 
 type ExportDocxInput = {
   htmlContent: string;
+  title: string;
   leftMargin: number;
   rightMargin: number;
 };
@@ -10,6 +11,7 @@ export function useExportDocx() {
   return useMutation({
     mutationFn: async ({
       htmlContent,
+      title,
       leftMargin,
       rightMargin,
     }: ExportDocxInput) => {
@@ -25,7 +27,7 @@ export function useExportDocx() {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "document.docx";
+      link.download = `${title}.docx`;
       link.click();
       URL.revokeObjectURL(url);
     },

@@ -1,5 +1,6 @@
 type ExportPdf = {
   htmlContent: string;
+  title: string;
   leftMargin: number;
   rightMargin: number;
 };
@@ -10,6 +11,7 @@ function pxToMm(px: number) {
 
 export const exportToPdf = async ({
   htmlContent,
+  title,
   leftMargin,
   rightMargin,
 }: ExportPdf) => {
@@ -208,7 +210,7 @@ export const exportToPdf = async ({
         scrollY: 0,
       },
       margin: [10, rightMarginMm, 10, leftMarginMm], // top, right, bottom, left
-      filename: "document.pdf",
+      filename: `${title}.pdf`,
       image: { type: "jpeg", quality: 0.98 },
       jsPDF: {
         unit: "mm",

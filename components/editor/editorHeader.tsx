@@ -27,13 +27,13 @@ export default function EditorHeader() {
   const handleExportToWord = async () => {
     if (!editor) return console.error("Editor instance not available");
     const htmlContent = editor.getHTML();
-    exportDocxMutation.mutate({ htmlContent, leftMargin, rightMargin });
+    exportDocxMutation.mutate({ htmlContent, title, leftMargin, rightMargin });
   };
 
   const handleExportToPdf = async () => {
     if (!editor) return console.error("Editor instance not available");
     const htmlContent = editor.getHTML();
-    await exportToPdf({ htmlContent, leftMargin, rightMargin });
+    await exportToPdf({ htmlContent, title, leftMargin, rightMargin });
   };
 
   return (
