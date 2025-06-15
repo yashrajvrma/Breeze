@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import localFont from "@next/font/local";
+import localFont from "next/font/local";
 import { Providers } from "./providers";
 import { Instrument_Serif } from "next/font/google";
 
