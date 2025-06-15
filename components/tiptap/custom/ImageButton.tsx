@@ -44,19 +44,6 @@ export const ImageButton = () => {
   };
 
   const onUpload = async () => {
-    // native object url
-    // const input = document.createElement("input");
-    // input.type = "file";
-    // input.accept = "image/*";
-    // input.onchange = (e) => {
-    //   const file = (e.target as HTMLInputElement).files?.[0];
-    //   if (file) {
-    //     const imageUrl = URL.createObjectURL(file);
-    //     onChange(imageUrl);
-    //   }
-    // };
-    // input.click();
-
     // upload to vercel
     const input = document.createElement("input");
     input.type = "file";

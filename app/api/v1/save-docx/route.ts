@@ -18,15 +18,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
       where: {
         id: id,
       },
-      select: {
-        content: true,
-      },
     });
 
     if (!message) {
       return new Response("Invalid message id", { status: 400 });
     }
 
+    const chatId = message.chatId;
     const originalContent = message.content;
 
     const updatedContent = updateMessageResponse({
@@ -41,6 +39,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
       data: {
         content: updatedContent,
       },
+    });
+
+    await prisma.chat.update({
+      where: { id: chatId },
+      data: { updatedAt: new Date() },
     });
 
     return NextResponse.json(
