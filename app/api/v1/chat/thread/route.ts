@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
           status: 400,
         }
       );
-    }
+    }2
 
     const threadMessage = await prisma.message.findMany({
       where: {
