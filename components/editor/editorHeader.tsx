@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  ShareIcon,
-  MoreHorizontal,
-  EllipsisVerticalIcon,
-  EllipsisIcon,
-} from "lucide-react";
+import { ShareIcon, EllipsisVerticalIcon } from "lucide-react";
 import { useEditorContent, useEditorStore } from "@/lib/store/editorStore";
 import { exportToPdf } from "@/extension/exportToPdf";
 import {
@@ -17,7 +12,7 @@ import {
 import { useMargin } from "@/lib/store/marginStore";
 import { useExportDocx } from "@/extension/exportToDocx";
 import SaveButton from "../button/saveButton";
-import { useIsMobile } from "@/hooks/use-mobile"; // your ShadCN hook
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function EditorHeader() {
   const title = useEditorContent((state) => state.title);
@@ -74,7 +69,7 @@ export default function EditorHeader() {
                 className={`flex justify-center items-center text-sm gap-x-1.5 rounded-lg sm:py-1.5 py-1 border ${
                   isMobile
                     ? "text-foreground rounded-lg border hover:bg-accent px-1.5"
-                    : "bg-blue-500 hover:bg-blue-600 text-background px-2.5"
+                    : "bg-blue-500 hover:bg-blue-600 text-neutral-50 px-2.5"
                 }`}
               >
                 {isMobile ? (
