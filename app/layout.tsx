@@ -27,7 +27,6 @@ const garamondBookCond = localFont({
 });
 
 export const metadata: Metadata = {
-  // title: "Breeze - AI Document Editor",
   title: {
     default: "Breeze - AI Document Editor",
     template: "%s | Breeze",

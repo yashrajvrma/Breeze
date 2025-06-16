@@ -1,5 +1,3 @@
-import HomeLayout from "@/components/layout/HomeLayout";
-
-export default function Chat() {
-  return <HomeLayout />;
+export default function HomePage() {
+  return <div>Home</div>;
 }
