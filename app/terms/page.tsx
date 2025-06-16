@@ -1,90 +1,70 @@
 import Navbar from "@/components/home/navbar";
 import { MailIcon } from "lucide-react";
 
-export default function Privacy() {
+export default function Terms() {
   return (
     <div className="flex flex-col min-h-screen border-x">
       <Navbar />
       <div className="flex justify-center w-full px-4">
         <div className="w-full max-w-[100px] md:max-w-[700px] flex flex-col gap-12 py-12 font-sans">
           <div className="flex flex-col justify-center items-center font-semibold text-4xl">
-            Privacy Policy
+            Terms of Service
             <p className="text-sm text-muted-foreground mt-1 font-medium">
               Last updated: June 16, 2025
             </p>
           </div>
 
           <section>
-            <h2 className="text-lg font-semibold mb-2">
-              Our Commitment to Privacy
-            </h2>
+            <h2 className="text-lg font-semibold mb-2">Overview </h2>
             <p className="text-base text-muted-foreground">
-              At Breeze, we believe privacy is a fundamental right. Our
-              AI-powered document editor is built with user privacy at its core,
-              and we're committed to being transparent about how we handle your
-              data. We do not share your personal information or content with
-              any external company or third party.
+              Breeze is an AI-powered document editor that helps users write,
+              edit, and manage documents more efficiently. By using Breeze, you
+              agree to these terms of service.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold mb-2">
-              Google Account Integration
-            </h2>
-            {/* <p className=""> */}
-            When you use Zero with your Google Account:
+            <h2 className="text-lg font-semibold mb-2">Service Description</h2>
+            AI Powered Editing
             <ul className="list-disc pl-5 text-base text-muted-foreground">
               <li>
-                We request access only to your name, email address, and profile
-                picture
+                Breeze provides AI tools for summarization, rewriting, and
+                content generation. All documents and chats are processed
+                securely and are not shared with any third parties.
               </li>
+            </ul>
+            {/* </p> */}
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold mb-2">
+              User Responsibilities
+            </h2>
+            By using Breeze, you agree to:
+            <ul className="list-disc pl-5 text-base text-muted-foreground">
+              <li>Comply with all applicable laws and regulations</li>
+              <li>Use Breeze only for lawful, non-malicious purposes</li>
+              <li>Not share offensive, illegal, or harmful content</li>
+              <li>Keep your account credentials secure</li>
+              <li>Report any security vulnerabilities responsibly</li>
+            </ul>
+            {/* </p> */}
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold mb-2">Data and Privacy</h2>
+            {/* <p className=""> */}
+            <ul className="list-disc pl-5 text-base text-muted-foreground">
+              <li>Breeze uses Google OAuth 2.0 for authentication</li>
               <li>
-                Your Google account credentials are never stored on our servers
+                We collect your name, email, and profile picture for
+                personalization
               </li>
-              <li>We use secure OAuth 2.0 authentication provided by Google</li>
+              <li>All documents and AI interactions are kept private</li>
+              <li>We do not share or sell user data to third parties</li>
               <li>
                 You can revoke access at any time through your Google Account
                 settings
-              </li>
-            </ul>
-            {/* </p> */}
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold mb-2">
-              Document and Chat Privacy
-            </h2>
-            {/* <p className=""> */}
-            <ul className="list-disc pl-5 text-base text-muted-foreground">
-              <li>
-                All documents and chat interactions you create with Breeze AI
-                are private and secure
-              </li>
-              <li>
-                Your content is never shared, sold, or used for any external
-                purpose
-              </li>
-              <li>
-                We collect basic usage analytics (page views, feature usage) to
-                improve the service, but this data is anonymized
-              </li>
-            </ul>
-            {/* </p> */}
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold mb-2">
-              Data Protection and Security
-            </h2>
-            {/* <p className=""> */}
-            <ul className="list-disc pl-5 text-base text-muted-foreground">
-              <li>
-                User content is securely stored and never accessed without your
-                permission
-              </li>
-              <li>
-                We do not retain or cache chat/document data longer than
-                necessary for functionality
               </li>
             </ul>
             {/* </p> */}
@@ -101,16 +81,14 @@ export default function Privacy() {
                 Right to request deletion of your account and all associated
                 content
               </li>
-              <li>
-                Right to contact us with questions at privacy@breezeeditor.ai
-              </li>
+              <li>Right to contact us with privacy related queries</li>
             </ul>
             {/* </p> */}
           </section>
 
           <section>
             <h2 className="text-lg font-semibold mb-2">Contacts</h2>
-            For privacy-related questions or concerns:
+            For questions about these terms:
             <p>
               <a
                 className="flex items-center align-middle gap-x-1.5 text-blue-500 hover:text-blue-400"

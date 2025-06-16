@@ -7,8 +7,11 @@ export default function About() {
       <Navbar />
       <div className="flex justify-center w-full px-4">
         <div className="w-full max-w-[100px] md:max-w-[700px] flex flex-col gap-12 py-12 font-sans">
+          <div className="flex flex-col justify-center items-center font-semibold text-4xl">
+            About Us
+          </div>
           <section>
-            <h2 className="text-lg font-semibold mb-2">About Us</h2>
+            <h2 className="text-lg font-semibold mb-2">About</h2>
             <p className="text-base text-muted-foreground">
               Breeze is an AI-powered document editor built to help you write
               smarter, faster, and with less friction. From drafting long-form
