@@ -7,7 +7,7 @@ import { NavigationMenuDemo } from "../nav-menu";
 export default function Navbar() {
   return (
     <div className="flex justify-center font-sans border border-b">
-      <div className="flex justify-between items-center align-middle min-w-[70%] md:py-3.5">
+      <div className="flex justify-between items-center align-middle min-w-[50%] md:py-3.5">
         <div className="flex justify-center items-center sm:gap-x-2 gap-x-2 ">
           <div className="flex items-center">
             <Link href="/">
@@ -18,12 +18,14 @@ export default function Navbar() {
             Breeze
           </div>
         </div>
-        <NavigationMenuDemo />
-        <Link href="/signin">
-          <Button className="text-sm rounded-xl hover:cursor-pointer">
-            Sign In
-          </Button>
-        </Link>
+        <div className="flex justify-center gap-x-2">
+          <NavigationMenuDemo />
+          <Link href="/signin">
+            <Button className="text-sm rounded-xl hover:cursor-pointer">
+              Sign In
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
