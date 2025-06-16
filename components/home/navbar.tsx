@@ -9,8 +9,10 @@ export default function Navbar() {
     <div className="flex justify-center font-sans border border-b">
       <div className="flex justify-between items-center align-middle min-w-[70%] md:py-3.5">
         <div className="flex justify-center items-center sm:gap-x-2 gap-x-2 ">
-          <div className="flex items-center rounded-lg">
-            <Image src={logo} alt="Logo" className="w-9" />
+          <div className="flex items-center">
+            <Link href="/">
+              <Image src={logo} alt="Logo" className="w-7" />
+            </Link>
           </div>
           <div className="flex items-center align-middle md:text-3xl text-3xl text-foreground font-instrumentSerif font-semibold tracking-tight">
             Breeze

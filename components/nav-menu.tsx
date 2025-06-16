@@ -87,10 +87,11 @@ export function NavigationMenuDemo() {
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+>(({ className, href, title, children, ...props }, ref) => {
   return (
     <li>
-      <NavigationMenuLink asChild>
+      {/* <NavigationMenuLink asChild> */}
+      <Link href={href!} legacyBehavior>
         <a
           ref={ref}
           className={cn(
@@ -104,7 +105,8 @@ const ListItem = React.forwardRef<
             {children}
           </p>
         </a>
-      </NavigationMenuLink>
+      </Link>
+      {/* </NavigationMenuLink> */}
     </li>
   );
 });
