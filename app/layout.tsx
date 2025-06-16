@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   description:
     "Breeze - an AI powered document editor that let's you create word docs in seconds.",
   icons: {
-    icon: "/assets/images/breeze.ico",
+    icon: "/assets/images/favicon.ico",
   },
 };
 
