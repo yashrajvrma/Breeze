@@ -11,7 +11,7 @@ export default function Hero() {
         <div className="text-6xl md:text-7xl font-medium tracking-tighter">
           Document Editor
         </div>
-        <p className="sm:text-xl text-sm text-center font-normal text-foreground/60 tracking-tight pt-2 font-sans sm:px-0 px-10 ">
+        <p className="sm:text-xl text-sm text-center font-normal text-foreground/70 tracking-tighter pt-2 font-sans sm:px-0 px-10 ">
           Breeze turns your ideas into professional documents in seconds with
           AI.
         </p>

@@ -28,9 +28,9 @@ const socialLinks = [
 ];
 
 const options = [
-  { value: "system", icon: <MonitorCogIcon size={18} />, label: "System" },
-  { value: "light", icon: <SunIcon size={18} />, label: "Light" },
-  { value: "dark", icon: <MoonStarIcon size={18} />, label: "Dark" },
+  { value: "system", icon: <MonitorCogIcon size={16} />, label: "System" },
+  { value: "light", icon: <SunIcon size={16} />, label: "Light" },
+  { value: "dark", icon: <MoonStarIcon size={16} />, label: "Dark" },
 ];
 export default function Footer() {
   const { theme, setTheme } = useThemeStore();
