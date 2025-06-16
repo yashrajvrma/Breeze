@@ -1,34 +1,28 @@
-"use client";
-
 import { Button } from "../ui/button";
 import logo from "@/public/assets/images/breeze-logo.png";
 import Image from "next/image";
-import { toast } from "sonner";
+import Link from "next/link";
+import { NavigationMenuDemo } from "../nav-menu";
 
 export default function Navbar() {
-  const handleGetStartedClick = () => {
-    toast.success("Please joined waitlist!");
-  };
-
   return (
-    <div className="flex flex-row justify-between items-center font-sans sm:px-10 sm:py-5 px-5 py-8">
-      <div className="flex justify-center items-center sm:gap-x-2 gap-x-2">
-        <div className="flex items-center rounded-lg bg-neutral-100 p-1">
-          <Image src={logo} alt="Logo" width={28} height={28} />
+    <div className="flex justify-center font-sans border border-b">
+      <div className="flex justify-between items-center align-middle min-w-[70%] md:py-3.5">
+        <div className="flex justify-center items-center sm:gap-x-2 gap-x-2 ">
+          <div className="flex items-center rounded-lg p-1">
+            <Image src={logo} alt="Logo" width={28} height={28} />
+          </div>
+          <div className="flex items-center align-middle md:text-3xl text-3xl text-foreground font-instrumentSerif font-semibold tracking-tight">
+            Breeze
+          </div>
         </div>
-        <div
-          style={{ fontFamily: "var(--font-garamond-book)" }}
-          className="flex items-center align-middle sm:text-4xl text-3xl text-stone-50 tracking-tight"
-        >
-          Breeze
-        </div>
+        <NavigationMenuDemo />
+        <Link href="/signin">
+          <Button className="text-sm rounded-xl hover:cursor-pointer">
+            Sign In
+          </Button>
+        </Link>
       </div>
-      <Button
-        onClick={handleGetStartedClick}
-        className="text-sm sm:text-base px-3 sm:px-4 hover:cursor-pointer"
-      >
-        Get Started
-      </Button>
     </div>
   );
 }

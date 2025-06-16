@@ -1,6 +1,9 @@
 "use client";
 
 import { Twitter, Linkedin, GitHub } from "@/components/icons/icons";
+import { useThemeStore } from "@/lib/store/themeStore";
+import { MonitorCogIcon, MoonStarIcon, SunIcon } from "lucide-react";
+
 import Link from "next/link";
 
 const socialLinks = [
@@ -24,26 +27,74 @@ const socialLinks = [
   },
 ];
 
+const options = [
+  { value: "system", icon: <MonitorCogIcon size={18} />, label: "System" },
+  { value: "light", icon: <SunIcon size={18} />, label: "Light" },
+  { value: "dark", icon: <MoonStarIcon size={18} />, label: "Dark" },
+];
 export default function Footer() {
+  const { theme, setTheme } = useThemeStore();
+
   return (
-    <div className="flex justify-center sm:pt-0 pt-12 pb-20 text-white font-sans px-12">
-      <div className="flex flex-row justify-between items-center w-[400px]">
-        <div className="flex justify-center items-center sm:gap-x-4 gap-x-3">
-          {socialLinks.map((social) => (
-            <Link
-              key={social.name}
-              href={social.href}
-              target="_blank"
-              aria-label={social.ariaLabel}
-              className="text-white transition-colors duration-200 hover:text-white"
-            >
-              <social.icon className="h-5 w-5 transition-transform hover:scale-110" />
-              <span className="sr-only">{social.ariaLabel}</span>
+    <div className="flex justify-center text-foreground font-sans">
+      <div className="flex flex-col border-x min-w-[70%] px-20 py-8">
+        {/* Top Row: Social + Links */}
+        <div className="flex justify-between items-center flex-wrap gap-y-4">
+          {/* Social Icons */}
+          <div className="flex gap-x-4 items-center">
+            {socialLinks.map((social) => (
+              <Link
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                aria-label={social.ariaLabel}
+                className="duration-200"
+              >
+                <social.icon
+                  fill="#dc2626"
+                  className="h-5 w-5 transition-transform hover:scale-110"
+                />
+                <span className="sr-only">{social.ariaLabel}</span>
+              </Link>
+            ))}
+          </div>
+
+          {/* About, Terms, Privacy */}
+          <div className="flex items-center md:text-base text-sm text-foreground/80 font-medium gap-x-2">
+            <Link className="hover:text-foreground" href="/about">
+              About
             </Link>
-          ))}
+            |
+            <Link className="hover:text-foreground" href="/terms">
+              Terms & Conditions
+            </Link>
+            |
+            <Link className="hover:text-foreground" href="/privacy">
+              Privacy Policy
+            </Link>
+          </div>
         </div>
-        <div className="text-neutral-400 sm:text-base text-sm">
-          Made by Yashraj Verma
+
+        {/* Theme Selector */}
+        <div className="flex justify-end mt-2">
+          <div className="flex items-center gap-x-3 border px-3 py-1 rounded-xl">
+            {options.map((option) => (
+              <div
+                key={option.value}
+                className={`cursor-pointer ${
+                  theme === option.value
+                    ? "bg-muted text-foreground"
+                    : "text-muted-foreground"
+                }`}
+                onClick={() => {
+                  setTheme(option.value as typeof theme);
+                  console.log("theme set to", option.value);
+                }}
+              >
+                {option.icon}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
