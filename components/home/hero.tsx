@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <div className="flex flex-col justify-center items-center font-sans">
       <div className="flex flex-col justify-center items-center w-full text-foreground md:max-w-7xl md:border-x">
-        <span className="text-center font-medium font-sans tracking-tight md:text-7xl text-5xl md:mt-40 mt-36 px-4">
+        <span className="text-center font-medium font-sans tracking-tighter md:text-7xl text-5xl md:mt-40 mt-36 px-4 ">
           <span className="flex flex-col md:hidden">
             <span>AI Powered</span>
             <span>Docs, Built to</span>

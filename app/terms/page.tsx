@@ -3,11 +3,11 @@ import { MailIcon } from "lucide-react";
 
 export default function Terms() {
   return (
-    <div className="flex flex-col min-h-screen border-x mt-16">
+    <div className="flex flex-col min-h-screen border-x md:mt-16 mt-12">
       <Navbar />
-      <div className="flex justify-center w-full px-4">
-        <div className="w-full max-w-[100px] md:max-w-[700px] flex flex-col gap-12 py-12 font-sans">
-          <div className="flex flex-col justify-center items-center font-semibold text-4xl">
+      <div className="flex justify-center w-full px-6">
+        <div className="w-full max-w-4xl md:max-w-[700px] flex flex-col md:gap-12 gap-8 py-12 font-sans">
+          <div className="flex flex-col justify-center items-center font-semibold md:text-4xl text-3xl">
             Terms of Service
             <p className="text-sm text-muted-foreground mt-1 font-medium">
               Last updated: June 16, 2025

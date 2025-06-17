@@ -3,11 +3,11 @@ import { MailIcon } from "lucide-react";
 
 export default function About() {
   return (
-    <div className="flex flex-col min-h-screen border-x mt-16">
+    <div className="flex flex-col min-h-screen md:mt-16 mt-12">
       <Navbar />
-      <div className="flex justify-center w-full px-4">
-        <div className="w-full max-w-[100px] md:max-w-[700px] flex flex-col gap-12 py-12 font-sans">
-          <div className="flex flex-col justify-center items-center font-semibold text-4xl">
+      <div className="flex justify-center w-full px-6">
+        <div className="w-full md:max-w-[700px] max-w-4xl flex flex-col md:gap-12 gap-8 py-12 font-sans">
+          <div className="flex flex-col justify-center items-center font-semibold md:text-4xl text-3xl">
             About Us
           </div>
           <section>
@@ -25,7 +25,7 @@ export default function About() {
             <h2 className="text-lg font-semibold mb-2">Our Mission</h2>
             <p className="text-base text-muted-foreground">
               Our mission is to redefine the way people interact with documents.
-              Writing shouldn’t feel like a chore or a barrier to productivity.
+              Writing shouldn't feel like a chore or a barrier to productivity.
               With Breeze, we're building an editor that acts like a true
               collaborator — one that understands context, enhances your ideas,
               and helps you go from rough thoughts to polished content in record
