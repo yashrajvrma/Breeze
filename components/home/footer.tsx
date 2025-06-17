@@ -36,8 +36,8 @@ export default function Footer() {
   const { theme, setTheme } = useThemeStore();
 
   return (
-    <div className="flex justify-center text-foreground font-sans">
-      <div className="flex flex-col border-x min-w-[70%] px-20 py-8">
+    <div className="flex justify-center text-foreground font-sans max-w-7xl">
+      <div className="flex flex-col border-x max-w- px-20 py-8">
         {/* Top Row: Social + Links */}
         <div className="flex justify-between items-center flex-wrap gap-y-4">
           {/* Social Icons */}

@@ -33,7 +33,7 @@ const socialLinks = [
 export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-background shadow-sm">
-      <div className="flex h-16 items-center justify-between px-4 md:px-6 max-w-6xl mx-auto font-sans">
+      <div className="flex h-16 items-center justify-between px-6 md:px-6 max-w-6xl mx-auto font-sans">
         {/* Logo and Brand Name */}
         <div className="flex items-center gap-x-2">
           <Link href="/">
@@ -58,8 +58,8 @@ export default function Navbar() {
         {/* Mobile Hamburger Menu */}
         <Sheet>
           <SheetTrigger asChild className="lg:hidden">
-            <div>
-              <Menu size={18} />
+            <div className="hover:cursor-pointer">
+              <Menu size={20} />
               <span className="sr-only">Toggle navigation menu</span>
             </div>
           </SheetTrigger>

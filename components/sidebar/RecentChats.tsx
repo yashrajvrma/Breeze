@@ -117,13 +117,13 @@ export default function RecentChats() {
   }
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
-      <div className="px-5 pb-1 flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
+    <div className="flex flex-col h-full overflow-hidden px-5">
+      <div className=" pb-1 flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
         Recents
       </div>
 
       <ScrollArea className="flex-1">
-        <div className="px-3 py-2 space-y-1">
+        <div className="py-2 space-y-1">
           {chats?.map((chat: Chat) => {
             const isActive = chat.id === chatId;
 
@@ -138,14 +138,14 @@ export default function RecentChats() {
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                <div className="flex-1 min-w-0 px-2 py-1">
-                  <div className="flex items-center justify-between">
-                    <div
-                      className="text-sm font-medium truncate w-[100%] "
+                <div className="flex-1 py-1">
+                  <div className="flex items-center justify-between min-w-0">
+                    <span
+                      className="text-sm font-medium truncate w-[50%]"
                       onClick={() => router.push(`/chat/${chat.id}`)}
                     >
                       {chat.title || "New chat"}
-                    </div>
+                    </span>
 
                     <div
                       className={cn(
