@@ -3,9 +3,9 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import HeroLightImg from "@/public/assets/images/new-light-hero.png";
-// import HeroDarkImg from "@/public/assets/images/new-dark-hero.png";
-import HeroDarkImg from "@/public/assets/images/localhost_3000_chat_83dccc62-07ec-4c72-ba93-e9f351a44b5c (1).png";
+import HeroLightImg from "@/public/assets/images/breeze-light-preview.png";
+
+import HeroDarkImg from "@/public/assets/images/breeze-preview.png";
 
 export default function HeroImg() {
   const { resolvedTheme } = useTheme();
@@ -18,8 +18,8 @@ export default function HeroImg() {
   if (!mounted) return null;
 
   return (
-    <div className="flex justify-center w-full border-y px-2.5">
-      <div className="flex items-center md:max-w-7xl border-x">
+    <div className="flex justify-center w-full md:border-y px-3">
+      <div className="flex items-center md:max-w-7xl md:border-x">
         <Image
           src={resolvedTheme === "dark" ? HeroDarkImg : HeroLightImg}
           alt="Breeze AI Preview Image"
