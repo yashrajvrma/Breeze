@@ -123,7 +123,7 @@ export default function RecentChats() {
       </div>
 
       <ScrollArea className="flex overflow-hidden px-2">
-        <div className="py-2">
+        <div className="py-2 space-y-0.5">
           {chats?.map((chat: Chat) => {
             const isActive = chat.id === chatId;
 
