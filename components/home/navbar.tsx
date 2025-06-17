@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import logo from "@/public/assets/images/breeze.png";
+import logo from "@/public/assets/images/breeze-logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { NavigationMenuDemo } from "../nav-menu"; // Assuming this component exists and handles navigation links
@@ -35,7 +35,7 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-background shadow-sm">
       <div className="flex h-16 items-center justify-between  max-w-5xl mx-auto font-sans">
         {/* Logo and Brand Name */}
-        <div className="flex items-center gap-x-2 md:px-0 px-3">
+        <div className="flex items-center gap-x-2 sm:px-0 md:px-0 lg:px-0 px-3">
           <Link href="/">
             <Image src={logo} alt="Breeze Logo" className="w-6" />
           </Link>

@@ -62,7 +62,7 @@ export default function About() {
               >
                 <MailIcon size={16} />
                 yashrajv.work@gmail.com
-              </a>
+              </a>  
             </p>
           </section>
         </div>
