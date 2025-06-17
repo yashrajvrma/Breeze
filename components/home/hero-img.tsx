@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import HeroLightImg from "@/public/assets/images/breeze-light-preview.png";
 
-import HeroDarkImg from "@/public/assets/images/breeze-preview.png";
+import HeroDarkImg from "@/public/assets/images/breeze-dark-preview.png";
 
 export default function HeroImg() {
   const { resolvedTheme } = useTheme();
@@ -18,7 +18,7 @@ export default function HeroImg() {
   if (!mounted) return null;
 
   return (
-    <div className="flex justify-center w-full md:border-y px-3">
+    <div className="flex justify-center w-full md:border-y px-4">
       <div className="flex items-center md:max-w-7xl md:border-x">
         <Image
           src={resolvedTheme === "dark" ? HeroDarkImg : HeroLightImg}
