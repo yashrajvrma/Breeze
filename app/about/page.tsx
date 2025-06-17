@@ -1,6 +1,12 @@
 import Navbar from "@/components/home/navbar";
 import { MailIcon } from "lucide-react";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us",
+};
+
 export default function About() {
   return (
     <div className="flex flex-col min-h-screen md:mt-16 mt-12">
@@ -62,7 +68,7 @@ export default function About() {
               >
                 <MailIcon size={16} />
                 yashrajv.work@gmail.com
-              </a>  
+              </a>
             </p>
           </section>
         </div>

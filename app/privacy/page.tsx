@@ -1,5 +1,10 @@
 import Navbar from "@/components/home/navbar";
 import { MailIcon } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+};
 
 export default function Privacy() {
   return (

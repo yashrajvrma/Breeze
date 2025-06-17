@@ -23,8 +23,8 @@ export default function HeroImg() {
         <Image
           src={resolvedTheme === "dark" ? HeroDarkImg : HeroLightImg}
           alt="Breeze AI Preview Image"
-          className="w-full h-full rounded-xl border-[0.5px] transition-opacity duration-300 ease-in-out"
-          loading="eager"
+          className="w-full h-auto rounded-xl border-[0.5px] transition-opacity duration-300 ease-in-out"
+          priority
         />
       </div>
     </div>

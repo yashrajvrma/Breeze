@@ -23,7 +23,7 @@ export default function Hero() {
           Breeze turns your ideas into documents in seconds with AI.
         </p>
         <div className="flex flex-col justify-center pt-3">
-          <Link href="/signin">
+          <Link href="/chat">
             <Button className="font-sans text-sm rounded-xl" variant="default">
               Get Started
             </Button>
