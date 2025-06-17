@@ -39,7 +39,7 @@ export default function Navbar() {
           <Link href="/">
             <Image src={logo} alt="Breeze Logo" className="w-6" />
           </Link>
-          <div className="md:text-3xl md:block hidden text-2xl text-foreground font-instrumentSerif font-semibold tracking-tight">
+          <div className="md:text-3xl text-2xl text-foreground font-instrumentSerif font-semibold tracking-tight">
             Breeze
           </div>
         </div>
