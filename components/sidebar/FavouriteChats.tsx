@@ -68,7 +68,7 @@ export default function FavouriteChats() {
 
   return (
     <div className="flex flex-col mb-8 mt-5">
-      <div className="px-5 py-1 flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
+      <div className="px-5 flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
         Favourite
       </div>
 
@@ -81,18 +81,24 @@ export default function FavouriteChats() {
               <div
                 key={chat.id}
                 className={cn(
-                  "group relative flex items-center justify-between rounded-lg transition-all duration-200 cursor-pointer",
+                  "group w-full flex items-center justify-between rounded-lg transition-all duration-200 cursor-pointer",
                   "hover:bg-accent/50",
                   isActive
                     ? "bg-accent text-accent-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                <div className="flex-1 min-w-0 px-2 py-1">
+                <div className="flex-1 min-w-0 px-2 py-1 w-full overflow-hidden">
                   <div className="flex items-center justify-between">
-                    <span
+                    {/* <span
                       onClick={() => router.push(`/chat/${chat.id}`)}
                       className="text-sm font-medium truncate"
+                    >
+                      {chat.title || "New chat"}
+                    </span> */}
+                    <span
+                      onClick={() => router.push(`/chat/${chat.id}`)}
+                      className="text-sm font-medium truncate overflow-hidden whitespace-nowrap block w-full"
                     >
                       {chat.title || "New chat"}
                     </span>

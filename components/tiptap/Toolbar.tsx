@@ -132,7 +132,7 @@ export const Toolbar = () => {
   return (
     <div className="flex flex-wrap items-center gap-x-1 gap-y-2 bg-primary-foreground mb-2 px-2.5 py-2 rounded-xl max-w-full min-h-[40px]">
       {sections[0].map((item) => (
-        <Tooltip>
+        <Tooltip key={item.label}>
           <TooltipTrigger>
             <ToolbarButton key={item.label} {...item} />
           </TooltipTrigger>
@@ -152,7 +152,7 @@ export const Toolbar = () => {
 
       <Separator orientation="vertical" className="bg-neutral-700 h-6" />
       {sections[1].map((item) => (
-        <Tooltip>
+        <Tooltip key={item.label}>
           <TooltipTrigger>
             <ToolbarButton key={item.label} {...item} />
           </TooltipTrigger>
@@ -185,7 +185,7 @@ export const Toolbar = () => {
       <Separator orientation="vertical" className="bg-neutral-700 h-6" />
       {/* task list */}
       {sections[2].map((item) => (
-        <Tooltip>
+        <Tooltip key={item.label}>
           <TooltipTrigger>
             <ToolbarButton key={item.label} {...item} />
           </TooltipTrigger>

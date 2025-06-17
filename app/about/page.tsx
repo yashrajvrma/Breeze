@@ -3,7 +3,7 @@ import { MailIcon } from "lucide-react";
 
 export default function About() {
   return (
-    <div className="flex flex-col min-h-screen border-x">
+    <div className="flex flex-col min-h-screen border-x mt-16">
       <Navbar />
       <div className="flex justify-center w-full px-4">
         <div className="w-full max-w-[100px] md:max-w-[700px] flex flex-col gap-12 py-12 font-sans">

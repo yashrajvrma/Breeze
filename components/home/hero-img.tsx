@@ -4,7 +4,8 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import HeroLightImg from "@/public/assets/images/new-light-hero.png";
-import HeroDarkImg from "@/public/assets/images/new-dark-hero.png";
+// import HeroDarkImg from "@/public/assets/images/new-dark-hero.png";
+import HeroDarkImg from "@/public/assets/images/localhost_3000_chat_83dccc62-07ec-4c72-ba93-e9f351a44b5c (1).png";
 
 export default function HeroImg() {
   const { resolvedTheme } = useTheme();

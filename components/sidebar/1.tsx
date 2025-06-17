@@ -90,7 +90,7 @@ export default function RecentChats() {
 
   if (status === "loading" || isLoading) {
     return (
-      <div className="flex flex-col px-4 py-1">
+      <div className="flex flex-col px-5 py-1">
         <div className="flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
           Recents
         </div>
@@ -105,7 +105,7 @@ export default function RecentChats() {
 
   if (!session) {
     return (
-      <div className="flex flex-col px-4 py-1">
+      <div className="flex flex-col px-5 py-1">
         <div className="flex-shrink-0 text-sm text-muted-foreground leading-none hover:text-foreground">
           Recents
         </div>
@@ -122,8 +122,8 @@ export default function RecentChats() {
         Recents
       </div>
 
-      <ScrollArea className="flex overflow-hidden px-2">
-        <div className="py-2">
+      <ScrollArea className="flex-1 overflow-hidden px-2">
+        <div className="py-2 space-y-1">
           {chats?.map((chat: Chat) => {
             const isActive = chat.id === chatId;
 
@@ -131,25 +131,23 @@ export default function RecentChats() {
               <div
                 key={chat.id}
                 className={cn(
-                  "group relative flex justify-between items-center rounded-lg transition-all duration-200 cursor-pointer",
+                  "group relative flex items-center rounded-lg transition-all duration-200 cursor-pointer",
                   "hover:bg-accent/50",
                   isActive
                     ? "bg-accent text-accent-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
                 )}
+                onClick={() => router.push(`/chat/${chat.id}`)}
               >
-                <div
-                  onClick={() => router.push(`/chat/${chat.id}`)}
-                  className="py-2 inline-block px-2 w-[90%]"
-                >
-                  <span className="text-sm font-medium line-clamp-1">
+                <div className="flex-1 min-w-0 px-3 py-2">
+                  <span className="text-sm font-medium truncate block w-full">
                     {chat.title || "New chat"}
                   </span>
                 </div>
 
                 <div
                   className={cn(
-                    "flex-shrink-0 pr-1 justify-center items-center align-middle transition-opacity duration-200 ",
+                    "flex-shrink-0 pr-1 transition-opacity duration-200",
                     isActive
                       ? "opacity-100"
                       : "opacity-0 group-hover:opacity-100"
@@ -159,7 +157,7 @@ export default function RecentChats() {
                     <PopoverTrigger asChild>
                       <button
                         className={cn(
-                          "flex align-middle p-1 rounded-md transition-colors duration-200 text-foreground",
+                          "p-1 rounded-md transition-colors duration-200 text-foreground",
                           "hover:bg-background/50 focus:outline-none",
                           isActive
                             ? "hover:bg-accent-foreground/10"
@@ -190,6 +188,20 @@ export default function RecentChats() {
               </div>
             );
           })}
+
+          {hasNextPage && (
+            <div
+              ref={ref}
+              className="flex justify-center text-center text-muted-foreground py-4"
+              style={{ minHeight: "40px" }}
+            >
+              {isFetchingNextPage && (
+                <div className="flex items-center justify-center space-x-2 py-5">
+                  <Spinner />
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </ScrollArea>
     </div>

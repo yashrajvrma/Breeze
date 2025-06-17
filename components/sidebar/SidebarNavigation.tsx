@@ -20,6 +20,7 @@ export default function SidebarNavigation() {
         <div className="flex-1 overflow-hidden flex flex-col font-sans">
           <RateLimitCard />
           <FavouriteChats />
+
           <RecentChats />
         </div>
       )}
