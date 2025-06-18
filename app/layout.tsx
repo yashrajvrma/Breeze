@@ -4,7 +4,6 @@ import localFont from "next/font/local";
 import { Providers } from "./providers";
 import { Instrument_Serif } from "next/font/google";
 
-// Instrument Serif
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
   subsets: ["latin"],
@@ -27,14 +26,45 @@ const garamondBookCond = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://breezeai.live"),
+  keywords: [
+    "breeze",
+    "word",
+    "docs",
+    "google docs",
+    "ai docs",
+    "breezeai",
+    "ai",
+    "docx",
+    "document editor",
+    "ai docx editor",
+  ],
   title: {
     default: "Breeze - AI Document Editor",
     template: "%s - Breeze",
   },
   description:
-    "Breeze - an AI powered document editor that let's you create word docs in seconds.",
+    "AI powered document editor that let's you create word docs in seconds.",
   icons: {
     icon: "/assets/images/favicon.ico",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+  openGraph: {
+    title: "Breeze",
+    url: "https://breezeai.live",
+    type: "website",
+    description:
+    "AI powered document editor that let's you create word docs in seconds.",
+    images: [
+      {
+        url: "/assets/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Breeze AI Document Editor Preview",
+      },
+    ],
   },
 };
 
@@ -45,6 +75,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head></head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${garamondBookCond.variable} ${instrumentSerif.variable} antialiased`}
       >
