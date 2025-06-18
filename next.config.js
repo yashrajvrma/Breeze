@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -7,6 +8,10 @@ const nextConfig = {
   reactStrictMode: false,
   experimental: {
     serverActions: true,
+  },
+  compiler: {
+    removeConsole:
+      process.env.NODE_ENV === "production" ? { exclude: ["error"] } : false,
   },
 };
 
