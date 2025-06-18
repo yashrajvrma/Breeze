@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     "ai docx editor",
   ],
   title: {
-    default: "Breeze - AI Document Editor",
+    default: "Breeze",
     template: "%s - Breeze",
   },
   description:
@@ -56,10 +56,10 @@ export const metadata: Metadata = {
     url: "https://breezeai.live",
     type: "website",
     description:
-    "AI powered document editor that let's you create word docs in seconds.",
+      "AI powered document editor that let's you create word docs in seconds.",
     images: [
       {
-        url: "/assets/images/og-image.png",
+        url: "/assets/images/og-img.png",
         width: 1200,
         height: 630,
         alt: "Breeze AI Document Editor Preview",
