@@ -230,7 +230,7 @@ export default function ChatInterface() {
           {messages.map((msg, index) => (
             <ChatMessage
               key={msg.id || index}
-              isLoading={isLoading}
+              // isLoading={isLoading}
               message={{
                 id: msg.id || String(index),
                 sender: msg.role === "user" ? "user" : "assistant",
