@@ -15,7 +15,8 @@
     "@hookform/resolvers": "^3.9.0",
     "@next/font": "^14.2.15",
     "@next/swc-wasm-nodejs": "13.5.1",
-    "@prisma/client": "^6.8.2",
+    "@prisma/client": "^6.10.1",
+    "@prisma/extension-accelerate": "^2.0.1",
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.10.1",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
@@ -125,7 +126,7 @@
     "@types/react-color": "^3.0.13",
     "encoding": "^0.1.13",
     "postcss-nesting": "^13.0.1",
-    "prisma": "^6.8.2",
-    "tsx": "^4.19.4"
+    "prisma": "^6.10.1",
+    "tsx": "^4.20.3"
   }
 }
