@@ -41,7 +41,10 @@ export default function Login() {
               variant="outline"
               className=" rounded-xl px-10"
               size="lg"
-              onClick={async () => await signIn("google")}
+              onClick={async () =>
+                // await signIn("google")
+                await signIn("google", { callbackUrl: "/chat" })
+              }
             >
               <span className="flex flex-row gap-x-2">
                 <img

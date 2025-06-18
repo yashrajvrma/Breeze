@@ -20,7 +20,7 @@ export default function NewChat() {
           ? "flex justify-center"
           : "rounded-md text-muted-foreground transition-colors hover:bg-accent/50 hover:text-accent-foreground"
       )}
-      onClick={() => router.push("/")}
+      onClick={() => router.push("/chat")}
     >
       {isSidebarCollapsed ? (
         <Button className="h-7 w-7 px-0" variant="outline">
