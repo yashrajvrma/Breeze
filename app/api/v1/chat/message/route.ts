@@ -76,7 +76,8 @@ export async function POST(req: NextRequest) {
     system: DOC_SYSTEM_PROMPT,
     maxTokens: 1200,
     temperature: 0.6,
-    messages: messages.map((m: any) => ({
+    // take only last 3 msg
+    messages: messages.slice(-3).map((m: any) => ({
       role: m.role,
       content: m.content,
     })),
