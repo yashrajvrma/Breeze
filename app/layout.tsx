@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Providers } from "./providers";
 import { Instrument_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 
 const baseURL = "https://breezeai.live";
 
@@ -93,6 +94,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${garamondBookCond.variable} ${instrumentSerif.variable} antialiased`}
       >
         <Providers>{children}</Providers>
+        <Analytics mode="production" />
       </body>
     </html>
   );
