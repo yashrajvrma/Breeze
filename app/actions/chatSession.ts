@@ -12,13 +12,8 @@ import { checkNoOfRequest } from "@/utils/no-of-request";
 export async function createChatSession(formData: FormData) {
   console.log("inside server components");
 
-  const session = await getServerSession(authConfig);
-
-  if (!session || !session?.user) {
-    redirect("/signin");
-  }
-
-  const userId = session.user.id!;
+  const message = formData.get("message") as string;
+  const userId = formData.get("userId") as string;
 
   // check no of request
   const request = await checkNoOfRequest({ userId });
@@ -33,18 +28,14 @@ export async function createChatSession(formData: FormData) {
     };
   }
 
-  const message = formData.get("message");
-
-  let chat;
-
   try {
     const { text } = await generateText({
-      model: openai("gpt-3.5-turbo"),
+      model: openai("gpt-4o-mini"),
       system: TITLE_SYSTEM_PROMPT,
       prompt: message as string,
     });
 
-    chat = await prisma.chat.create({
+    const chat = await prisma.chat.create({
       data: {
         userId: userId,
         title: text,
@@ -61,6 +52,8 @@ export async function createChatSession(formData: FormData) {
         status: "PENDING",
       },
     });
+    console.log("server actions completed");
+
     return {
       success: true,
       data: {
