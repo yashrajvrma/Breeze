@@ -82,7 +82,6 @@ export async function POST(req: NextRequest) {
     system: DOC_SYSTEM_PROMPT,
     maxTokens: 1200,
     temperature: 0.6,
-    frequencyPenalty: 0.2,
     messages: messages.map((m: any) => ({
       role: m.role,
       content: m.content,
