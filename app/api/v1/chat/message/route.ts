@@ -15,12 +15,6 @@ export async function POST(req: NextRequest) {
 
   const session = await getServerSession(authConfig);
 
-  // get last message
-  let msgArray = [];
-  const lastMsg = messages[messages.length - 1];
-  msgArray.push(lastMsg);
-  console.log("chat id is ", chatId);
-
   if (!session) {
     return new Response("Unauthorized", {
       status: 401,
