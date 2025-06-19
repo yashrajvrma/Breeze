@@ -127,15 +127,25 @@ export async function POST(req: NextRequest) {
 
   const docxBuffer = await htmlToDocx(wrappedHTML, null, {
     orientation: "portrait",
+    // margins: {
+    //   gutter: 0,
+    //   header: 720,
+    //   fotter: 720,
+    //   top: 720,
+    //   bottom: 720,
+    //   left: (leftMargin / 96) * 1440,
+    //   right: (rightMargin / 96) * 1440,
+    // },
+    // pageNumber: true,
     margins: {
       gutter: 0,
       header: 720,
-      fotter: 720,
+      footer: 720,
       top: 720,
       bottom: 720,
       left: (leftMargin / 96) * 1440,
       right: (rightMargin / 96) * 1440,
-    },
+    } as any,
     pageNumber: true,
   });
 
