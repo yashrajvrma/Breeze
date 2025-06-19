@@ -97,41 +97,49 @@ export async function POST(req: NextRequest) {
 
       if (llmResponse && llmResponse.role === "assistant") {
         try {
-          await prisma.$transaction(async (tx) => {
-            // Create assistant message
-            const assistantMessage = await tx.message.create({
-              data: {
-                chatId: chatId,
-                userId: userId,
-                sender: "assistant",
-                content: llmResponse.content,
-                status: "COMPLETED",
-                orderIndex: lastOrderIndex + (isFirstMessage ? 2 : 1),
-              },
-            });
-            console.log("message created in db");
-
-            // Update user message status
-            await tx.message.update({
-              where: { id: userMessageId },
-              data: { status: "COMPLETED" },
-            });
-
-            // Update user credit
-            const credit = await tx.user.update({
-              where: { id: userId, isActive: true },
-              data: {
-                noOfRequest: request.requestCount + 1,
-              },
-            });
-            console.log("credits is", credit.noOfRequest);
-
-            // Update chat timestamp
-            await tx.chat.update({
-              where: { id: chatId },
-              data: { updatedAt: new Date() },
-            });
+          // Create assistant message
+          const assistantMsgPromise = prisma.message.create({
+            data: {
+              chatId: chatId,
+              userId: userId,
+              sender: "assistant",
+              content: llmResponse.content,
+              status: "COMPLETED",
+              orderIndex: lastOrderIndex + (isFirstMessage ? 2 : 1),
+            },
           });
+
+          // Update user message status
+          const updatedUserMsgPromise = prisma.message.update({
+            where: { id: userMessageId },
+            data: { status: "COMPLETED" },
+          });
+
+          // Update user credit
+          const updateCreditPromise = prisma.user.update({
+            where: { id: userId, isActive: true },
+            data: {
+              noOfRequest: request.requestCount + 1,
+            },
+          });
+
+          // Update chat timestamp
+          const updateChatPromise = prisma.chat.update({
+            where: { id: chatId },
+            data: { updatedAt: new Date() },
+          });
+
+          const [assistantMsg, updatedUserMsg, updatedCredit, updatedChat] =
+            await Promise.all([
+              assistantMsgPromise,
+              updatedUserMsgPromise,
+              updateCreditPromise,
+              updateChatPromise,
+            ]);
+
+          console.log("credits is", updatedCredit.noOfRequest);
+
+          console.log("message created in db");
 
           console.log("message updated in db");
         } catch (error) {
