@@ -287,7 +287,7 @@ export const DOC_SYSTEM_PROMPT = `You are an advanced AI model with deep experti
 ### 6.2 Response Template
 
 \`\`\`
-Approach: [1–2 lines summary of what’s being generated]
+[1-2 lines summary of what's being generated] - OPTIONAL
 
 <doc>
   [Formatted document content]

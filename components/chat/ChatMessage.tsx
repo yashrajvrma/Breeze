@@ -221,7 +221,6 @@ interface ParsedContent {
   docContent: string | null;
   afterDoc: string | null;
 }
-
 export default function ChatMessage({ message }: ChatMessageProps) {
   const setContentId = useEditorContent((state) => state.setContentId);
   const setContentTitle = useEditorContent((state) => state.setContentTitle);
@@ -259,12 +258,13 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     const endIdx = content.indexOf(endTag, startIdx);
 
     if (endIdx === -1) {
+      // If closing tag is not present, treat the rest as document content
       setParsedContent({
         beforeDoc,
         docContent: content.slice(startIdx + startTag.length).trim(),
         afterDoc: null,
       });
-      setIsLoading(true);
+      setIsLoading(false); // Changed from true to false
       return;
     }
 
@@ -277,7 +277,8 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   }, [message.content]);
 
   useEffect(() => {
-    if (isMobile && parsedContent.docContent && !isLoading) {
+    // Auto-populate editor content for both mobile and desktop when docs are ready
+    if (parsedContent.docContent && !isLoading) {
       try {
         const htmlContent = parsedContent.docContent;
         setContentId(message.id);
@@ -288,13 +289,15 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           setContentTitle(extractedTitle);
         }
 
-        openDrawer();
+        // Only auto-open drawer on mobile
+        if (isMobile) {
+          openDrawer();
+        }
       } catch (error) {
-        console.error("Error processing document content for mobile:", error);
+        console.error("Error processing document content:", error);
       }
     }
   }, [
-    isMobile,
     parsedContent.docContent,
     isLoading,
     message.id,
@@ -302,6 +305,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     setEditorContent,
     setContentTitle,
     openDrawer,
+    isMobile, // Added isMobile to dependencies
   ]);
 
   const handleDocumentClick = () => {

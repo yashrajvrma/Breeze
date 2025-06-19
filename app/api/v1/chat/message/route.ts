@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
   }
 
   const result = streamText({
-    model: openai("gpt-4.1-nano"),
+    model: openai("gpt-3.5-turbo"),
     system: DOC_SYSTEM_PROMPT,
     maxTokens: 1000,
     temperature: 0.6,
