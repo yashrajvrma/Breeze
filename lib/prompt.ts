@@ -287,13 +287,13 @@ export const DOC_SYSTEM_PROMPT = `You are an advanced AI model with deep experti
 ### 6.2 Response Template
 
 \`\`\`
-[1-2 lines summary of what's being generated] - OPTIONAL
+[1-2 lines of short summary of what's being generated] 
 
 <doc>
   [Formatted document content]
 </doc>
 
-Would you like me to add a summary, appendix, or visuals? **(STRICTLY OUTSIDE THE DOCS CONTENT)**
+Would you like me to add a summary, appendix, or visuals?
 \`\`\`
 
 ### 6.3 Optional Enhancements You Can Suggest
