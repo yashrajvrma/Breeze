@@ -112,7 +112,7 @@ export const Editor = () => {
 
   return (
     <div className="flex flex-col h-full bg-background print:bg-white overflow-hidden">
-      <EditorHeader />
+      {/* <EditorHeader /> */}
       <div className="flex-shrink-0 bg-background border-b z-10 flex justify-center pt-2 px-2">
         <Toolbar />
       </div>

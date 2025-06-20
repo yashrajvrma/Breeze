@@ -1,11 +1,18 @@
 import { AppSidebar } from "@/components/app-sidebar";
+import ChatInterface from "@/components/chat/ChatInterface";
 import { NavActions } from "@/components/nav-actions";
+import { Editor } from "@/components/tiptap/Editor";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -18,7 +25,7 @@ export default function Page() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-14 shrink-0 items-center gap-2">
+        <header className="flex h-14 shrink-0 items-center gap-2 border-b">
           <div className="flex flex-1 items-center gap-1 px-3">
             <SidebarTrigger />
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -36,9 +43,16 @@ export default function Page() {
             <NavActions />
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 px-4 py-10">
-          <div className="mx-auto h-24 w-full max-w-3xl rounded-xl bg-muted/50" />
-          <div className="mx-auto h-full w-full max-w-3xl rounded-xl bg-muted/50" />
+        <div className="flex-1 overflow-hidden flex flex-col font-sans">
+          <ResizablePanelGroup direction="horizontal" className="flex-1">
+            <ResizablePanel defaultSize={70} minSize={50}>
+              <Editor />
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={30} minSize={30} maxSize={40}>
+              <ChatInterface />
+            </ResizablePanel>
+          </ResizablePanelGroup>
         </div>
       </SidebarInset>
     </SidebarProvider>
