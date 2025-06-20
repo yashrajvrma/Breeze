@@ -36,7 +36,15 @@ export const generateMetadata = async ({
   };
 };
 
-export default function ChatSession() {
+export default async function ChatSession({ params }: Props) {
+  const chatId = (await params).chatId;
+
+  const chat = await prisma.chat.findUnique({
+    where: {
+      id: chatId,
+    },
+  });
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -49,7 +57,7 @@ export default function ChatSession() {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbPage className="line-clamp-1 font-sans">
-                    Project Management & Task Tracking
+                    {chat?.title || "Untitled chat"}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
