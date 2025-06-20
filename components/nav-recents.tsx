@@ -204,36 +204,6 @@ export function NavRecents() {
                       </div>
                     </PopoverContent>
                   </Popover>
-                  {/* <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <SidebarMenuAction showOnHover>
-                        <MoreHorizontal size={16} />
-                        <span className="sr-only">More</span>
-                      </SidebarMenuAction>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      className="w-44 rounded-2xl shadow-xl px-2 py-1 font-sans"
-                      side={isMobile ? "bottom" : "right"}
-                      align={isMobile ? "end" : "start"}
-                      sideOffset={1}
-                    >
-                      <DropdownMenuItem className="bg-red-400 hover:bg-green-400 hover:border-none">
-                        <ShareButton />
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="hover:bg-red-300 hover:border-green-400">
-                        hii
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <RenameChatButton id={chat.id} title={chat.title} />
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <FavouriteButton chatId={chat.id} />
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <DeleteButton chatId={chat.id} />
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu> */}
                 </SidebarMenuItem>
               );
             })}
