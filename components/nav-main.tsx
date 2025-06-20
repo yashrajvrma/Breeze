@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import RateLimit from "./sidebar/RateLimit";
 
 export function NavMain({
   items,
@@ -39,6 +40,7 @@ export function NavMain({
             New Chat
           </SidebarMenuButton>
         </Link>
+        <RateLimit />
       </SidebarMenuItem>
     </SidebarMenu>
   );

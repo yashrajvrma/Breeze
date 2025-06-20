@@ -53,14 +53,14 @@ export default function RateLimit() {
 
   if (status === "loading" || isLoading) {
     return (
-      <div className="flex py-1 px-5">
+      <div className="flex pt-3">
         <Skeleton className="flex items-center h-20 w-full" />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col justify-center font-sans text-sm rounded-xl mx-3 my-1">
+    <div className="flex flex-col justify-center font-sans text-sm rounded-xl mt-3">
       <RateLimitCard
         usedMessages={requestCount}
         totalMessages={maxRequest}
