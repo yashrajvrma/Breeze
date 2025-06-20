@@ -1,19 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  AudioWaveform,
-  Blocks,
-  Calendar,
-  Command,
-  Home,
-  Inbox,
-  MessageCircleQuestion,
-  Search,
-  Settings2,
-  Sparkles,
-  Trash2,
-} from "lucide-react";
+import { Search } from "lucide-react";
 
 import { NavFavorites } from "@/components/nav-favorites";
 import { NavMain } from "@/components/nav-main";
