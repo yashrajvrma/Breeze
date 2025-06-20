@@ -29,8 +29,11 @@ import { Ruler } from "./Ruler";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useEffect } from "react";
 import EditorHeader from "../editor/editorHeader";
+import { useSidebar } from "../ui/sidebar";
+import { cn } from "@/lib/utils";
 
 export const Editor = () => {
+  const isMobile = useSidebar();
   const setEditor = useEditorStore((state) => state.setEditor);
   const content = useEditorContent((state) => state.content);
   const leftMargin = useMargin((state) => state.leftMargin);
@@ -111,7 +114,12 @@ export const Editor = () => {
   if (!editor) return null;
 
   return (
-    <div className="flex flex-col h-full bg-background print:bg-white overflow-hidden border rounded-xl">
+    <div
+      className={cn(
+        "flex flex-col h-full bg-background print:bg-white overflow-hidden",
+        isMobile ? "border-0" : "border rounded-xl"
+      )}
+    >
       {/* <EditorHeader /> */}
       <div className="flex-shrink-0 bg-background border-b z-10 flex justify-center pt-2 px-2">
         <Toolbar />

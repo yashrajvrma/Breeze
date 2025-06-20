@@ -17,10 +17,11 @@ import toast from "react-hot-toast";
 import { getFormattedResetTime } from "@/lib/utils/getLocalTimeZone";
 import { Skeleton } from "../ui/skeleton";
 import { TextShimmer } from "../text-shimmer";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { EditorDrawer } from "../editor/EditorDrawer";
 import { useEditorStore } from "@/lib/store/editorStore";
 import ChatTitle from "../chat-title";
+import { useSidebar } from "../ui/sidebar";
+import { cn } from "@/lib/utils";
 
 type Messages = {
   id: string;
@@ -61,7 +62,7 @@ const fetchThreadFn = async (chatId: string): Promise<Thread> => {
 };
 
 export default function ChatInterface() {
-  const isMobile = useIsMobile();
+  const isMobile = useSidebar();
   const params = useParams();
   const { data: session } = useSession();
   const [firstMsg, setFirstMsg] = useState<Messages[]>();
@@ -219,7 +220,12 @@ export default function ChatInterface() {
     );
   }
   return (
-    <div className="flex flex-col h-full font-sans border rounded-xl">
+    <div
+      className={cn(
+        "flex flex-col h-full font-sans  rounded-xl",
+        isMobile ? "border-0" : "border rounded-xl"
+      )}
+    >
       {/* <ChatTitle
         title={threadData?.title || "Untitled Chat"}
         isMobile={isMobile}
