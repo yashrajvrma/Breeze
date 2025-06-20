@@ -37,10 +37,11 @@ export default function EditorHeader() {
   };
 
   return (
-    <div className="flex flex-row justify-between items-center sm:px-5 px-3 sm:py-2.5 py-4 border-b border-t-2 border-t-background">
+    <div className="flex flex-row justify-between items-center px-3.5 sm:py-2 border-b border-t-2 border-t-background">
       {/* <div className="sm:text-base text-sm font-medium w-[70%]">
         {title || "Untitled Doc"}
       </div> */}
+      <div className="text-base text-muted-foreground font-sm">Edit</div>
 
       <div className="flex items-center gap-x-2.5">
         {/* Always show Save Button */}
@@ -51,7 +52,7 @@ export default function EditorHeader() {
           <DropdownMenuTrigger asChild>
             {isEditorEmpty ? (
               <button
-                className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 sm:py-1.5 py-1 cursor-not-allowed border text-neutral-50"
+                className="flex justify-center items-center text-sm gap-x-1.5 rounded-lg px-2.5 cursor-not-allowed text-neutral-50"
                 disabled
               >
                 {isMobile ? (
@@ -66,7 +67,7 @@ export default function EditorHeader() {
               </button>
             ) : (
               <button
-                className={`flex justify-center items-center text-sm gap-x-1.5 rounded-lg sm:py-1.5 py-1 border ${
+                className={`flex justify-center items-center text-sm gap-x-1.5 rounded-lg sm:py-1.5 py-1 ${
                   isMobile
                     ? "text-foreground rounded-lg border hover:bg-accent px-1.5"
                     : "bg-blue-500 hover:bg-blue-600 text-neutral-50 px-2.5"

@@ -1,4 +1,3 @@
-// app/components/home-chat-layout.tsx (Server Component)
 "use client";
 
 import { Suspense } from "react";
@@ -20,9 +19,9 @@ export default function HomeChatLayout() {
 
   return (
     <div className="flex flex-col font-sans h-screen">
-      <div className="md:hidden">
+      {/* <div className="md:hidden">
         <HomeChatHeader title="Breeze" />
-      </div>
+      </div> */}
 
       <div className="flex flex-col justify-center items-center align-middle text-center h-screen">
         <div className="md:text-5xl text-3xl tracking-tighter font-semibold text-primary text-center px-1">

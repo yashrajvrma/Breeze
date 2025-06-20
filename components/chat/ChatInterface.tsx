@@ -202,9 +202,9 @@ export default function ChatInterface() {
   if (isThreadLoading) {
     return (
       <div className="flex flex-col h-full border rounded-xl font-sans">
-        {/* <div className="p-4 border-b">
-          <Skeleton className="flex items-center h-8 w-full" />
-        </div> */}
+        <div className="sm:py-3.5 px-3.5 text-base hidden text-muted-foreground md:inline-block font-sm border-b">
+          Chat
+        </div>
         <div className="flex flex-col w-full gap-y-4 px-7 pt-4">
           <div className="flex justify-end">
             <Skeleton className="items-end h-8 w-[80%]" />
@@ -221,11 +221,14 @@ export default function ChatInterface() {
   }
   return (
     <div
-      className={`flex flex-col h-full font-sans rounded-xl ${
+      className={cn(
+        "flex flex-col h-full font-sans rounded-xl",
         isMobile ? "border-0" : "border"
-      }`}
-      // isMobile ? "border-none" : "border"
+      )}
     >
+      <div className="sm:py-3.5 px-3.5 text-base hidden text-muted-foreground md:inline-block font-sm border-b">
+        Chat
+      </div>
       {/* <ChatTitle
         title={threadData?.title || "Untitled Chat"}
         isMobile={isMobile}

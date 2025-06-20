@@ -120,7 +120,7 @@ export const Editor = () => {
         isMobile ? "border-0" : "border rounded-xl"
       )}
     >
-      {/* <EditorHeader /> */}
+      <EditorHeader />
       <div className="flex-shrink-0 bg-background border-b z-10 flex justify-center pt-2 px-2">
         <Toolbar />
       </div>

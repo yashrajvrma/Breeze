@@ -14,7 +14,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import NewChatLayout from "@/components/new-chat-layout";
+import NewChatLayout from "@/components/chat/new-chat-layout";
 
 type Props = {
   params: Promise<{ chatId: string }>;
