@@ -19,8 +19,8 @@ import { Skeleton } from "../ui/skeleton";
 import { TextShimmer } from "../text-shimmer";
 import { EditorDrawer } from "../editor/EditorDrawer";
 import { useEditorStore } from "@/lib/store/editorStore";
-import ChatTitle from "../chat-title";
-import { useSidebar } from "../ui/sidebar";
+import ChatTitle from "../x- chat-title";
+import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
 type Messages = {
@@ -62,7 +62,7 @@ const fetchThreadFn = async (chatId: string): Promise<Thread> => {
 };
 
 export default function ChatInterface() {
-  const isMobile = useSidebar();
+  const { isMobile } = useSidebar();
   const params = useParams();
   const { data: session } = useSession();
   const [firstMsg, setFirstMsg] = useState<Messages[]>();
@@ -221,10 +221,10 @@ export default function ChatInterface() {
   }
   return (
     <div
-      className={cn(
-        "flex flex-col h-full font-sans  rounded-xl",
-        isMobile ? "border-0" : "border rounded-xl"
-      )}
+      className={`flex flex-col h-full font-sans rounded-xl ${
+        isMobile ? "border-0" : "border"
+      }`}
+      // isMobile ? "border-none" : "border"
     >
       {/* <ChatTitle
         title={threadData?.title || "Untitled Chat"}

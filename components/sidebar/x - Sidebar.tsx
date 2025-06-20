@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
-import SidebarHeader from "./SidebarHeader";
-import SidebarNavigation from "./SidebarNavigation";
-import SidebarFooter from "./SidebarFooter";
+import SidebarHeader from "./x - SidebarHeader";
+import SidebarNavigation from "./x - SidebarNavigation";
+import SidebarFooter from "./x - SidebarFooter";
 import { useSidebarStore } from "@/lib/store/sidebarStore";
 import { useIsMobile } from "@/hooks/use-mobile";
 

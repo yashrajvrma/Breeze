@@ -8,7 +8,6 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { useSidebar } from "@/components/ui/sidebar";
-import { cn } from "@/lib/utils";
 
 export default function NewChatLayout() {
   const { isMobile } = useSidebar();
@@ -16,9 +15,13 @@ export default function NewChatLayout() {
   return (
     <>
       {isMobile ? (
-        <div className={cn("h-full w-full", isMobile ? "p-0" : "p-2")}>
-          <ChatInterface />
-        </div>
+        <ResizablePanelGroup direction="horizontal" className="h-full">
+          <ResizablePanel defaultSize={100}>
+            <div className="h-full">
+              <ChatInterface />
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       ) : (
         <ResizablePanelGroup direction="horizontal" className="h-full">
           <ResizablePanel defaultSize={70} minSize={50}>

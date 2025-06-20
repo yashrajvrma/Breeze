@@ -2,7 +2,7 @@
 "use client";
 
 import { Suspense } from "react";
-import HomeChatHeader from "./home-chat-header";
+import HomeChatHeader from "./x - home-chat-header";
 import ChatForm from "./chat-form";
 import ChatTemplates from "./chat-template";
 import { useRouter } from "next/navigation";

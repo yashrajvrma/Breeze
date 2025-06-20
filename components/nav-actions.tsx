@@ -2,31 +2,14 @@
 
 import * as React from "react";
 import {
-  ArrowDown,
-  ArrowUp,
-  Bell,
-  Copy,
-  CornerUpLeft,
-  CornerUpRight,
-  FileText,
-  GalleryVerticalEnd,
-  LineChart,
-  Link,
-  MoreHorizontal,
-  Router,
-  Settings2,
   Star,
-  Trash,
-  Trash2,
   User,
+  CircleUser,
+  MessageCircle,
+  Paintbrush,
+  Settings,
 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import {
   Sidebar,
   SidebarContent,
@@ -39,15 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useSession } from "next-auth/react";
-import {
-  CircleUser,
-  EllipsisVerticalIcon,
-  MessageCircle,
-  Paintbrush,
-  Settings,
-} from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
-import LoginButton from "./button/loginButton";
 import { ThemeSettings } from "./theme-settings";
 import { ProfileSettings } from "./profile-settings";
 import { AccountSettings } from "./account-settings";
@@ -70,6 +45,7 @@ const data = {
     { name: "Contact Us", icon: MessageCircle, component: ContactUsSettings },
   ],
 };
+
 export function NavActions() {
   const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();

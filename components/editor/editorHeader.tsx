@@ -12,7 +12,7 @@ import {
 import { useMargin } from "@/lib/store/marginStore";
 import { useExportDocx } from "@/extension/exportToDocx";
 import SaveButton from "../button/saveButton";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useSidebar } from "../ui/sidebar";
 
 export default function EditorHeader() {
   const title = useEditorContent((state) => state.title);
@@ -20,7 +20,7 @@ export default function EditorHeader() {
   const leftMargin = useMargin((state) => state.leftMargin);
   const rightMargin = useMargin((state) => state.rightMargin);
   const exportDocxMutation = useExportDocx();
-  const isMobile = useIsMobile();
+  const { isMobile } = useSidebar();
 
   const isEditorEmpty = !editor || editor.getText().trim().length === 0;
 
@@ -38,9 +38,9 @@ export default function EditorHeader() {
 
   return (
     <div className="flex flex-row justify-between items-center sm:px-5 px-3 sm:py-2.5 py-4 border-b border-t-2 border-t-background">
-      <div className="sm:text-base text-sm font-medium w-[70%]">
+      {/* <div className="sm:text-base text-sm font-medium w-[70%]">
         {title || "Untitled Doc"}
-      </div>
+      </div> */}
 
       <div className="flex items-center gap-x-2.5">
         {/* Always show Save Button */}

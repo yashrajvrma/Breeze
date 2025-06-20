@@ -33,7 +33,7 @@ import { useSidebar } from "../ui/sidebar";
 import { cn } from "@/lib/utils";
 
 export const Editor = () => {
-  const isMobile = useSidebar();
+  const { isMobile } = useSidebar();
   const setEditor = useEditorStore((state) => state.setEditor);
   const content = useEditorContent((state) => state.content);
   const leftMargin = useMargin((state) => state.leftMargin);

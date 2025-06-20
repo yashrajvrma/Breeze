@@ -200,9 +200,7 @@ import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
 import { useEditorContent, useEditorStore } from "@/lib/store/editorStore";
 import DocsContent from "./button/docsContentButton";
-import { extractTitleFromDoc } from "@/lib/utils/docx-title";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useEditorState } from "@tiptap/react";
+import { useSidebar } from "../ui/sidebar";
 
 interface Message {
   id: string;
@@ -226,7 +224,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   const setContentTitle = useEditorContent((state) => state.setContentTitle);
   const setEditorContent = useEditorContent((state) => state.setEditorContent);
   const openDrawer = useEditorStore((state) => state.openDrawer);
-  const isMobile = useIsMobile();
+  const { isMobile } = useSidebar();
 
   const [parsedContent, setParsedContent] = useState<ParsedContent>({
     beforeDoc: "",
