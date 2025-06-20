@@ -1,4 +1,5 @@
-import MainLayout from "@/components/layout/MainLayout";
+// import MainLayout from "@/components/layout/MainLayout";
+import Page from "@/components/new-layout";
 import prisma from "@/db";
 import { Metadata } from "next";
 
@@ -23,5 +24,6 @@ export const generateMetadata = async ({
 };
 
 export default function ChatSession() {
-  return <MainLayout />;
+  // return <MainLayout />;
+  return <Page />;
 }

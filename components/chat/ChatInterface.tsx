@@ -200,10 +200,10 @@ export default function ChatInterface() {
 
   if (isThreadLoading) {
     return (
-      <div className="flex flex-col h-full border-r border-border font-sans">
-        <div className="p-4 border-b">
+      <div className="flex flex-col h-full border rounded-xl font-sans">
+        {/* <div className="p-4 border-b">
           <Skeleton className="flex items-center h-8 w-full" />
-        </div>
+        </div> */}
         <div className="flex flex-col w-full gap-y-4 px-7 pt-4">
           <div className="flex justify-end">
             <Skeleton className="items-end h-8 w-[80%]" />
@@ -219,13 +219,13 @@ export default function ChatInterface() {
     );
   }
   return (
-    <div className="flex flex-col h-screen border-r border-border font-sans">
-      <ChatTitle
+    <div className="flex flex-col h-full font-sans border rounded-xl">
+      {/* <ChatTitle
         title={threadData?.title || "Untitled Chat"}
         isMobile={isMobile}
-      />
+      /> */}
 
-      <ScrollArea className="flex-1 p-0 pb-0 sm:px-7 px-4">
+      <ScrollArea className="flex-1 sm:px-7 px-4">
         <div className="space-y-4 pt-4 pb-1">
           {messages.map((msg, index) => (
             <ChatMessage
