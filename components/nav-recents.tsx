@@ -183,7 +183,28 @@ export function NavRecents() {
                       <span>{chat.title}</span>
                     </Link>
                   </SidebarMenuButton>
-                  <DropdownMenu>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <SidebarMenuAction showOnHover>
+                        <MoreHorizontal size={16} />
+                        <span className="sr-only">More</span>
+                      </SidebarMenuAction>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-44 rounded-2xl shadow-xl px-2 py-1 font-sans"
+                      side={isMobile ? "bottom" : "right"}
+                      align={isMobile ? "end" : "start"}
+                      sideOffset={1}
+                    >
+                      <div className="space-y-0.5 py-1">
+                        <ShareButton />
+                        <RenameChatButton id={chat.id} title={chat.title} />
+                        <FavouriteButton chatId={chat.id} />
+                        <DeleteButton chatId={chat.id} />
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                  {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <SidebarMenuAction showOnHover>
                         <MoreHorizontal size={16} />
@@ -191,40 +212,31 @@ export function NavRecents() {
                       </SidebarMenuAction>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                      className="w-44 rounded-2xl shadow-xl px-2 py-1 font-sans backdrop-blur-sm"
+                      className="w-44 rounded-2xl shadow-xl px-2 py-1 font-sans"
                       side={isMobile ? "bottom" : "right"}
                       align={isMobile ? "end" : "start"}
                       sideOffset={1}
                     >
-                      <DropdownMenuItem>
+                      <DropdownMenuItem className="bg-red-400 hover:bg-green-400 hover:border-none">
                         <ShareButton />
-                        {/* <StarOff className="text-muted-foreground" />
-                        <span>Remove from Favorites</span> */}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="hover:bg-red-300 hover:border-green-400">
+                        hii
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <RenameChatButton id={chat.id} title={chat.title} />
-                        {/* <LinkIcon className="text-muted-foreground" />
-                        <span>Copy Link</span> */}
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <FavouriteButton chatId={chat.id} />
-                        {/* <ArrowUpRight className="text-muted-foreground" />
-                        <span>Open in New Tab</span> */}
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <DeleteButton chatId={chat.id} />
                       </DropdownMenuItem>
                     </DropdownMenuContent>
-                  </DropdownMenu>
+                  </DropdownMenu> */}
                 </SidebarMenuItem>
               );
             })}
-            {/* <SidebarMenuItem>
-            <SidebarMenuButton className="text-sidebar-foreground/70">
-              <MoreHorizontal />
-              <span>More</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem> */}
           </ScrollArea>
         </SidebarMenu>
       </SidebarGroupContent>

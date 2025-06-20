@@ -7,7 +7,11 @@ import {
   Trash2,
   LinkIcon,
 } from "lucide-react";
-
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,6 +36,10 @@ import { Skeleton } from "./ui/skeleton";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import ShareButton from "./button/shareButton";
+import UnFavouriteButton from "./button/unFavourite";
+import { DeleteButton } from "./button/deleteButton";
+import { RenameChatButton } from "./button/renameButton";
 
 type FavChats = {
   id: string;
@@ -110,47 +118,30 @@ export function NavFavorites() {
                     <span>{chat.title}</span>
                   </Link>
                 </SidebarMenuButton>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+                <Popover>
+                  <PopoverTrigger asChild>
                     <SidebarMenuAction showOnHover>
                       <MoreHorizontal size={16} />
                       <span className="sr-only">More</span>
                     </SidebarMenuAction>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    className="w-56 rounded-lg"
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-44 rounded-2xl shadow-xl px-1.5 py-1.5 backdrop-blur-sm font-sans"
                     side={isMobile ? "bottom" : "right"}
                     align={isMobile ? "end" : "start"}
+                    sideOffset={1}
                   >
-                    <DropdownMenuItem>
-                      <StarOff className="text-muted-foreground" />
-                      <span>Remove from Favorites</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <LinkIcon className="text-muted-foreground" />
-                      <span>Copy Link</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <ArrowUpRight className="text-muted-foreground" />
-                      <span>Open in New Tab</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Trash2 className="text-muted-foreground" />
-                      <span>Delete</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                    <div className="space-y-0.5">
+                      <ShareButton />
+                      <RenameChatButton id={chat.id} title={chat.title} />
+                      <UnFavouriteButton chatId={chat.id} />
+                      <DeleteButton chatId={chat.id} />
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </SidebarMenuItem>
             );
           })}
-          {/* <SidebarMenuItem>
-          <SidebarMenuButton className="text-sidebar-foreground/70">
-            <MoreHorizontal />
-            <span>More</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem> */}
         </ScrollArea>
       </SidebarMenu>
     </SidebarGroup>

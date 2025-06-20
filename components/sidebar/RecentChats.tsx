@@ -178,7 +178,7 @@ export default function RecentChats() {
                       align="start"
                       className="w-44 rounded-2xl shadow-xl px-1.5 py-1.5 backdrop-blur-sm font-sans"
                     >
-                      <div className="space-y-0.5">
+                      <div className="space-y-0.5 py-1">
                         <ShareButton />
                         <RenameChatButton id={chat.id} title={chat.title} />
                         <FavouriteButton chatId={chat.id} />
