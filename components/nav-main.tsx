@@ -1,26 +1,29 @@
-"use client"
+"use client";
 
-import { type LucideIcon } from "lucide-react"
+import { type LucideIcon } from "lucide-react";
 
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    icon: LucideIcon
-    isActive?: boolean
-  }[]
+    title: string;
+    url: string;
+    icon: LucideIcon;
+    isActive?: boolean;
+  }[];
 }) {
+  const router = useRouter;
   return (
-    <SidebarMenu>
-      {items.map((item) => (
+    <SidebarMenu className="font-sans">
+      {/* {items.map((item) => (
         <SidebarMenuItem key={item.title}>
           <SidebarMenuButton asChild isActive={item.isActive}>
             <a href={item.url}>
@@ -29,7 +32,14 @@ export function NavMain({
             </a>
           </SidebarMenuButton>
         </SidebarMenuItem>
-      ))}
+      ))} */}
+      <SidebarMenuItem>
+        <Link href="/chat">
+          <SidebarMenuButton className="flex justify-center border">
+            New Chat
+          </SidebarMenuButton>
+        </Link>
+      </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

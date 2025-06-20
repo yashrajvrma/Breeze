@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
 import {
   ArrowUpRight,
-  Link,
   MoreHorizontal,
   StarOff,
   Trash2,
-} from "lucide-react"
+  LinkIcon,
+} from "lucide-react";
 
 import {
   DropdownMenu,
@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -23,72 +23,135 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { Skeleton } from "./ui/skeleton";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
-export function NavFavorites({
-  favorites,
-}: {
-  favorites: {
-    name: string
-    url: string
-    emoji: string
-  }[]
-}) {
-  const { isMobile } = useSidebar()
+type FavChats = {
+  id: string;
+  userId: string;
+  title: string;
+  favourite: boolean;
+  updatedAt: string;
+};
+
+const favChatsFn = async () => {
+  return axios.get("/api/v1/chat/favourite");
+};
+
+export function NavFavorites() {
+  const { isMobile } = useSidebar();
+
+  const params = useParams();
+
+  const { data: session, status } = useSession();
+
+  const chatId = params.chatId as string;
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["favChats"],
+    queryFn: favChatsFn,
+    enabled: !!session,
+  });
+
+  if (status === "loading" || isLoading) {
+    return (
+      <div className="flex flex-col px-3 mb-1 mt-2">
+        <div className="flex-shrink-0  text-muted-foreground leading-none hover:text-foreground font-sans text-xs">
+          Favourites
+        </div>
+        <div className="flex flex-col py-2 font-sans text-center text-sm text-muted-foreground gap-y-2">
+          <Skeleton className="flex items-center h-12 w-full" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="flex flex-col px-3 mb-1 mt-2">
+        <div className="flex-shrink-0 text-muted-foreground leading-none hover:text-foreground text-xs font-sans">
+          Favourites
+        </div>
+        <div className="border border-dashed text-center mt-3 px-4 py-2 text-xs text-muted-foreground rounded-lg font-sans">
+          Favourites chats that you use often.
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Favorites</SidebarGroupLabel>
+    <SidebarGroup className="group-data-[collapsible=icon]:hidden font-sans">
+      <SidebarGroupLabel className="font-sans">Favourites</SidebarGroupLabel>
       <SidebarMenu>
-        {favorites.map((item) => (
-          <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
-              <a href={item.url} title={item.name}>
-                <span>{item.emoji}</span>
-                <span>{item.name}</span>
-              </a>
-            </SidebarMenuButton>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuAction showOnHover>
-                  <MoreHorizontal />
-                  <span className="sr-only">More</span>
-                </SidebarMenuAction>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-56 rounded-lg"
-                side={isMobile ? "bottom" : "right"}
-                align={isMobile ? "end" : "start"}
+        <ScrollArea className="flex flex-col max-h-[150px]">
+          {data?.data.favourite.map((chat: FavChats) => {
+            const isActive = chat.id === chatId;
+
+            return (
+              <SidebarMenuItem
+                key={chat.id}
+                className={cn(
+                  "group relative flex justify-between items-center rounded-lg transition-all duration-200 cursor-pointer",
+                  "hover:bg-accent/50",
+                  isActive
+                    ? "bg-accent text-accent-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
               >
-                <DropdownMenuItem>
-                  <StarOff className="text-muted-foreground" />
-                  <span>Remove from Favorites</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link className="text-muted-foreground" />
-                  <span>Copy Link</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <ArrowUpRight className="text-muted-foreground" />
-                  <span>Open in New Tab</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Trash2 className="text-muted-foreground" />
-                  <span>Delete</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        ))}
-        <SidebarMenuItem>
+                <SidebarMenuButton asChild className="font-medium text-sm pr-8">
+                  <Link href={`/chat/${chat.id}`}>
+                    <span>{chat.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <SidebarMenuAction showOnHover>
+                      <MoreHorizontal size={16} />
+                      <span className="sr-only">More</span>
+                    </SidebarMenuAction>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="w-56 rounded-lg"
+                    side={isMobile ? "bottom" : "right"}
+                    align={isMobile ? "end" : "start"}
+                  >
+                    <DropdownMenuItem>
+                      <StarOff className="text-muted-foreground" />
+                      <span>Remove from Favorites</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <LinkIcon className="text-muted-foreground" />
+                      <span>Copy Link</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <ArrowUpRight className="text-muted-foreground" />
+                      <span>Open in New Tab</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <Trash2 className="text-muted-foreground" />
+                      <span>Delete</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </SidebarMenuItem>
+            );
+          })}
+          {/* <SidebarMenuItem>
           <SidebarMenuButton className="text-sidebar-foreground/70">
             <MoreHorizontal />
             <span>More</span>
           </SidebarMenuButton>
-        </SidebarMenuItem>
+        </SidebarMenuItem> */}
+        </ScrollArea>
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }
