@@ -69,6 +69,19 @@ export function NavFavorites() {
     );
   }
 
+  if (!session || data?.data.favourite.length === 0) {
+    return (
+      <div className="flex flex-col px-3 mb-1 mt-2">
+        <div className="flex-shrink-0 text-muted-foreground leading-none hover:text-foreground text-xs font-sans">
+          Favourites
+        </div>
+        <div className="border border-dashed text-center mt-3 px-4 py-2 text-xs text-muted-foreground rounded-lg font-sans">
+          Favourites chats that you use often.
+        </div>
+      </div>
+    );
+  }
+
   return (
     <SidebarGroup className="flex group-data-[collapsible=icon]:hidden font-sans overflow-hidden">
       <SidebarGroupLabel className="font-sans shrink-0">

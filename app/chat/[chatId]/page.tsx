@@ -31,8 +31,10 @@ export const generateMetadata = async ({
     },
   });
 
+  const chatTitle = chat?.title ? chat.title : "Untitled chat";
+
   return {
-    title: `${chat?.title}`,
+    title: chatTitle,
   };
 };
 
