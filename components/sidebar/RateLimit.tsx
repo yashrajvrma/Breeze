@@ -51,17 +51,18 @@ export default function RateLimit() {
 
   const localTime = getFormattedResetTime();
 
-  if (status === "loading" || isLoading) {
-    return (
-      <div className="flex pt-3">
-        <Skeleton className="flex items-center h-20 w-full" />
-      </div>
-    );
-  }
+  // if (status === "loading" || isLoading) {
+  //   return (
+  //     <div className="flex pt-3">
+  //       <Skeleton className="flex items-center h-20 w-full" />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex flex-col justify-center font-sans text-sm rounded-xl mt-3">
       <RateLimitCard
+        loading={status === "loading" || isLoading}
         usedMessages={requestCount}
         totalMessages={maxRequest}
         resetTime={`Resets after ${localTime}`}
