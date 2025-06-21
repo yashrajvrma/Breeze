@@ -19,7 +19,6 @@ import { Skeleton } from "../ui/skeleton";
 import { TextShimmer } from "../text-shimmer";
 import { EditorDrawer } from "../editor/EditorDrawer";
 import { useEditorStore } from "@/lib/store/editorStore";
-import ChatTitle from "../x- chat-title";
 import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
