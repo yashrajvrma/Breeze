@@ -53,15 +53,15 @@ export function ProfileSettings() {
     }
   }, [RateLimitData]);
 
-  if (status === "loading" || isLoading) {
-    return (
-      <div className="flex flex-col gap-y-2 py-1 px-1">
-        <Skeleton className="flex items-center h-10 w-full" />
-        <Skeleton className="flex items-center h-10 w-full" />
-        <Skeleton className="flex items-center h-16 w-full" />
-      </div>
-    );
-  }
+  // if (status === "loading" || isLoading) {
+  //   return (
+  //     <div className="flex flex-col gap-y-2 py-1 px-1">
+  //       <Skeleton className="flex items-center h-10 w-full" />
+  //       <Skeleton className="flex items-center h-10 w-full" />
+  //       <Skeleton className="flex items-center h-16 w-full" />
+  //     </div>
+  //   );
+  // }
 
   const localTime = getFormattedResetTime();
 
@@ -93,6 +93,7 @@ export function ProfileSettings() {
       <div className="flex flex-col justify-center gap-y-2 text-sm">
         <span className="font-medium">Token</span>
         <RateLimitCard
+          loading={status === "loading" || isLoading}
           usedMessages={requestCount}
           totalMessages={maxRequest}
           resetTime={`Resets after ${localTime}`}
