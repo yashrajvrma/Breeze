@@ -2,7 +2,7 @@
 
 import { signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import loginImage from "@/public/assets/images/loginImage.jpg";
 import logo from "@/public/assets/images/breeze-logo.png";
@@ -10,10 +10,11 @@ import { Button } from "../ui/button";
 
 export default function Login() {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated") {
-      redirect("/");
+      router.push("/chat");
     }
   }, [status]);
 

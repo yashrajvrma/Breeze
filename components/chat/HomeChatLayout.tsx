@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import ChatForm from "./chat-form";
 import ChatTemplates from "./chat-template";
 import { useRouter } from "next/navigation";
@@ -10,8 +10,15 @@ export default function HomeChatLayout() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  if (!session) {
-    router.push("/signin");
+  useEffect(() => {
+    // Only redirect when we're sure the user is not authenticated
+    if (status === "unauthenticated") {
+      router.push("/signin");
+    }
+  }, [status, router]);
+
+  if (status === "unauthenticated" || !session) {
+    return null;
   }
 
   const userId = session?.user.id!;
