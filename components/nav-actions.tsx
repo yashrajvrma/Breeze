@@ -2,14 +2,12 @@
 
 import * as React from "react";
 import {
-  Star,
   User,
   CircleUser,
   MessageCircle,
   Paintbrush,
   Settings,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,

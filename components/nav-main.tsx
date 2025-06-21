@@ -10,16 +10,7 @@ import {
 import Link from "next/link";
 import RateLimit from "./sidebar/RateLimit";
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon: LucideIcon;
-    isActive?: boolean;
-  }[];
-}) {
+export function NavMain() {
   return (
     <SidebarMenu className="font-sans">
       <SidebarMenuItem>
