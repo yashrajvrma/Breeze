@@ -198,30 +198,31 @@ export default function ChatInterface() {
   const isGenerating =
     (status === "submitted" || status === "streaming") && !chatError;
 
-  if (isThreadLoading) {
-    return (
-      <div className="flex flex-col h-full border rounded-xl font-sans">
-        <div className="sm:py-3.5 px-3.5 text-base hidden text-muted-foreground md:inline-block font-sm border-b">
-          Chat
-        </div>
-        <div className="flex flex-col w-full gap-y-4 px-7 pt-4">
-          <div className="flex justify-end">
-            <Skeleton className="items-end h-8 w-[80%]" />
-          </div>
+  // if (isThreadLoading) {
+  //   return (
+  //     <div className="flex flex-col h-full border rounded-xl font-sans">
+  //       <div className="sm:py-3.5 px-3.5 text-base hidden text-muted-foreground md:inline-block font-sm border-b">
+  //         Chat
+  //       </div>
+  //       <div className="flex flex-col w-full gap-y-4 px-7 pt-4">
+  //         <div className="flex justify-end">
+  //           <Skeleton className="items-end h-8 w-[80%]" />
+  //         </div>
 
-          <div className="flex flex-col items-start gap-y-2">
-            <Skeleton className="flex items-start h-8 w-[90%]" />
-            <Skeleton className="flex items-start h-8 w-[90%]" />
-            <Skeleton className="flex items-start h-8 w-[90%]" />
-          </div>
-        </div>
-      </div>
-    );
-  }
+  //         <div className="flex flex-col items-start gap-y-2">
+  //           <Skeleton className="flex items-start h-8 w-[90%]" />
+  //           <Skeleton className="flex items-start h-8 w-[90%]" />
+  //           <Skeleton className="flex items-start h-8 w-[90%]" />
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
   return (
     <div
       className={cn(
-        "flex flex-col h-full font-sans rounded-xl",
+        "flex flex-col h-full font-sans rounded-xl min-h-0 overflow-hidden",
         isMobile ? "border-0" : "border"
       )}
     >
@@ -233,21 +234,56 @@ export default function ChatInterface() {
         isMobile={isMobile}
       /> */}
 
-      <ScrollArea className="flex-1 sm:px-7 px-4">
+      <ScrollArea className="flex-1 min-h-0 sm:px-7 px-4">
+        {/* {isThreadLoading ? (
+          <div className="flex flex-col h-full border rounded-xl font-sans">
+            <div className="sm:py-3.5 px-3.5 text-base hidden text-muted-foreground md:inline-block font-sm border-b">
+              Chat
+            </div>
+            <div className="flex flex-col w-full gap-y-4 px-7 pt-4">
+              <div className="flex justify-end">
+                <Skeleton className="items-end h-8 w-[80%]" />
+              </div>
+
+              <div className="flex flex-col items-start gap-y-2">
+                <Skeleton className="flex items-start h-8 w-[90%]" />
+                <Skeleton className="flex items-start h-8 w-[90%]" />
+                <Skeleton className="flex items-start h-8 w-[90%]" />
+              </div>
+            </div>
+          </div>
+        ) : ( */}
         <div className="space-y-4 pt-4 pb-1">
-          {messages.map((msg, index) => (
-            <ChatMessage
-              key={msg.id || index}
-              // isLoading={isLoading}
-              message={{
-                id: msg.id || String(index),
-                sender: msg.role === "user" ? "user" : "assistant",
-                content: msg.content,
-              }}
-            />
-          ))}
-          <div ref={messagesEndRef} />
+          {isThreadLoading ? (
+            <div className="flex flex-col w-full gap-y-2">
+              <div className="flex justify-end">
+                <Skeleton className="items-end h-8 w-[80%]" />
+              </div>
+              <div className="flex flex-col w-full items-start gap-y-2">
+                <Skeleton className="flex items-start h-8 w-[90%]" />
+                <Skeleton className="flex items-start h-8 w-[90%]" />
+                <Skeleton className="flex items-start h-8 w-[90%]" />
+              </div>
+            </div>
+          ) : (
+            <>
+              {messages.map((msg, index) => (
+                <ChatMessage
+                  key={msg.id || index}
+                  // isLoading={isLoading}
+                  message={{
+                    id: msg.id || String(index),
+                    sender: msg.role === "user" ? "user" : "assistant",
+                    content: msg.content,
+                  }}
+                />
+              ))}
+              <div ref={messagesEndRef} />
+            </>
+          )}
         </div>
+        {/* )} */}
+
         {isGenerating && (
           <div className="flex justify-start pb-4">
             {status === "submitted" && (
@@ -262,7 +298,7 @@ export default function ChatInterface() {
         )}
       </ScrollArea>
 
-      <div className="sm:px-4 px-3 pb-4 mt-auto">
+      <div className="sm:px-4 px-3 pb-4 mt-auto shrink-0">
         <ChatInput
           variant="default"
           value={input}
@@ -270,12 +306,13 @@ export default function ChatInterface() {
           onSubmit={handleChatSubmit}
           loading={isGenerating}
           onStop={() => stop()}
-          className="relative w-full h-full focus:outline-none ring-0 border md:min-h-[120px] min-h-[130px] max-h-[300px] py-0"
+          className="relative w-full h-full focus:outline-none ring-0 border md:min-h-[120px] py-0 min-h-[100px] max-h-[300px]"
+          // className="relative w-full h-full focus:outline-none ring-0 border md:min-h-[120px] min-h-[130px] max-h-[300px] py-0 min-h-[60px] max-h-[180px]"
           rows={2}
         >
           <ChatInputTextArea
             placeholder="How can Breeze help you today?"
-            className="my-0 placeholder:text-base  placeholder:font-normal"
+            className="my-0 md:placeholder:text-base placeholder:text-sm  placeholder:font-normal"
           />
           <ChatInputSubmit />
         </ChatInput>

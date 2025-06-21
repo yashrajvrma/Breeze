@@ -15,13 +15,16 @@ export default function NewChatLayout() {
   return (
     <>
       {isMobile ? (
-        <ResizablePanelGroup direction="horizontal" className="h-full">
-          <ResizablePanel defaultSize={100}>
-            <div className="h-full">
-              <ChatInterface />
-            </div>
-          </ResizablePanel>
-        </ResizablePanelGroup>
+        // <ResizablePanelGroup direction="horizontal" className="h-full">
+        //   <ResizablePanel defaultSize={100}>
+        //     <div className="h-full">
+        //       <ChatInterface />
+        //     </div>
+        //   </ResizablePanel>
+        // </ResizablePanelGroup>
+        <div className="h-full">
+          <ChatInterface />
+        </div>
       ) : (
         <ResizablePanelGroup direction="horizontal" className="h-full">
           <ResizablePanel defaultSize={70} minSize={50}>

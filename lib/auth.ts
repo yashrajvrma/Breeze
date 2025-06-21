@@ -20,7 +20,7 @@ export const authConfig: NextAuthOptions = {
       authorization: {
         params: {
           scope: "openid email profile",
-          // prompt: "consent",
+          prompt: "consent",
           access_type: "offline",
         },
       },
