@@ -1,18 +1,10 @@
 import {
   ArrowUpRight,
-  ChevronRight,
-  LinkIcon,
+  Link2Icon,
   MoreHorizontal,
-  Plus,
   StarOff,
-  Trash2,
+  Trash2Icon,
 } from "lucide-react";
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -21,9 +13,6 @@ import {
   SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -31,7 +20,6 @@ import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-import { Ellipsis } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -46,14 +34,14 @@ import { RenameChatButton } from "@/components/button/renameButton";
 import { useSession } from "next-auth/react";
 
 import Link from "next/link";
+import { Skeleton } from "./ui/skeleton";
 import {
   DropdownMenu,
-  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
-import { Skeleton } from "./ui/skeleton";
+import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 
 interface Chat {
   id: string;
@@ -82,7 +70,6 @@ export function NavRecents() {
   const { isMobile } = useSidebar();
 
   const params = useParams();
-  const router = useRouter();
   const { data: session, status } = useSession();
   const { ref, inView } = useInView({
     threshold: 0,
@@ -156,60 +143,68 @@ export function NavRecents() {
     );
   }
   return (
-    <SidebarGroup>
-      <SidebarGroupLabel className="font-sans">Recents</SidebarGroupLabel>
-      <SidebarGroupContent>
+    <SidebarGroup className="group-data-[collapsible=icon]:hidden overflow-hidden">
+      <SidebarGroupLabel className="font-sans shrink-0">
+        Recents
+      </SidebarGroupLabel>
+      <ScrollArea className="flex flex-col [&>div>div[style]]:!block">
         <SidebarMenu>
-          <ScrollArea className="flex overflow-hidden ">
-            {chats?.map((chat: Chat) => {
-              const isActive = chat.id === chatId;
+          {chats?.map((chat: Chat) => {
+            const isActive = chat.id === chatId;
 
-              return (
-                <SidebarMenuItem
-                  key={chat.id}
-                  className={cn(
-                    "group relative flex justify-between items-center rounded-lg transition-all duration-200 cursor-pointer",
-                    "hover:bg-accent/50",
-                    isActive
-                      ? "bg-accent text-accent-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
+            return (
+              <SidebarMenuItem
+                key={chat.id}
+                className={cn(
+                  "flex rounded-lg transition-all duration-200 cursor-pointer hover:bg-accent/50",
+                  isActive
+                    ? "bg-accent text-accent-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <SidebarMenuButton
+                  asChild
+                  className="font-sans font-medium text-sm pr-8"
                 >
-                  <SidebarMenuButton
-                    asChild
-                    className="font-medium font-sans text-sm pr-8"
+                  <Link href={`/chat/${chat.id}`}>
+                    <span>{chat.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <SidebarMenuAction showOnHover>
+                      <MoreHorizontal size={16} />
+                      <span className="sr-only">More</span>
+                    </SidebarMenuAction>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="w-44 rounded-2xl shadow-xl px-1.5 py-1.5 backdrop-blur-sm font-sans bg-background border"
+                    side={isMobile ? "bottom" : "right"}
+                    align={isMobile ? "end" : "start"}
+                    sideOffset={1}
                   >
-                    <Link href={`/chat/${chat.id}`}>
-                      <span>{chat.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <SidebarMenuAction showOnHover>
-                        <MoreHorizontal size={16} />
-                        <span className="sr-only">More</span>
-                      </SidebarMenuAction>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      className="w-44 rounded-2xl shadow-xl px-2 py-1 font-sans"
-                      side={isMobile ? "bottom" : "right"}
-                      align={isMobile ? "end" : "start"}
-                      sideOffset={1}
-                    >
-                      <div className="space-y-0.5 py-1">
-                        <ShareButton />
-                        <RenameChatButton id={chat.id} title={chat.title} />
-                        <FavouriteButton chatId={chat.id} />
-                        <DeleteButton chatId={chat.id} />
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                </SidebarMenuItem>
-              );
-            })}
-          </ScrollArea>
+                    <div className="space-y-0.5">
+                      <ShareButton />
+                      <RenameChatButton id={chat.id} title={chat.title} />
+                      <FavouriteButton chatId={chat.id} />
+                      <DeleteButton chatId={chat.id} />
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </SidebarMenuItem>
+            );
+          })}
+          {hasNextPage && (
+            <div ref={ref} className="h-4 flex justify-center">
+              {isFetchingNextPage && (
+                <div className="text-xs text-muted-foreground font-sans">
+                  Loading...
+                </div>
+              )}
+            </div>
+          )}
         </SidebarMenu>
-      </SidebarGroupContent>
+      </ScrollArea>
     </SidebarGroup>
   );
 }

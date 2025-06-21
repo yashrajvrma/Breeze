@@ -56,6 +56,7 @@ html {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --scrollbar: 0 0% 63.9%;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -91,6 +92,7 @@ html {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --scrollbar: 0 0% 45.1%;
   }
 }
 
@@ -105,7 +107,9 @@ html {
 
 /* Custom scrollbar styles */
 .scrollbar-thin::-webkit-scrollbar {
-  width: 4px;
+  width: 7px;
+  /* background-color: hsl(var(--background)); */
+  /* background-color: burlywood; */
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
@@ -113,12 +117,15 @@ html {
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
-  border-radius: 2px;
+  /* background: hsl(var(--border)); */
+  background: hsl(var(--scrollbar));
+
+  border-radius: 4px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground));
+  /* background: hsl(var(--muted-foreground)); */
+  background-color: aqua;
 }
 
 /* Basic editor styles */

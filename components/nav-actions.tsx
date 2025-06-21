@@ -71,12 +71,12 @@ export function NavActions() {
 
   return (
     <div className="flex items-center gap-2 text-sm font-sans">
-      <div className="hidden font-medium text-muted-foreground md:inline-block font-sm">
+      {/* <div className="hidden font-medium text-muted-foreground md:inline-block font-sm">
         Edit Oct 08
       </div>
       <Button variant="ghost" size="icon" className="h-7 w-7">
         <Star size={16} />
-      </Button>
+      </Button> */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Avatar className="h-7 w-7 rounded-lg">

@@ -8,10 +8,10 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 export default function HomeChatLayout() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
-  if (!session || !session?.user) {
+  if (!session) {
     router.push("/signin");
   }
 

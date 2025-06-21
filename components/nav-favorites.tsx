@@ -1,24 +1,12 @@
 "use client";
 
-import {
-  ArrowUpRight,
-  MoreHorizontal,
-  StarOff,
-  Trash2,
-  LinkIcon,
-} from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -81,24 +69,17 @@ export function NavFavorites() {
     );
   }
 
-  if (!session) {
-    return (
-      <div className="flex flex-col px-3 mb-1 mt-2">
-        <div className="flex-shrink-0 text-muted-foreground leading-none hover:text-foreground text-xs font-sans">
-          Favourites
-        </div>
-        <div className="border border-dashed text-center mt-3 px-4 py-2 text-xs text-muted-foreground rounded-lg font-sans">
-          Favourites chats that you use often.
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden font-sans">
-      <SidebarGroupLabel className="font-sans">Favourites</SidebarGroupLabel>
-      <SidebarMenu>
-        <ScrollArea className="flex flex-col max-h-[150px]">
+    <SidebarGroup className="flex group-data-[collapsible=icon]:hidden font-sans overflow-hidden">
+      <SidebarGroupLabel className="font-sans shrink-0">
+        Favourites
+      </SidebarGroupLabel>
+
+      <ScrollArea
+        // style="scrollbar-width:none"
+        className="[&>div>div[style]]:!block max-h-[250px] overflow-hidden hover:overflow-y-auto  scrollbar-thin"
+      >
+        <SidebarMenu>
           {data?.data.favourite.map((chat: FavChats) => {
             const isActive = chat.id === chatId;
 
@@ -142,8 +123,8 @@ export function NavFavorites() {
               </SidebarMenuItem>
             );
           })}
-        </ScrollArea>
-      </SidebarMenu>
+        </SidebarMenu>
+      </ScrollArea>
     </SidebarGroup>
   );
 }
