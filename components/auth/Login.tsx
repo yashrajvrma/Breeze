@@ -7,6 +7,7 @@ import Image from "next/image";
 import loginImage from "@/public/assets/images/loginImage.jpg";
 import logo from "@/public/assets/images/breeze-logo.png";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function Login() {
   const { data: session, status } = useSession();
@@ -61,11 +62,11 @@ export default function Login() {
               <div className="text-muted-foreground text-center text-xs text-wrap md:mx-16 mx-5">
                 By clicking continue, you agree to our{" "}
                 <span className="border-b-2 border-b-neutral-500 hover:text-foreground hover:border-b-foreground hover:cursor-pointer">
-                  Terms of Service
+                  <Link href="/terms">Terms of Service</Link>
                 </span>{" "}
                 and{" "}
                 <span className="border-b-2 border-b-neutral-500 hover:text-foreground hover:border-b-foreground hover:cursor-pointer">
-                  Privacy Policy
+                  <Link href="/privacy">Privacy Policy</Link>
                 </span>
                 .
               </div>

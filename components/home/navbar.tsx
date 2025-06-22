@@ -36,7 +36,10 @@ export default function Navbar() {
       <div className="flex h-16 items-center justify-between  max-w-5xl mx-auto font-sans">
         {/* Logo and Brand Name */}
         <div className="flex items-center gap-x-2 sm:px-0 md:px-0 lg:px-0 px-3">
-          <Link href="/">
+          <Link
+            href="/"
+            className="flex justify-center items-center align-middle bg-stone-50 rounded-lg w-7 h-7"
+          >
             <Image src={logo} alt="Breeze Logo" className="w-6" />
           </Link>
           <div className="md:text-3xl text-2xl text-foreground font-instrumentSerif font-semibold tracking-tight">
