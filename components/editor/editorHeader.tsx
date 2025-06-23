@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useMargin } from "@/lib/store/marginStore";
 import { useExportDocx } from "@/extension/exportToDocx";
-import SaveButton from "../button/saveButton";
+import SaveButton from "../button/save-button";
 import { useSidebar } from "../ui/sidebar";
 
 export default function EditorHeader() {

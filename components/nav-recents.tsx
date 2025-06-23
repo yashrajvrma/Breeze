@@ -27,10 +27,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import ShareButton from "@/components/button/shareButton";
-import { DeleteButton } from "@/components/button/deleteButton";
-import FavouriteButton from "@/components/button/favouriteButton";
-import { RenameChatButton } from "@/components/button/renameButton";
+import ShareButton from "@/components/button/share-button";
+import { DeleteButton } from "@/components/button/delete-button";
+import FavouriteButton from "@/components/button/favourite-button";
+import { RenameChatButton } from "@/components/button/rename-button";
 import { useSession } from "next-auth/react";
 
 import Link from "next/link";

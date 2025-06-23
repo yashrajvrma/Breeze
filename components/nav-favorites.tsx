@@ -24,10 +24,10 @@ import { Skeleton } from "./ui/skeleton";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import ShareButton from "./button/shareButton";
-import UnFavouriteButton from "./button/unFavourite";
-import { DeleteButton } from "./button/deleteButton";
-import { RenameChatButton } from "./button/renameButton";
+import ShareButton from "./button/share-button";
+import UnFavouriteButton from "./button/unfavourite-button";
+import { DeleteButton } from "./button/delete-button";
+import { RenameChatButton } from "./button/rename-button";
 
 type FavChats = {
   id: string;
