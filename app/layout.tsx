@@ -12,6 +12,7 @@ const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
   subsets: ["latin"],
   weight: ["400"],
+  style: ["italic", "normal"],
 });
 
 const geistSans = localFont({
@@ -19,14 +20,9 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
 });
 
-const geistMono = localFont({
-  src: "../public/assets/fonts/GeistMono-VariableFont_wght.ttf",
-  variable: "--font-geist-mono",
-});
-
-const garamondBookCond = localFont({
-  src: "../public/assets/fonts/ITCGaramondStd-BkCond.ttf",
-  variable: "--font-garamond-book",
+const interTight = localFont({
+  src: "../public/assets/fonts/InterTight-VariableFont_wght.ttf",
+  variable: "--font-inter-tight",
 });
 
 export const metadata: Metadata = {
@@ -92,7 +88,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head></head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${garamondBookCond.variable} ${instrumentSerif.variable} antialiased`}
+        className={`${geistSans.variable}  ${instrumentSerif.variable} ${interTight.variable} antialiased`}
       >
         <Providers>{children}</Providers>
         <Analytics mode="production" />
