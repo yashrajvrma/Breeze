@@ -4,10 +4,13 @@ import { Button } from "@/components/ui/button";
 import logo from "@/public/assets/images/breeze-logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { NavigationMenuDemo } from "../nav-menu"; // Assuming this component exists and handles navigation links
-import { Menu } from "lucide-react";
+import { NavigationMenuDemo } from "../nav-menu";
+import { Menu, MoonStarIcon, SunIcon } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Twitter, Linkedin, GitHub } from "@/components/icons/icons";
+import { useTheme } from "next-themes";
+import { useThemeStore } from "@/lib/store/themeStore";
+import { useEffect, useState } from "react";
 
 const socialLinks = [
   {
@@ -31,40 +34,102 @@ const socialLinks = [
 ];
 
 export default function Navbar() {
+  const { resolvedTheme } = useTheme();
+  const { theme, setTheme } = useThemeStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-background shadow-sm backdrop-blur-sm">
-      <div className="flex h-16 items-center justify-between  max-w-5xl mx-auto font-sans">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-background/10 backdrop-blur-md shadow-sm">
+      <div className="flex h-16 items-center justify-between max-w-3xl mx-auto font-sans px-3">
         <div className="flex items-center gap-x-2 sm:px-0 md:px-0 lg:px-0 px-3">
           <Link
             href="/"
-            className="flex justify-center items-center align-middle bg-stone-50 rounded-lg w-7 h-7"
+            className="flex justify-center items-center align-middle bg-stone-50 rounded-xl w-8 h-8"
           >
-            <Image src={logo} alt="Breeze Logo" className="w-5" />
+            <Image src={logo} alt="Breeze Logo" className="w-6" />
           </Link>
           <div className="md:text-2xl text-xl text-foreground font-instrumentSerif font-semibold">
-            Breeze
+            breeze
           </div>
         </div>
 
-        {/* Desktop Navigation Links and Sign In Button */}
-        <div className="hidden lg:flex items-center gap-x-5">
-          {/* NavigationMenuDemo is assumed to contain your main navigation links with dropdowns */}
+        <div className="hidden md:flex items-center">
           <NavigationMenuDemo />
+        </div>
+
+        {/* Desktop Navigation Links and Sign In Button */}
+        <div className="hidden md:flex items-center gap-x-2">
+          {/* NavigationMenuDemo is assumed to contain your main navigation links with dropdowns */}
+
+          {resolvedTheme === "dark" ? (
+            <button
+              className="border py-2.5 px-2.5 rounded-lg"
+              onClick={() => {
+                setTheme("light" as typeof theme);
+                console.log("theme is dark");
+              }}
+            >
+              <SunIcon size={16} />
+            </button>
+          ) : (
+            <button
+              className="border p-2 rounded-lg"
+              onClick={() => {
+                setTheme("dark" as typeof theme);
+                console.log("theme is light");
+              }}
+            >
+              {/* <SunIcon size={16} /> */}
+              <MoonStarIcon size={16} />
+            </button>
+          )}
+
           <Link href="/signin">
-            <Button className="text-sm rounded-xl hover:cursor-pointer">
+            <button className="bg-foreground text-background hover:bg-foreground/90 py-2 px-3 text-sm font-medium rounded-lg hover:cursor-pointer">
               Get Started
-            </Button>
+            </button>
           </Link>
         </div>
 
         {/* Mobile Hamburger Menu */}
         <Sheet>
-          <SheetTrigger asChild className="lg:hidden px-3">
-            <div className="hover:cursor-pointer">
-              <Menu size={20} />
-              <span className="sr-only">Toggle navigation menu</span>
-            </div>
-          </SheetTrigger>
+          <div className="flex justify-between items-center align-middle">
+            {resolvedTheme === "dark" ? (
+              <button
+                className="border p-1 rounded-md"
+                onClick={() => {
+                  setTheme("light" as typeof theme);
+                  console.log("theme is dark");
+                }}
+              >
+                <SunIcon size={16} />
+              </button>
+            ) : (
+              <button
+                className="border p-1 rounded-md"
+                onClick={() => {
+                  setTheme("dark" as typeof theme);
+                  console.log("theme is light");
+                }}
+              >
+                {/* <SunIcon size={16} /> */}
+                <MoonStarIcon size={16} />
+              </button>
+            )}
+            <SheetTrigger asChild className="md:hidden px-3">
+              <div className="hover:cursor-pointer">
+                <Menu size={22} />
+                <span className="sr-only">Toggle navigation menu</span>
+              </div>
+            </SheetTrigger>
+          </div>
+
           <SheetContent
             side="right"
             className="w-[300px] sm:w-[400px] flex flex-col font-sans"

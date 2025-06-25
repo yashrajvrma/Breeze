@@ -3,7 +3,7 @@
 import { RainbowButton } from "../rainbow-button";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import lightPeerlistLogo from "@/public/assets/images/Launch_SVG_Dark (1).svg";
+import lightPeerlistLogo from "@/public/assets/images/Launch_SVG_Light (1).svg";
 import darkPeerlistLogo from "@/public/assets/images/Launch_SVG_Dark (1).svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ export default function Hero() {
   return (
     <div className="flex flex-col justify-center items-center font-interTight md:mt-40 mt-36">
       <div className="flex flex-col justify-center items-center w-full text-foreground">
-        <div className="flex justify-center items-center mb-16">
+        <div className="flex justify-center items-center md:mb-16 mb-12">
           <Link
             href="https://peerlist.io/yashrajvrma/project/breeze"
             target="_blank"
@@ -32,7 +32,7 @@ export default function Hero() {
                 resolvedTheme === "dark" ? darkPeerlistLogo : lightPeerlistLogo
               }
               alt="Peerlist logo"
-              className="w-56"
+              className="md:w-56 w-44"
             />
           </Link>
         </div>
@@ -44,7 +44,7 @@ export default function Hero() {
             </span>
           </span>
 
-          <span className="hidden md:inline">
+          <span className="hidden md:inline dark:text-neutral-200">
             Your AI Docs
             <br />
             <span className="font-instrumentSerif italic font-[400]">

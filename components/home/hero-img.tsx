@@ -3,9 +3,8 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import HeroLightImg from "@/public/assets/images/breeze-light-preview.png";
-
-import HeroDarkImg from "@/public/assets/images/breeze-dark-preview.png";
+import editorDarkImg from "@/public/assets/images/editor-dark.png";
+import editorLightImg from "@/public/assets/images/editor-light.png";
 
 export default function HeroImg() {
   const { resolvedTheme } = useTheme();
@@ -18,12 +17,12 @@ export default function HeroImg() {
   if (!mounted) return null;
 
   return (
-    <div className="flex justify-center w-full md:border-y px-4">
-      <div className="flex items-center md:max-w-7xl md:border-x">
+    <div className="flex justify-center w-full px-4">
+      <div className="flex items-center md:max-w-7xl">
         <Image
-          src={resolvedTheme === "dark" ? HeroDarkImg : HeroLightImg}
+          src={resolvedTheme === "dark" ? editorDarkImg : editorLightImg}
           alt="Breeze AI Preview Image"
-          className="w-full h-auto rounded-xl border-[0.5px] transition-opacity duration-300 ease-in-out"
+          className="w-full h-auto rounded-2xl border transition-opacity duration-300 ease-in-out"
           priority
         />
       </div>

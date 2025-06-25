@@ -39,8 +39,8 @@ const components = [
 export function NavigationMenuDemo() {
   return (
     <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem className="px-4">
+      <NavigationMenuList className="gap-x-4">
+        <NavigationMenuItem>
           <NavigationMenuTrigger className="border-none bg-transparent text-muted-foreground hover:text-foreground">
             Platform
           </NavigationMenuTrigger>
@@ -76,13 +76,11 @@ export function NavigationMenuDemo() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        {/* <NavigationMenuItem>
-          <Link href="/docs" passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Platform
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem> */}
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="border-none bg-transparent text-muted-foreground hover:text-foreground">
+            FAQ
+          </NavigationMenuTrigger>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
