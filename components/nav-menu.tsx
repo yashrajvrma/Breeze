@@ -40,8 +40,10 @@ export function NavigationMenuDemo() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Platform</NavigationMenuTrigger>
+        <NavigationMenuItem className="px-4">
+          <NavigationMenuTrigger className="border-none bg-transparent text-muted-foreground hover:text-foreground">
+            Platform
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="flex flex-col gap-2 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <ListItem href="/about" title="About">
@@ -57,7 +59,9 @@ export function NavigationMenuDemo() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="border-none bg-transparent text-muted-foreground hover:text-foreground">
+            Resources
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {components.map((component) => (

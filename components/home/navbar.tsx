@@ -32,17 +32,16 @@ const socialLinks = [
 
 export default function Navbar() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-background shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-background shadow-sm backdrop-blur-sm">
       <div className="flex h-16 items-center justify-between  max-w-5xl mx-auto font-sans">
-        {/* Logo and Brand Name */}
         <div className="flex items-center gap-x-2 sm:px-0 md:px-0 lg:px-0 px-3">
           <Link
             href="/"
             className="flex justify-center items-center align-middle bg-stone-50 rounded-lg w-7 h-7"
           >
-            <Image src={logo} alt="Breeze Logo" className="w-6" />
+            <Image src={logo} alt="Breeze Logo" className="w-5" />
           </Link>
-          <div className="md:text-3xl text-2xl text-foreground font-instrumentSerif font-semibold tracking-tight">
+          <div className="md:text-2xl text-xl text-foreground font-instrumentSerif font-semibold">
             Breeze
           </div>
         </div>
@@ -53,7 +52,7 @@ export default function Navbar() {
           <NavigationMenuDemo />
           <Link href="/signin">
             <Button className="text-sm rounded-xl hover:cursor-pointer">
-              Sign In
+              Get Started
             </Button>
           </Link>
         </div>
@@ -79,7 +78,7 @@ export default function Navbar() {
                   variant="default"
                   className="text-sm rounded-lg hover:cursor-pointer"
                 >
-                  Sign In
+                  Get Started
                 </Button>
               </Link>
             </div>
