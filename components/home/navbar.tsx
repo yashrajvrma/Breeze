@@ -47,17 +47,16 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-background/10 backdrop-blur-md shadow-sm">
       <div className="flex h-16 items-center justify-between max-w-3xl mx-auto font-sans px-3">
-        <div className="flex items-center gap-x-2 sm:px-0 md:px-0 lg:px-0 px-3">
-          <Link
-            href="/"
-            className="flex justify-center items-center align-middle bg-stone-50 rounded-xl w-8 h-8"
-          >
-            <Image src={logo} alt="Breeze Logo" className="w-6" />
-          </Link>
-          <div className="md:text-2xl text-xl text-foreground font-instrumentSerif font-semibold">
-            breeze
+        <Link href="/">
+          <div className="flex items-center gap-x-2 sm:px-0 md:px-0 lg:px-0 px-3">
+            <div className="flex justify-center items-center align-middle bg-stone-50 rounded-xl w-8 h-8">
+              <Image src={logo} alt="Breeze Logo" className="w-6" />
+            </div>
+            <div className="md:text-2xl text-xl text-foreground font-instrumentSerif font-semibold">
+              Breeze
+            </div>
           </div>
-        </div>
+        </Link>
 
         <div className="hidden md:flex items-center">
           <NavigationMenuDemo />
@@ -99,7 +98,7 @@ export default function Navbar() {
 
         {/* Mobile Hamburger Menu */}
         <Sheet>
-          <div className="flex justify-between items-center align-middle">
+          <div className="flex justify-between items-center align-middle md:hidden px-3 gap-x-3">
             {resolvedTheme === "dark" ? (
               <button
                 className="border p-1 rounded-md"
@@ -122,7 +121,7 @@ export default function Navbar() {
                 <MoonStarIcon size={16} />
               </button>
             )}
-            <SheetTrigger asChild className="md:hidden px-3">
+            <SheetTrigger>
               <div className="hover:cursor-pointer">
                 <Menu size={22} />
                 <span className="sr-only">Toggle navigation menu</span>

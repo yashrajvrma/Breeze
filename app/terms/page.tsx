@@ -1,3 +1,4 @@
+import Footer from "@/components/home/footer";
 import Navbar from "@/components/home/navbar";
 import { MailIcon } from "lucide-react";
 
@@ -107,6 +108,7 @@ export default function Terms() {
           </section>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

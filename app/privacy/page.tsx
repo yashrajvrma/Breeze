@@ -1,3 +1,4 @@
+import Footer from "@/components/home/footer";
 import Navbar from "@/components/home/navbar";
 import { MailIcon } from "lucide-react";
 import type { Metadata } from "next";
@@ -128,6 +129,7 @@ export default function Privacy() {
           </section>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

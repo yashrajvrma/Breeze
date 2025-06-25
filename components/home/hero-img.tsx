@@ -17,7 +17,7 @@ export default function HeroImg() {
   if (!mounted) return null;
 
   return (
-    <div className="flex justify-center w-full px-4">
+    <div className="flex justify-center w-full px-4 mb-16">
       <div className="flex items-center md:max-w-7xl">
         <Image
           src={resolvedTheme === "dark" ? editorDarkImg : editorLightImg}
