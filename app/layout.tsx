@@ -6,6 +6,8 @@ import { Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+
+
 const baseURL = "https://breezeai.live";
 
 const instrumentSerif = Instrument_Serif({
